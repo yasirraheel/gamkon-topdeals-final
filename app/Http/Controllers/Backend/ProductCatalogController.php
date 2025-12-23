@@ -49,11 +49,11 @@ class ProductCatalogController extends Controller
             'icon' => 'nullable|image|mimes:jpeg,jpg,png,svg|max:2048',
             'thumbnail' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'durations' => 'nullable|array',
-            'durations.*' => 'string',
+            'durations.*' => 'nullable|string',
             'sharing_methods' => 'nullable|array',
-            'sharing_methods.*' => 'string',
+            'sharing_methods.*' => 'nullable|string',
             'plans' => 'nullable|array',
-            'plans.*' => 'exists:subscription_plans,id',
+            'plans.*' => 'nullable|string',
             'description' => 'nullable|string',
             'status' => 'required|boolean',
             'order' => 'nullable|numeric|unique:product_catalogs,order',
@@ -75,13 +75,26 @@ class ProductCatalogController extends Controller
             $thumbnailPath = $this->imageUploadTrait($request->file('thumbnail'));
         }
 
+        // Filter out empty values
+        $durations = $request->get('durations') ? array_values(array_filter($request->get('durations'), function($value) {
+            return !empty(trim($value));
+        })) : null;
+        
+        $sharingMethods = $request->get('sharing_methods') ? array_values(array_filter($request->get('sharing_methods'), function($value) {
+            return !empty(trim($value));
+        })) : null;
+        
+        $plans = $request->get('plans') ? array_values(array_filter($request->get('plans'), function($value) {
+            return !empty(trim($value));
+        })) : null;
+
         ProductCatalog::create([
             'name' => $request->get('name'),
             'icon' => $iconPath,
             'thumbnail' => $thumbnailPath,
-            'durations' => $request->get('durations'),
-            'sharing_methods' => $request->get('sharing_methods'),
-            'plans' => $request->get('plans'),
+            'durations' => $durations,
+            'sharing_methods' => $sharingMethods,
+            'plans' => $plans,
             'description' => $request->get('description'),
             'status' => $request->get('status'),
             'order' => !$request->order || empty($request->order) ? ProductCatalog::max('order') + 1 : $request->get('order'),
@@ -108,11 +121,11 @@ class ProductCatalogController extends Controller
             'icon' => 'nullable|image|mimes:jpeg,jpg,png,svg|max:2048',
             'thumbnail' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
             'durations' => 'nullable|array',
-            'durations.*' => 'string',
+            'durations.*' => 'nullable|string',
             'sharing_methods' => 'nullable|array',
-            'sharing_methods.*' => 'string',
+            'sharing_methods.*' => 'nullable|string',
             'plans' => 'nullable|array',
-            'plans.*' => 'string',
+            'plans.*' => 'nullable|string',
             'description' => 'nullable|string',
             'status' => 'required|boolean',
             'order' => 'nullable|numeric|unique:product_catalogs,order,'.$catalog->id,
@@ -134,13 +147,26 @@ class ProductCatalogController extends Controller
             $thumbnailPath = $this->imageUploadTrait($request->file('thumbnail'), $catalog->thumbnail);
         }
 
+        // Filter out empty values
+        $durations = $request->get('durations') ? array_values(array_filter($request->get('durations'), function($value) {
+            return !empty(trim($value));
+        })) : null;
+        
+        $sharingMethods = $request->get('sharing_methods') ? array_values(array_filter($request->get('sharing_methods'), function($value) {
+            return !empty(trim($value));
+        })) : null;
+        
+        $plans = $request->get('plans') ? array_values(array_filter($request->get('plans'), function($value) {
+            return !empty(trim($value));
+        })) : null;
+
         $catalog->update([
             'name' => $request->get('name'),
             'icon' => $iconPath,
             'thumbnail' => $thumbnailPath,
-            'durations' => $request->get('durations'),
-            'sharing_methods' => $request->get('sharing_methods'),
-            'plans' => $request->get('plans'),
+            'durations' => $durations,
+            'sharing_methods' => $sharingMethods,
+            'plans' => $plans,
             'description' => $request->get('description'),
             'status' => $request->get('status'),
             'order' => !$request->order || empty($request->order) ? ProductCatalog::max('order') + 1 : $request->get('order'),
