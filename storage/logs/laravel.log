@@ -966,3 +966,23 @@
 [stacktrace]
 #0 {main}
 "} 
+[2025-12-23 21:12:25] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\Compressed\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\Compressed\\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\Compressed\\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-23 21:13:24] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\Compressed\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\Compressed\\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\Compressed\\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-23 21:14:24] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\Compressed\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\Compressed\\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\Compressed\\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-23 21:15:24] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\Compressed\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\Compressed\\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\Compressed\\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-23 21:16:25] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\Compressed\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\Compressed\\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\Compressed\\codecanyon-59577555-gamkon-on-demand-subscription-based-digital-id-selling-marketplace-with-buyer-and-seller-module\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 

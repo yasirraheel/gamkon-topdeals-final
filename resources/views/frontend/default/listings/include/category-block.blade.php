@@ -22,8 +22,17 @@
                     d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
             </svg>
         </button>
-        <a href="{{ $listing->url }}" class="game-image">
+        <a href="{{ $listing->url }}" class="game-image" style="position: relative; display: block;">
             <img loading="lazy" src="{{ $listing->thumbnail_url }}" alt="{{ $listing->product_name }}">
+            
+            {{-- Product Name Overlay on Image --}}
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; z-index: 8; text-align: center;">
+                <div style="background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 15px 20px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.18);">
+                    <h3 style="color: white; font-size: 18px; font-weight: 800; margin: 0; line-height: 1.3; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); letter-spacing: 0.3px;">
+                        {{ $listing->product_name }}
+                    </h3>
+                </div>
+            </div>
         </a>
         
         {{-- Plan/Delivery Banner with Wave Effect --}}
@@ -54,12 +63,6 @@
         
         <div class="game-content" style="padding-bottom: {{ ($listing->selected_plan || $listing->delivery_method == 'auto') ? '80px' : '15px' }};">
             <div class="game-content-full">
-                <h3 class="title" style="margin-bottom: 10px; font-size: 16px; font-weight: 700;">
-                    <a href="{{ $listing->url }}">
-                        {{ $listing->product_name }}
-                    </a>
-                </h3>
-                
                 {{-- Prominent Attributes Grid --}}
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px;">
                     @if ($listing->selected_duration)
