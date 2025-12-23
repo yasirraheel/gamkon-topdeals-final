@@ -343,15 +343,22 @@
                     if (response.success) {
                         var data = response.data;
                         
-                        // Set product name
-                        $('#product_name').val(data.name);
+                        // Set product name (only if empty or creating new listing)
+                        if (!$('#product_name').val() || $('#product_name').val() === '') {
+                            $('#product_name').val(data.name);
+                        }
+                        
+                        // Get saved values for editing
+                        var savedDuration = '{{ old('selected_duration', $listing?->selected_duration ?? '') }}';
+                        var savedPlan = '{{ old('selected_plan', $listing?->selected_plan ?? '') }}';
                         
                         // Populate duration dropdown
                         var durationOptions = '<option value="">{{ __('Select Duration') }}</option>';
                         if (data.durations && data.durations.length > 0) {
                             data.durations.forEach(function(duration) {
                                 if (duration && duration.trim() !== '') {
-                                    durationOptions += '<option value="' + duration + '">' + duration + '</option>';
+                                    var selected = (duration === savedDuration) ? ' selected' : '';
+                                    durationOptions += '<option value="' + duration + '"' + selected + '>' + duration + '</option>';
                                 }
                             });
                         }
@@ -362,7 +369,8 @@
                         if (data.plans && data.plans.length > 0) {
                             data.plans.forEach(function(plan) {
                                 if (plan && plan.trim() !== '') {
-                                    planOptions += '<option value="' + plan + '">' + plan + '</option>';
+                                    var selected = (plan === savedPlan) ? ' selected' : '';
+                                    planOptions += '<option value="' + plan + '"' + selected + '>' + plan + '</option>';
                                 }
                             });
                         }
@@ -371,8 +379,9 @@
                         // Update nice-select
                         $('.nice-select-active').niceSelect('update');
                         
-                        // Load thumbnail if available
-                        if (data.thumbnail) {
+                        // Load thumbnail if available (only for new listings)
+                        var isEditing = {{ $listing ? 'true' : 'false' }};
+                        if (data.thumbnail && !isEditing) {
                             // Auto-populate thumbnail preview
                             var thumbnailContainer = $('input[name="thumbnail"]').closest('.custom-file-input');
                             thumbnailContainer.find('.upload-btn').addClass('hidden');
@@ -398,7 +407,9 @@
 
         // Trigger change event if editing existing listing with catalog
         @if($listing?->product_catalog_id)
-            $('#selectProductCatalog').trigger('change');
+            $(document).ready(function() {
+                $('#selectProductCatalog').trigger('change');
+            });
         @endif
     </script>
 @endpush
