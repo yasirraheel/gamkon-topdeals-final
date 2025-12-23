@@ -1,0 +1,166 @@
+@use "../utils" as *;
+
+/*----------------------------------------*/
+/* 2.4 Offcanvas
+/*----------------------------------------*/
+
+.td-offcanvas {
+  position: fixed;
+  z-index: 99;
+  background-color: var(--td-heading);
+  width: 425px;
+  right: 0;
+  top: 0;
+  padding: 20px 20px;
+  height: 100vh;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(100%);
+  transition: 0.3s ease-in-out;
+
+  @include rtl {
+    right: auto;
+    left: 0;
+    transform: translateX(-100%);
+  }
+
+  @media #{$xs} {
+    width: 300px;
+  }
+
+  &-logo {
+    width: 130px;
+  }
+
+  &-open {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+
+    @include rtl {
+      right: auto;
+      left: 0;
+      transform: translateX(0%);
+    }
+  }
+
+  &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+
+    .authentication-and-close {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+
+      .auth {
+        .login {
+          a {
+            color: var(--td-white);
+          }
+        }
+        .auth-btn {
+          background-color: var(--td-secondary);
+          height: 30px;
+          padding: 10px 16px;
+          border-radius: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: rem(14);
+          line-height: lh(26, 14);
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  &-navbars {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+
+    .start-selling-mobile-btn {
+      padding-top: 12px;
+      .primary-button {
+        width: 50%;
+
+        @media #{$xs} {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &-buttons {
+    margin-top: 20px;
+    display: block;
+
+    @media #{$md} {
+      display: none;
+    }
+  }
+
+  &-overlay {
+    position: fixed;
+    top: 0;
+    inset-inline-start: 0;
+    z-index: 98;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.45s ease-in-out;
+    background: rgba(24, 24, 24, 0.4);
+
+    &-open {
+      visibility: visible;
+      opacity: 0.7;
+    }
+  }
+}
+
+.bar-button {
+  display: none;
+  margin-inline-start: 8px;
+
+  @media #{$lg,$md,$xs} {
+    display: block;
+  }
+
+  .td-offcanvas-toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    justify-content: center;
+
+    span {
+      display: block;
+      width: 30px;
+      height: 2px;
+      background-color: var(--td-heading);
+
+      @media #{$xs} {
+        width: 22px;
+      }
+
+      @media #{$sm} {
+        width: 25px;
+      }
+    }
+  }
+}
+
+.td-offcanvas-close {
+  .td-offcanvas-close-toggle {
+    svg {
+      fill: var(--td-white);
+      path {
+        fill: var(--td-white);
+      }
+    }
+  }
+}

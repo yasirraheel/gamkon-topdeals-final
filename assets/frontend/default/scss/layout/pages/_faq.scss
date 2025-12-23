@@ -1,0 +1,234 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.2.6 FAQ
+/*----------------------------------------*/
+.faq-area {
+  .faq-main-content {
+    .right {
+      margin-inline-start: 135px;
+      position: relative;
+
+      @media #{$xl,$lg} {
+        margin-inline-start: 35px;
+      }
+
+      @media #{$md,$xs} {
+        margin-inline-start: 0px;
+      }
+
+      .bg-img {
+        position: absolute;
+        top: -60px;
+        inset-inline-start: -60px;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+
+        @media #{$xl,$lg,$md,$xs} {
+          display: none;
+        }
+      }
+
+      .faq-img {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        z-index: 1;
+
+        img {
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
+
+.faq {
+  .faq-content {
+    .left {
+      h2 {
+        width: 90%;
+        margin-bottom: 16px;
+        color: var(--td-white);
+      }
+
+      p {
+        width: 80%;
+
+        @media #{$xs} {
+          width: 100%;
+        }
+      }
+
+      .img-box {
+        height: 350px;
+        margin-top: 24px;
+
+        @media #{$xs} {
+          height: 240px;
+        }
+
+        @media #{$sm} {
+          height: 460px;
+        }
+
+        img {
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
+
+.common-faq-box {
+  .accordion {
+    .accordion-item {
+      margin-bottom: 16px;
+      border: none;
+
+      @media #{$xs} {
+        margin-bottom: 10px;
+      }
+
+      &:first-of-type {
+        border-top-left-radius: unset;
+        border-top-right-radius: unset;
+        border-top-left-radius: 8cqw;
+        border-top-right-radius: 8cqw;
+      }
+
+      &:last-of-type {
+        border-bottom-left-radius: unset;
+        border-bottom-right-radius: unset;
+        border-bottom-left-radius: 8cqw;
+        border-bottom-right-radius: 8cqw;
+      }
+
+      .accordion-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--td-heading) !important;
+        font-size: 18px;
+        font-weight: 600;
+        line-height: 120%;
+        padding: 20px 40px 20px 20px;
+
+        @media #{$xs} {
+          padding: 20px 40px 20px 20px;
+          font-size: 18px;
+        }
+
+        &:focus {
+          box-shadow: unset;
+        }
+
+        &:not(.collapsed) {
+          color: var(--td-heading) !important;
+          background-color: transparent;
+          box-shadow: unset;
+          padding: 20px 20px 20px 20px;
+          border-radius: 8px 8px 0 0;
+          border: 1px solid rgba(48, 48, 48, 0.16);
+          border-bottom: 1px solid transparent;
+
+          @media #{$xs} {
+            padding: 20px 20px 20px 20px;
+          }
+        }
+
+        &.collapsed {
+          color: inherit;
+          border-bottom-right-radius: unset;
+          border-bottom-left-radius: unset;
+          border-radius: 8px;
+        }
+      }
+
+      .accordion-body {
+        padding: unset;
+        padding: 0px 50px 20px 20px;
+        color: rgba(23, 23, 23, 0.8);
+        background-color: transparent;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 150%;
+        border-radius: 0 0 8px 8px;
+        border: 1px solid rgba(48, 48, 48, 0.16);
+        border-top: none;
+
+        span {
+          color: var(--td-theme-bg-color);
+        }
+      }
+    }
+  }
+
+  &-2 {
+    .accordion {
+      .accordion-item {
+        background-color: transparent;
+        border-radius: 8px;
+      }
+    }
+  }
+}
+
+.common-faq-box {
+  .accordion {
+    .accordion-item {
+      .accordion-button {
+        position: relative;
+
+        &::after {
+          display: none !important;
+        }
+
+        &::before {
+          content: "";
+          background-image: url("../../assets/images/faq/accordion-arrow-plus.svg") !important;
+          background-size: 20px 20px;
+          background-repeat: no-repeat;
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          inset-inline-end: 20px;
+          top: 50%;
+          transform: translateY(-50%);
+          transition: transform 0.3s ease-in-out;
+        }
+
+        &:not(.collapsed)::before {
+          content: "";
+          background-image: url("../../assets/images/faq/accordion-arrow-cross.svg") !important;
+          background-size: 20px 20px;
+          background-repeat: no-repeat;
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          position: absolute;
+          inset-inline-end: 20px;
+          top: 50%;
+          transform: translateY(-50%);
+          transition: transform 0.3s ease-in-out;
+          transform: translateY(-50%) rotate(180deg);
+        }
+      }
+    }
+  }
+
+  &-2 {
+    .accordion {
+      .accordion-item {
+        .accordion-button {
+          background-color: transparent;
+          border: 1px solid rgba(48, 48, 48, 0.16);
+        }
+      }
+    }
+  }
+}

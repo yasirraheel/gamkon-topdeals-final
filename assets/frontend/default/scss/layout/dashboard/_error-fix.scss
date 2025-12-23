@@ -1,0 +1,29 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.4.6 Error Fix
+/*----------------------------------------*/
+.info-withdraw {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h6 {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    color: var(--td-heading);
+  }
+  p {
+    color: var(--td-text-primary);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+  }
+}

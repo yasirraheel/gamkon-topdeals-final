@@ -1,0 +1,139 @@
+@use "../utils" as *;
+
+/*----------------------------------------*/
+/* 2.14 Alert
+/*----------------------------------------*/
+
+.td-alert-box {
+    background: #010c1a;
+    padding: 16px 20px;
+    z-index: 1;
+    position: relative;
+    transition: 0.3s;
+    @include flexbox();
+    column-gap: rem(12);
+    align-items: center;
+    border: rem(1) solid transparent;
+    width: 351px;
+
+    @media #{$xxs} {
+        padding: rem(10) rem(12) rem(10);
+        width: 300px;
+    }
+
+    .alert-content {
+        @include flexbox();
+        align-items: center;
+        column-gap: rem(16);
+        flex-grow: 1;
+        overflow: hidden;
+
+        @media #{$xs} {
+            column-gap: rem(12);
+        }
+
+        .alert-title {
+            font-size: 18px;
+            font-weight: 500;
+            font-family: var(--td-body-font);
+
+            @media #{$xs} {
+                font-size: rem(14);
+            }
+        }
+
+        .alert-message {
+            font-size: 14px;
+            position: relative;
+            margin-top: 2px;
+        }
+    }
+
+    .alert-icon {
+        flex: 0 0 auto;
+
+        svg {
+            width: rem(36);
+            height: rem(36);
+        }
+    }
+
+    .close-btn {
+        padding: 5px;
+        position: absolute;
+        inset-inline-end: -8px;
+        top: -8px;
+        display: flex;
+        width: 30px;
+        height: 30px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 24px;
+        background: #ffdde0;
+    }
+
+    .open-here {
+        position: absolute;
+        inset-inline-end: 10px;
+        bottom: 10px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    &.hidden {
+        opacity: 0;
+        transform: translateY(-50%, rem(20));
+        pointer-events: none;
+    }
+
+    &.has-success {
+        border-inline-start: 4px solid #0c9;
+        background: #fff;
+        border-radius: 16px;
+        border-top: 1px solid rgba(48, 48, 48, 0.16);
+        border-inline-end: 1px solid rgba(48, 48, 48, 0.16);
+        border-bottom: 1px solid rgba(48, 48, 48, 0.16);
+    }
+
+    &.has-warning {
+        border-inline-start: 4px solid #f2c94c;
+        background: #fff;
+        border-radius: 16px;
+        border-radius: 16px;
+        border-top: 1px solid rgba(48, 48, 48, 0.16);
+        border-inline-end: 1px solid rgba(48, 48, 48, 0.16);
+        border-bottom: 1px solid rgba(48, 48, 48, 0.16);
+    }
+
+    &.has-info {
+        border-inline-start: 4px solid #25b7d3;
+        background: #fff;
+        border-radius: 16px;
+        border-radius: 16px;
+        border-top: 1px solid rgba(48, 48, 48, 0.16);
+        border-inline-end: 1px solid rgba(48, 48, 48, 0.16);
+        border-bottom: 1px solid rgba(48, 48, 48, 0.16);
+        position: relative;
+    }
+
+    &.has-danger {
+        border-inline-start: 4px solid #e93a2d;
+        background: #fff;
+        border-radius: 16px;
+        border-radius: 16px;
+        border-top: 1px solid rgba(48, 48, 48, 0.16);
+        border-inline-end: 1px solid rgba(48, 48, 48, 0.16);
+        border-bottom: 1px solid rgba(48, 48, 48, 0.16);
+    }
+}
+
+.alert-show-status {
+    position: fixed;
+    top: rem(16);
+    inset-inline-end: rem(16);
+    z-index: 999;
+}

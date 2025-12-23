@@ -1,0 +1,70 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.2.7 Ads Banner
+/*----------------------------------------*/
+.ads-banner-area {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  .ads-banner-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .ads-banner-box-content {
+      width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+
+      @media #{$xs} {
+        gap: 20px;
+      }
+
+      h2 {
+        color: var(--td-heading);
+        font-size: 48px;
+        font-weight: 700;
+        line-height: lh(57, 48);
+        text-align: center;
+
+        @media #{$xl} {
+          font-size: 40px;
+        }
+
+        @media #{$lg} {
+          font-size: 35px;
+        }
+
+        @media #{$md} {
+          font-size: 30px;
+        }
+
+        @media #{$xs} {
+          font-size: 26px;
+        }
+
+        @media #{$sm} {
+          font-size: 28px;
+        }
+
+        span {
+          &.shadow-color {
+            color: #ff62294d;
+          }
+
+          &.deep {
+            color: var(--td-secondary);
+          }
+        }
+      }
+
+      .primary-button {
+        border-radius: 8px;
+      }
+    }
+  }
+}

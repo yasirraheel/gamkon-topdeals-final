@@ -1,0 +1,143 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.2.4 All Games
+/*----------------------------------------*/
+.all-games-area {
+  .all-games-filter-box {
+    display: flex;
+    justify-content: start;
+  }
+}
+
+.filter-button-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  .filter-button {
+    display: inline-flex;
+    padding: 10px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(48, 48, 48, 0.16);
+    backdrop-filter: blur(8px);
+
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: cover;
+    }
+
+    .tab-iocn {
+      font-size: 18px;
+
+      &.all-icon {
+        color: #6456fe;
+      }
+
+      &.games-icon {
+        color: #6456fe;
+      }
+
+      &.games-coin-icon {
+        color: #fbad26;
+      }
+
+      &.software-icon {
+        color: #fb2d26;
+      }
+
+      &.payment-icon {
+        color: #5b2c8e;
+      }
+
+      &.item-icon {
+        color: #2674fb;
+      }
+
+      &.boosting-icon {
+        color: #e830cf;
+      }
+
+      &.coaching-icon {
+        color: #2674fb;
+      }
+
+      &.gift-icon {
+        color: #19c8cf;
+      }
+
+      &.account-icon {
+        color: #31b269;
+      }
+
+      &.telco-icon {
+        color: #665773;
+      }
+
+      &.skins-icon {
+        color: #31adb2;
+      }
+
+      &.zalando-icon {
+        color: #ff6229;
+      }
+
+      &.google-play-icon {
+        color: #932fba;
+      }
+
+      &.riotgames-icon {
+        color: #fb2d26;
+      }
+
+      &.itunes-icon {
+        color: #26b4fb;
+      }
+
+      &.airbnb-icon {
+        color: #2674fb;
+      }
+
+      &.xbox-icon {
+        color: #9c9538;
+      }
+
+      &.wallet-icon {
+        color: #5b2c8e;
+      }
+    }
+
+    span {
+      color: var(--td-heading);
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 20px;
+    }
+
+    &:hover {
+      border: 1px solid rgba(var(--td-secondary-rgb), 0.5);
+      background-color: rgba(var(--td-secondary-rgb), 0.1);
+    }
+
+    &.active {
+      border: 1px solid var(--td-secondary);
+      background-color: var(--td-secondary);
+
+      img {
+        filter: brightness(0) invert(1);
+      }
+
+      span {
+        color: var(--td-white);
+      }
+
+      .tab-iocn {
+        color: var(--td-white);
+      }
+    }
+  }
+}

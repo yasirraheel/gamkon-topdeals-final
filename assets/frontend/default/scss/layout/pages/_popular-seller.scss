@@ -1,0 +1,14 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.2.5 Popular Seller
+/*----------------------------------------*/
+.popular-seller-area {
+  .popular-seller-area-content {
+    border-radius: 20px;
+
+    @media #{$xs} {
+      padding: 20px;
+    }
+  }
+}

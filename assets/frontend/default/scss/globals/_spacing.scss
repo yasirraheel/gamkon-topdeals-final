@@ -1,0 +1,35 @@
+@use "../utils" as u;
+@use "../utils" as *;
+
+/*---------------------------------
+/*  1.2 Spacing
+---------------------------------*/
+
+.section_space-py {
+    padding-block-start: clamp(1.5rem, 6.5vw + 1rem, 4.375rem);
+    padding-block-end: clamp(1.5rem, 6.5vw + 1rem, 4.375rem);
+}
+.section_space-my {
+    margin-block-start: clamp(1.5rem, 6.5vw + 1rem, 4.375rem);
+    margin-block-end: clamp(1.5rem, 6.5vw + 1rem, 4.375rem);
+}
+.section_space-mT {
+    margin-block-start: clamp(1.5rem, 6.5vw + 1rem, 4.375rem);
+}
+.section_space-mB {
+    margin-block-end: clamp(1.5rem, 6.5vw + 1rem, 4.375rem);
+}
+.section_space-pT {
+    padding-block-start: clamp(1.5rem, 6.5vw + 1rem, 4.375rem);
+}
+.section_space-pB {
+    padding-block-end: clamp(1.5rem, 6.5vw + 1rem, 4.375rem);
+}
+
+.title_mt {
+    margin-block-start: clamp(1rem, 6.5vw, 2rem);
+}
+
+.title_mb {
+    margin-block-end: clamp(1rem, 6.5vw, 2rem);
+}

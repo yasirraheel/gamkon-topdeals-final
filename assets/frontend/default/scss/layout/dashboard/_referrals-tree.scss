@@ -1,0 +1,141 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.4.11 Referrals Tree
+/*----------------------------------------*/
+.referrals-tree {
+  .title {
+    margin-bottom: 30px;
+    h4 {
+      color: var(--td-heading);
+      font-size: 20px;
+      font-weight: 700;
+      line-height: normal;
+    }
+  }
+}
+.td-referral-tree-wrapper {
+  max-width: max-content;
+  margin: 0 auto;
+  margin-top: 15px;
+}
+
+.td-referral-tree {
+  min-width: 1000px;
+  padding-bottom: 20px;
+
+  ul {
+    padding-top: 20px;
+    position: relative;
+    transition: all 0.5s;
+    @include flexbox();
+
+    ul {
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        border-left: 1px solid #ccd1f0;
+        width: 0;
+        height: 20px;
+      }
+    }
+  }
+
+  li {
+    float: left;
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 5px 0 5px;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+
+    &::after {
+      right: auto;
+      left: 50%;
+      border-left: 1px solid #ccd1f0;
+    }
+
+    &:only-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      &::before {
+        border-right: 1px solid #ccd1f0;
+        border-radius: 0 0px 0 0;
+      }
+    }
+
+    &:first-child {
+      &::after {
+        border-radius: 0px 0 0 0;
+      }
+    }
+  }
+}
+
+.td-referral-tree-card {
+  padding: 20px 12px;
+  border-radius: 8px;
+  background: #fff;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 10px;
+  backdrop-filter: blur(6px);
+  width: 250px;
+  background: rgb(241, 241, 241);
+
+  .thumb {
+    width: 35px;
+    height: 35px;
+    margin: 0 auto;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  .content {
+    .title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 0;
+    }
+
+    .info {
+      color: #555;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: normal;
+    }
+  }
+}
+
+.td-referral-tree li::before,
+.td-referral-tree li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-top: 1px solid #c4c4c4;
+  width: 50%;
+  height: 20px;
+}
+
+.td-referral-tree li:only-child::after,
+.td-referral-tree li:only-child::before {
+  display: none;
+}
+
+.td-referral-tree li:first-child::before,
+.td-referral-tree li:last-child::after {
+  border: 0 none;
+}

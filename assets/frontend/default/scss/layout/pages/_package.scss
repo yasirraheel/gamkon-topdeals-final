@@ -1,0 +1,14 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.2.12 Package
+/*----------------------------------------*/
+.packages-area {
+  .packages-area-content {
+    display: flex;
+    justify-content: center;
+    .packages-box {
+      max-width: 1095px;
+    }
+  }
+}

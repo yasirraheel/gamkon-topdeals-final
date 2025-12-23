@@ -1,0 +1,153 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.4.2 Common Dashboard Table
+/*----------------------------------------*/
+.common-table {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+
+  .common-table-full {
+    border: 1px solid rgba(48, 48, 48, 0.16);
+    border-radius: 10px;
+    overflow: hidden;
+    width: 100%;
+    min-width: 1000px;
+    border-collapse: collapse;
+
+    // Override Bootstrap table styles
+    table {
+      margin-bottom: 0;
+
+      .table-light {
+        --bs-table-color: #f1f1f1;
+        --bs-table-bg: #f1f1f1;
+        --bs-table-border-color: #f1f1f1;
+        --bs-table-striped-bg: #f1f1f1;
+        --bs-table-striped-color: #f1f1f1;
+        --bs-table-active-bg: #f1f1f1;
+        --bs-table-active-color: #f1f1f1;
+        --bs-table-hover-bg: #f1f1f1;
+        --bs-table-hover-color: #f1f1f1;
+        color: #303030;
+        border-color: #f1f1f1;
+      }
+
+      thead tr {
+        th,
+        td {
+          border-bottom: 0;
+          color: #303030;
+          font-size: 14px;
+          font-weight: 700;
+          line-height: normal;
+          padding: 14px 16px;
+        }
+      }
+
+      tbody tr {
+        th,
+        td {
+          color: rgba(48, 48, 48, 0.8);
+          font-size: 14px;
+          font-weight: 500;
+          line-height: normal;
+          padding: 21px 16px;
+          vertical-align: middle;
+        }
+
+        th {
+          .payment-name-and-date {
+            .name {
+              color: #303030;
+              font-size: 14px;
+              font-weight: 600;
+              line-height: 21px;
+            }
+
+            .date {
+              color: rgba(48, 48, 48, 0.8);
+              font-size: 13px;
+              font-weight: 500;
+              line-height: 21px;
+            }
+          }
+
+          .account-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .icon {
+              width: 58px;
+              height: 40px;
+              flex-shrink: 0;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border-radius: 6px;
+              border: 1px solid #d9d9d9;
+              background: #fff;
+
+              img {
+                width: 100%;
+                height: 18px;
+                object-fit: contain;
+              }
+            }
+
+            .text {
+              p {
+                color: var(--td-heading);
+                font-size: 14px;
+                font-weight: 600;
+                line-height: normal;
+              }
+            }
+          }
+
+          .Product-image {
+            width: 48px;
+            height: 48px;
+
+            img {
+              width: 100%;
+              height: 100%;
+              border-radius: 3px;
+              object-fit: cover;
+            }
+          }
+        }
+
+        td {
+          .name-and-badge {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+          }
+
+          .main-price-and-discount {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            .main-price {
+              color: rgba(48, 48, 48, 0.6);
+              font-size: 14px;
+              font-weight: 500;
+              line-height: normal;
+              text-decoration: line-through;
+            }
+          }
+        }
+      }
+
+      // Last row border removal
+      & > tbody > tr:last-child > td,
+      & > tbody > tr:last-child > th {
+        border-bottom-width: 0;
+      }
+    }
+  }
+}

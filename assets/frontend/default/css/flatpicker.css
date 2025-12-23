@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Marcellus&display=swap");
+
+.flatpickr-calendar {
+  font-family: "Marcellus", serif;
+  font-size: 14px;
+  line-height: 24px;
+  border-radius: 0px;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.1);
+}
+
+span.flatpickr-weekday {
+  font-size: 14px;
+  color: #444344;
+  font-weight: 400;
+  line-height: 100%;
+}
+
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.flatpickr-day {
+  background: #f5f5f5;
+  border: 1px solid transparent;
+  border-radius: 0px;
+  margin-bottom: 5px;
+  font-size: 16px !important;
+}
+
+.flatpickr-months {
+  margin-bottom: 12px;
+}
+
+.flatpickr-day.today {
+  border-color: #fff;
+  background: #151415;
+  color: #fff;
+}
+
+.flatpickr-current-month input.cur-year {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.selected.inRange,
+.flatpickr-day.startRange.inRange,
+.flatpickr-day.endRange.inRange,
+.flatpickr-day.selected:focus,
+.flatpickr-day.startRange:focus,
+.flatpickr-day.endRange:focus,
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover,
+.flatpickr-day.selected.prevMonthDay,
+.flatpickr-day.startRange.prevMonthDay,
+.flatpickr-day.endRange.prevMonthDay,
+.flatpickr-day.selected.nextMonthDay,
+.flatpickr-day.startRange.nextMonthDay,
+.flatpickr-day.endRange.nextMonthDay {
+  background: #aa8453;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  color: #fff;
+  border-color: #aa8453;
+}

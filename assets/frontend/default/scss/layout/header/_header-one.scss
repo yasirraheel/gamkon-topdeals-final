@@ -1,0 +1,475 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.1.1 Header One
+/*----------------------------------------*/
+.header {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  background-color: var(--td-white);
+  justify-content: center;
+  width: 100%;
+  border-bottom: 1px solid rgba(48, 48, 48, 0.16);
+
+  &-full {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    .left {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+
+      .logo {
+        img {
+        }
+      }
+
+      .navigation-menu {
+        ul {
+          list-style-type: none;
+          display: flex;
+          justify-content: center;
+          gap: 20px;
+
+          li {
+            a {
+              font-size: 14px;
+              font-weight: 600;
+              line-height: lh(26, 14);
+              transition: all 0.3s ease-in-out;
+
+              &:hover {
+                color: var(--td-white);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .middle {
+      .navigation-menu {
+        margin-inline-end: 36px;
+        // padding: 12px 30px;
+        // background: rgba(var(--td-secondary-rgb), 0.1);
+        // border-radius: 8px;
+
+        @media #{$xxl,$xl,$lg,$md,$xs} {
+          padding: 12px 20px;
+        }
+        @media #{$xl,$lg,$md,$xs} {
+          margin-inline-end: 10px;
+        }
+
+        @media #{$lg,$md,$xs} {
+          display: none;
+        }
+
+        ul {
+          list-style-type: none;
+          display: flex;
+          justify-content: center;
+          gap: 26px;
+
+          @media #{$xxl,$xl,$lg,$md,$xs} {
+            gap: 14px;
+          }
+
+          li {
+            a {
+              color: var(--td-heading);
+              font-size: 16px;
+              font-weight: 600;
+              line-height: normal;
+              position: relative;
+              display: inline-block;
+              transition: all 0.3s ease-in-out;
+
+              @media #{$xxl,$xl,$lg,$md,$xs} {
+                font-size: 14px;
+              }
+
+              &:after {
+                content: "";
+                position: absolute;
+                inset-inline-start: 0;
+                bottom: 0px;
+                width: 0;
+                height: 1px;
+                background-color: var(--td-secondary);
+                transition: width 0.3s ease-in-out;
+              }
+
+              &:hover,
+              &.active {
+                color: var(--td-secondary);
+              }
+
+              // &:hover::after,
+              // &.active::after {
+              //   width: 100%;
+              // }
+            }
+          }
+        }
+      }
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .auth-language-cta {
+        display: flex;
+        align-items: center;
+
+        .auth-language-cta-inside {
+          display: flex;
+          align-items: center;
+          background: var(--td-card-bg-2);
+          border-radius: 14px;
+        }
+
+        .language-button {
+          @media #{$lg,$md,$xs} {
+            display: none;
+          }
+
+          .nice-select {
+            color: var(--td-heading);
+            font-size: 16px;
+            font-weight: 600;
+            border: solid 1px transparent;
+            border-radius: 0px;
+            background-color: transparent;
+            height: 42px;
+            line-height: 40px;
+            padding-inline-start: 18px;
+            padding-inline-end: 30px;
+
+            &::after {
+              border-bottom: 1px solid #303030;
+              border-right: 1px solid #303030;
+              height: 6px;
+              width: 6px;
+              right: 16px;
+              content: "";
+              display: block;
+              margin-top: -4px;
+              pointer-events: none;
+              position: absolute;
+              top: 50%;
+              -webkit-transform-origin: 66% 66%;
+              -ms-transform-origin: 66% 66%;
+              transform-origin: 66% 66%;
+              -webkit-transform: rotate(45deg);
+              -ms-transform: rotate(45deg);
+              transform: rotate(45deg);
+              -webkit-transition: all 0.15s ease-in-out;
+              transition: all 0.15s ease-in-out;
+              @include rtl {
+                right: auto;
+                left: 16px;
+              }
+            }
+
+            .list {
+              border-radius: 10px;
+              border: 1px solid rgba(48, 48, 48, 0.16);
+              background: #fff;
+              padding: 10px;
+              inset-inline-start: auto;
+              inset-inline-end: 0;
+            }
+          }
+
+          .nice-select .option:hover,
+          .nice-select .option.focus,
+          .nice-select .option.selected.focus {
+            border-radius: 6px;
+            background-color: rgba(var(--td-secondary-rgb), 0.1);
+            color: var(--td-secondary);
+            font-weight: 500;
+          }
+        }
+
+        .auth-cta {
+          display: flex;
+          align-items: center;
+          padding: 6px;
+          gap: 24px;
+          border-radius: 14px;
+
+          @include rtl {
+            border-radius: 14px 0px 0px 14px;
+          }
+
+          @media #{$xl,$lg,$md,$xs} {
+            gap: 16px;
+          }
+
+          @media #{$lg,$md} {
+            border-radius: 14px;
+
+            @include rtl {
+              border-radius: 14px;
+            }
+          }
+
+          @media #{$xs} {
+            padding: 0;
+            border-radius: 0;
+            background: transparent;
+          }
+
+          .start-selling {
+            position: relative;
+
+            .primary-button {
+              border-radius: 8px;
+            }
+
+            .left-bar {
+              display: inline-block;
+              position: absolute;
+              width: 1px;
+              height: 22px;
+              background: linear-gradient(
+                360deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.7) 51%,
+                rgba(255, 255, 255, 0) 100%
+              );
+              top: 50%;
+              transform: translateY(-50%);
+              inset-inline-start: 0;
+
+              @media #{$lg,$md,$xs} {
+                display: none;
+              }
+            }
+
+            .right-bar {
+              display: inline-block;
+              position: absolute;
+              width: 1px;
+              height: 22px;
+              background: linear-gradient(
+                360deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.7) 51%,
+                rgba(255, 255, 255, 0) 100%
+              );
+              top: 50%;
+              transform: translateY(-50%);
+              inset-inline-end: 0;
+            }
+          }
+
+          .auth-btn {
+            position: relative;
+
+            @media #{$xl,$lg,$md,$xs} {
+              padding: 0px 16px 0 16px;
+            }
+
+            @media #{$lg,$md,$xs} {
+              display: none;
+            }
+
+            // &::after {
+            //     position: absolute;
+            //     content: '';
+            //     width: 1px;
+            //     height: 22px;
+            //     background: linear-gradient(360deg, rgba(255, 255, 255, 0.00) 0%, rgba(255, 255, 255, 0.70) 51%, rgba(255, 255, 255, 0.00) 100%);
+            //     top: 50%;
+            //     transform: translateY(-50%);
+            //     inset-inline-start: 0;
+            // }
+          }
+
+          &-2 {
+            padding: 13px 6px 13px 6px;
+
+            @media #{$lg,$md,$xs} {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-2 {
+    position: fixed;
+    top: 0;
+    background: var(--td-white);
+    width: 100%;
+    z-index: 99;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(48, 48, 48, 0.16);
+
+    .has-container-fluid {
+      padding-inline-start: 30px;
+      padding-inline-end: 30px;
+
+      @media #{$xs} {
+        padding-inline-start: 10px;
+        padding-inline-end: 10px;
+      }
+
+      @media #{$sm} {
+        padding-inline-start: 30px;
+        padding-inline-end: 30px;
+      }
+    }
+  }
+
+  &-3 {
+    .has-container-fluid {
+      .header-full {
+        .left {
+          gap: 137px;
+        }
+      }
+    }
+  }
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.full-page-overlay {
+  position: fixed;
+  // top: 0px;
+  top: 80px;
+  inset-inline-start: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(8, 8, 8, 0.6);
+  z-index: 10;
+  visibility: hidden;
+  opacity: 0;
+
+  &.open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  &-dashboard {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  &-2 {
+    top: 0;
+  }
+}
+
+.has-container-fluid {
+  padding-inline-start: 50px;
+  padding-inline-end: 50px;
+  width: 100%;
+
+  @media #{$xl} {
+    padding-inline-start: 40px;
+    padding-inline-end: 40px;
+  }
+
+  @media #{$lg} {
+    padding-inline-start: 30px;
+    padding-inline-end: 30px;
+  }
+
+  @media #{$md} {
+    padding-inline-start: 25px;
+    padding-inline-end: 25px;
+  }
+
+  @media #{$xs} {
+    padding-inline-start: 20px;
+    padding-inline-end: 20px;
+  }
+
+  @media #{$sm} {
+    padding-inline-start: 30px;
+    padding-inline-end: 30px;
+  }
+}
+
+.has-enable-disable-search-button {
+  display: none;
+
+  @media #{$xxl,$xl,$lg,$md,$xs} {
+    display: block;
+  }
+}
+
+.offcanvas-nav {
+  margin-bottom: 20px;
+
+  ul {
+    list-style-type: none;
+
+    li {
+      margin-bottom: 12px;
+
+      a {
+        color: var(--td-white);
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          color: var(--td-white);
+        }
+      }
+    }
+  }
+}
+
+.language-switch-mobile {
+  .nice-select {
+    width: 50%;
+    border-radius: 12px;
+    padding-inline-start: 18px;
+    padding-inline-end: 30px;
+
+    @media #{$xs} {
+      width: 100%;
+    }
+
+    @include rtl {
+      text-align: right !important;
+    }
+  }
+
+  .nice-select:after {
+    @include rtl {
+      right: auto;
+      left: 18px;
+    }
+  }
+
+  .nice-select .list {
+    width: 100%;
+  }
+
+  .nice-select .option {
+    @include rtl {
+      text-align: right;
+      padding-left: 29px;
+      padding-right: 18px;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+:root {
+  // font family declaration
+  --td-heading-font: "DM Sans", sans-serif;
+  --td-body-font: "Space Grotesk", sans-serif;
+  --td-ff-fontawesome: "Font Awesome 6 Free";
+
+  // color declaration
+
+  // Common Color
+  --td-white: hsl(0, 0%, 100%);
+  --td-black: hsl(0, 0%, 0%);
+  --td-placeholder: hsla(0, 0%, 0%, 0.5);
+  --td-selection: hsl(0, 0%, 0%);
+
+  // Heading Color
+  --td-heading: #303030;
+
+  // Theme Color
+  --td-primary: #303473;
+  --td-primary-rgb: 48, 52, 115;
+  --td-secondary: #ff6229;
+  --td-secondary-rgb: 255, 98, 41;
+  --td-ternary: #6eee54;
+  --td-ternary-rgb: 110, 238, 84;
+
+  // Text Color
+  --td-text-primary: rgba(48, 48, 48, 0.8);
+  --td-text-secondary: rgba(48, 48, 48, 0.6);
+
+  //bg color
+  --td-bg-1: #effdff;
+  --td-bg-2: rgba(0, 0, 0, 0.04);
+  --td-bg-3: #8a8a8a0a;
+
+  //border color
+  --td-border-1: rgba(48, 48, 48, 0.16);
+  --td-border-2: rgba(48, 48, 48, 0.1);
+}

@@ -1,0 +1,128 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.4.12 Settings
+/*----------------------------------------*/
+.account-overview {
+  @media #{$lg,$md,$xs} {
+    margin-top: 16px;
+  }
+
+  h3 {
+    color: var(--td-heading);
+    font-size: rem(20);
+    font-weight: 600;
+    line-height: lh(20, 20);
+    margin-bottom: 24px;
+  }
+
+  .account-overview-box {
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid rgba(48, 48, 48, 0.16);
+    background: #fff;
+
+    @media #{$xs} {
+      padding: 10px 10px;
+    }
+
+    .overview-full {
+      padding: 30px;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0px 4px 30px 0px rgba(0, 0, 0, 0.1);
+
+      @media #{$xs} {
+        padding: 10px;
+        box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    .account-form-submit-button {
+      display: flex;
+      justify-content: start;
+      align-items: start;
+      margin-top: 20px;
+    }
+
+    &-2 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .overview-full {
+        max-width: 700px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.all-verification-box {
+  .verification-box {
+    margin-bottom: 40px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    h4 {
+      color: var(--td-heading);
+      font-size: 20px;
+      font-weight: 600;
+      line-height: normal;
+      margin-bottom: 16px;
+    }
+
+    .verification-card {
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid rgba(1, 8, 19, 0.16);
+
+      .verification-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+      }
+
+      .all-table-card {
+        width: 100%;
+        overflow-x: auto;
+
+        .table-card {
+          width: 100%;
+          min-width: 800px;
+          border-collapse: collapse;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 30px;
+          border-radius: 10 px;
+          background: rgba(var(--td-secondary-rgb), 0.1);
+          margin-bottom: 30px;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+
+          .left {
+            width: 60%;
+
+            .left-card {
+              display: flex;
+              align-items: center;
+              gap: 16px;
+            }
+          }
+          .right {
+            width: 40%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+          }
+        }
+      }
+    }
+  }
+}

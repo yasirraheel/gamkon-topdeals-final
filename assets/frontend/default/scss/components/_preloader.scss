@@ -1,0 +1,55 @@
+@use "../utils" as *;
+
+/*----------------------------------------*/
+/*  2.15 Preloader
+/*----------------------------------------*/
+.preloader {
+  background-color: #f7c8b7;
+  position: fixed;
+  top: 0;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9998;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    width: 5.25em;
+    transform-origin: center;
+    animation: rotate4 2s linear infinite;
+  }
+
+  circle {
+    fill: none;
+    stroke: var(--td-secondary);
+    stroke-width: 2;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: dash4 1.5s ease-in-out infinite;
+  }
+
+  @keyframes rotate4 {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes dash4 {
+    0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+    }
+
+    50% {
+      stroke-dasharray: 90, 200;
+      stroke-dashoffset: -35px;
+    }
+
+    100% {
+      stroke-dashoffset: -125px;
+    }
+  }
+}

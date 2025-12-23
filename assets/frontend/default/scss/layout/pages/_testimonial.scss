@@ -1,0 +1,224 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  testimonial
+/*----------------------------------------*/
+.testimonial-area {
+  .testimonial-swiper-box {
+    .client-review-item {
+      margin-inline-start: 43px;
+      .client-review-box {
+        &::before {
+          position: absolute;
+          content: "";
+          width: calc(100% - 43px);
+          height: 100%;
+          top: 0;
+          inset-inline-start: 43px;
+          clip-path: polygon(
+            0% 24.112%,
+            0% 75.663%,
+            0% 75.663%,
+            0.148% 77.868%,
+            0.578% 79.977%,
+            1.269% 81.964%,
+            2.202% 83.803%,
+            3.356% 85.469%,
+            4.71% 86.936%,
+            6.245% 88.18%,
+            7.939% 89.174%,
+            9.772% 89.893%,
+            11.725% 90.312%,
+            85.2% 99.849%,
+            85.2% 99.849%,
+            87.529% 99.926%,
+            89.765% 99.565%,
+            91.872% 98.803%,
+            93.814% 97.675%,
+            95.555% 96.216%,
+            97.06% 94.462%,
+            98.293% 92.448%,
+            99.217% 90.209%,
+            99.798% 87.781%,
+            100% 85.199%,
+            100% 15.009%,
+            100% 15.009%,
+            99.8% 12.435%,
+            99.222% 10.014%,
+            98.303% 7.781%,
+            97.078% 5.77%,
+            95.581% 4.017%,
+            93.849% 2.557%,
+            91.916% 1.425%,
+            89.818% 0.657%,
+            87.591% 0.287%,
+            85.269% 0.35%,
+            11.794% 9.453%,
+            11.794% 9.453%,
+            9.832% 9.863%,
+            7.989% 10.576%,
+            6.285% 11.566%,
+            4.742% 12.808%,
+            3.379% 14.277%,
+            2.218% 15.946%,
+            1.278% 17.789%,
+            0.582% 19.782%,
+            0.149% 21.898%,
+            0% 24.112%
+          );
+          background: #f1f1f1;
+          z-index: -1;
+        }
+        .client-review {
+          padding-top: 78px;
+          padding-bottom: 78px;
+          padding-inline-start: 30px;
+          padding-inline-end: 30px;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+          z-index: 2;
+
+          @media #{$xs} {
+            padding-top: 50px;
+            padding-bottom: 50px;
+          }
+
+          .name-and-star {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            h5 {
+              color: #303030;
+              font-size: 24px;
+              font-weight: 700;
+              line-height: normal;
+              margin-bottom: 4px;
+
+              @media #{$xs} {
+                font-size: 18px;
+              }
+            }
+            p {
+              color: rgba(48, 48, 48, 0.8);
+              text-align: center;
+              font-size: 16px;
+              font-weight: 400;
+              line-height: normal;
+            }
+            .stars {
+              margin-top: 9px;
+              display: flex;
+              align-items: center;
+              gap: 3px;
+
+              img {
+                width: 16px;
+                height: 16px;
+              }
+            }
+          }
+
+          .review {
+            margin-top: 30px;
+
+            @media #{$xs} {
+              margin-top: 20px;
+            }
+
+            p {
+              color: rgba(48, 48, 48, 0.8);
+              text-align: center;
+              font-size: 16px;
+              font-weight: 400;
+              line-height: lh(26, 16);
+              text-overflow: ellipsis;
+              -webkit-line-clamp: 3;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              display: -webkit-box;
+            }
+          }
+
+          .quote {
+            position: absolute;
+            top: 84px;
+            inset-inline-start: -43px;
+            z-index: 3;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            border: 2px solid var(--td-white);
+            background: var(--td-secondary);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            @media #{$xs} {
+              width: 70px;
+              height: 70px;
+            }
+
+            img {
+              width: 36px;
+              height: 36px;
+
+              @media #{$xs} {
+                width: 30px;
+                height: 30px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// .testimonial-area {
+//   .testimonial-swiper-box {
+//     .swiper-slide:nth-child(even) {
+//       .client-review-box {
+//         &::before {
+//           background: rgba(var(--td-secondary-rgb), 0.1);
+//         }
+//       }
+//     }
+//   }
+// }
+.testimonial-area {
+  .testimonial-swiper-box {
+    .myTestimonialSwiper {
+      .swiper-wrapper {
+        .swiper-slide {
+          &.swiper-slide-next {
+            .client-review-item {
+              .client-review-box {
+                &::before {
+                  background: rgba(var(--td-secondary-rgb), 0.1);
+                  @media #{$xs} {
+                    background: #f1f1f1;
+                  }
+                }
+              }
+            }
+          }
+          &.swiper-slide-active {
+            .client-review-item {
+              .client-review-box {
+                &::before {
+                  background: #f1f1f1;
+                  @media #{$xs} {
+                    background: rgba(var(--td-secondary-rgb), 0.1);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

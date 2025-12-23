@@ -1,0 +1,105 @@
+@use "../utils" as *;
+
+/*----------------------------------------*/
+/*  2.18 Error 404
+/*----------------------------------------*/
+
+.error-404 {
+    .error-404-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+
+        .content {
+            position: relative;
+            z-index: 10;
+
+            h2 {
+                color: #080808;
+                text-align: center;
+                font-size: 200px;
+                font-weight: 300;
+
+                @media #{$xl, $lg} {
+                    font-size: 150px;
+                }
+
+                @media #{$md} {
+                    font-size: 100px;
+                }
+
+                @media #{$xs} {
+                    font-size: 60px;
+                }
+
+                @media #{$sm} {
+                    font-size: 70px;
+                }
+            }
+
+            p {
+                color: #aab6c2;
+                font-size: 30px;
+                text-align: center;
+
+                @media #{$xs} {
+                    font-size: 20px;
+                }
+            }
+
+            .action-btn {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 30px;
+            }
+        }
+
+        .top-element {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 10%;
+            z-index: 5;
+
+            @media #{$xs} {
+                top: 15%;
+            }
+        }
+
+        .left-element {
+            position: absolute;
+            left: 20%;
+            bottom: 20%;
+            z-index: 2;
+
+            @media #{$lg,$md,$xs} {
+                left: 10%;
+                bottom: 10%;
+
+                @media #{$xs} {
+                    width: 200px;
+                }
+            }
+        }
+        .right-element {
+            position: absolute;
+            right: 15%;
+            top: 15%;
+            z-index: 2;
+
+            @media #{$lg,$md,$xs} {
+                right: 1%;
+                top: 1%;
+
+                @media #{$xs} {
+                    width: 200px;
+                }
+            }
+        }
+    }
+}

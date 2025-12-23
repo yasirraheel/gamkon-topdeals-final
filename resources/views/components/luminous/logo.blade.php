@@ -1,0 +1,2 @@
+<img width="{{ setting('site_logo_width', 'global')== 'auto' ? 'auto' : setting('site_logo_width', 'global') . 'px' }}" height="{{ setting('site_logo_height', 'global')== 'auto' ? 'auto' : setting('site_logo_height', 'global') . 'px' }}" src="{{ asset(setting('site_logo_dark', 'global')) }}"
+                        alt="{{ setting('site_title', 'global') }}" style="object-fit:contain">

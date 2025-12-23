@@ -1,0 +1,111 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.4.14 Upload System
+/*----------------------------------------*/
+.common-upload-image-system {
+  .title {
+    .left {
+      width: unset;
+      height: unset;
+      p {
+        color: var(--td-heading);
+        font-size: 14px;
+        font-weight: 600;
+        line-height: normal;
+
+        sup {
+          color: #ec0707;
+        }
+      }
+    }
+  }
+
+  .upload-thumb {
+    border-radius: 12px;
+    border: 1px dashed rgba(48, 48, 48, 0.3);
+    padding: 26px;
+    margin-top: 10px;
+    cursor: pointer;
+
+    @media #{$xs} {
+      padding: 16px;
+    }
+
+    .upload-thumb-inner {
+      .upload-thumb-img {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        display: none;
+
+        &.has-img {
+          display: flex;
+        }
+
+        .image-box {
+          height: 100px;
+          width: 100px;
+          border-radius: 8px;
+          overflow: hidden;
+          background: rgba(255, 255, 255, 0.04);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid rgba(48, 48, 48, 0.14);
+          position: relative;
+
+          @media #{$xs} {
+            height: 85px;
+            width: 85px;
+          }
+
+          img {
+            width: 100px;
+            height: 100px;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }
+          }
+        }
+      }
+
+      .upload-thumb-content {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+
+        &.has-img {
+          display: none;
+        }
+
+        h4 {
+          color: var(--td-heading);
+          font-size: 14px;
+          font-weight: 600;
+          line-height: normal;
+          margin-bottom: 0px;
+
+          a {
+            color: var(--td-secondary);
+            font-size: 14px;
+            font-weight: 400;
+            line-height: normal;
+          }
+        }
+
+        p {
+          color: rgba(48, 48, 48, 0.6);
+          font-size: 12px;
+          font-weight: 400;
+          line-height: 21px;
+        }
+      }
+    }
+  }
+}

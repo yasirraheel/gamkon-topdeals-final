@@ -1,0 +1,45 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.2.13 Contact Us
+/*----------------------------------------*/
+.contact-us-area {
+  .contact-us-area-content {
+    display: flex;
+    justify-content: center;
+
+    .contact-box-full {
+      width: 1095px;
+    }
+
+    .contact-box {
+      margin-top: 30px;
+
+      .left {
+        border-radius: 12px;
+        background: rgba(var(--td-secondary-rgb), 0.08);
+        padding: 50px;
+
+        @media #{$xs} {
+          padding: 30px;
+        }
+      }
+
+      .right {
+        width: 100%;
+        height: 520px;
+
+        @media #{$xs} {
+          height: 450px;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 12px;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}

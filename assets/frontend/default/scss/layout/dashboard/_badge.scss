@@ -1,0 +1,146 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.4.1 Badge
+/*----------------------------------------*/
+.badge {
+  display: inline-flex;
+  width: 72px;
+  height: 22px;
+  padding: 0px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 24px;
+  background: var(--td-primary);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: normal;
+
+  &.delivered {
+    color: #fff;
+    background: #2674fb;
+  }
+
+  &.primary {
+    color: #fff;
+    background: #2674fb;
+  }
+
+  &.success {
+    color: #fff;
+    background: #31b269;
+  }
+
+  &.pending {
+    color: #fff;
+    background: #ff8d29;
+  }
+
+  &.error {
+    color: #fff;
+    background: #ff5353;
+  }
+
+  &-2 {
+    width: fit-content;
+  }
+}
+
+.tooltip-action-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  .tooltip-btn {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(48, 48, 48, 0.16);
+
+    .tooltip-icon {
+      font-size: 16px;
+      color: #595959;
+
+      &.tooltip-icon-trash {
+        color: #ff5353;
+      }
+    }
+
+    &-2 {
+      width: max-content;
+      padding: 0 10px;
+      color: var(--td-white);
+    }
+
+    &.view-btn {
+      background-color: #3c1fa1;
+      border: none;
+
+      .tooltip-icon {
+        color: var(--td-white);
+      }
+    }
+    &.delivery-btn {
+      background-color: #2a9d8f;
+      border: none;
+
+      .tooltip-icon {
+        color: var(--td-white);
+      }
+    }
+    &.delete-btn {
+      background-color: #ef476f;
+      border: none;
+
+      .tooltip-icon {
+        color: var(--td-white);
+      }
+    }
+    &.edit-btn {
+      background-color: #31b269;
+      border: none;
+
+      .tooltip-icon {
+        color: var(--td-white);
+      }
+    }
+
+    &:hover {
+      background-color: var(--td-heading);
+
+      .tooltip-icon {
+        color: var(--td-white);
+      }
+    }
+  }
+}
+
+.no-item-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  border-radius: 16px;
+  background: #f8f8f8;
+  padding: 68px 10px;
+
+  @media #{$md} {
+    padding: 50px 10px;
+  }
+  @media #{$xs} {
+    padding: 40px 10px;
+  }
+
+  p {
+    color: var(--td-heading);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: normal;
+  }
+}

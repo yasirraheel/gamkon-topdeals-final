@@ -1,0 +1,58 @@
+@use "sass:math";
+
+@function rem($pixel) {
+  @if math.is-unitless($pixel) {
+    @return #{math.div($pixel, 16)}rem; // Use interpolation to add "rem" properly
+  } @else {
+    @error "Don't use units when using the rem() function; only numbers.";
+  }
+}
+
+@function em($pixel) {
+  @if math.is-unitless($pixel) {
+    @return #{math.div($pixel, 16)}em; // Use interpolation to add "em" properly
+  } @else {
+    @error "Don't use units when using the em() function; only numbers.";
+  }
+}
+
+// Function to generate margin and padding classes
+@mixin spacing-generator($property, $css-property) {
+  @for $i from 1 through 200 {
+    .#{$property}t-#{$i} {
+      #{$css-property}-top: #{1 * $i}px;
+    }
+
+    .#{$property}b-#{$i} {
+      #{$css-property}-bottom: #{1 * $i}px;
+    }
+
+    .#{$property}l-#{$i} {
+      #{$css-property}-inset-inline-start: #{1 * $i}px;
+    }
+
+    .#{$property}r-#{$i} {
+      #{$css-property}-inset-inline-end: #{1 * $i}px;
+    }
+  }
+}
+
+// Generate margin classes with proper CSS properties
+@include spacing-generator("m", "margin"); // Generates mt-1, mb-1, etc., with `margin-top`.
+
+// Generate padding classes with proper CSS properties
+@include spacing-generator("p", "padding"); // Generates pt-1, pb-1, etc., with `padding-top`.
+
+// function for line height calculation px to percentage
+@function lh($line-height-px, $font-size-px) {
+  @if math.is-unitless($line-height-px) and math.is-unitless($font-size-px) {
+    @return math.div($line-height-px, $font-size-px);
+  } @else {
+    @error "Both parameters ($line-height-px and $font-size-px) must be unitless numbers.";
+  }
+}
+
+// convert hex to rgba
+@function rgba-var($color, $alpha) {
+  @return rgba($color, $alpha);
+}

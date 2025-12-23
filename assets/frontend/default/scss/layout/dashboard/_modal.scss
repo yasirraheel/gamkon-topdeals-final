@@ -1,0 +1,437 @@
+@use "../../utils" as *;
+
+/*----------------------------------------*/
+/*  3.4.8 Modal
+/*----------------------------------------*/
+.common-modal-full {
+  position: fixed;
+  top: 0;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(8, 8, 8, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  overflow-y: auto;
+
+  &.open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .common-modal-box {
+    max-width: 650px;
+    width: 90%;
+    background-color: #fff;
+    border-radius: 14px;
+    padding: 30px;
+
+    @media #{$xs} {
+      padding: 16px;
+    }
+
+    .content {
+      .add-new-withdrawal {
+        h4 {
+          color: var(--td-heading);
+          font-size: 20px;
+          font-weight: 600;
+          line-height: normal;
+          margin-bottom: 20px;
+        }
+
+        .add-forms {
+          padding: 30px;
+          border-radius: 20px;
+          border: 1px solid rgba(48, 48, 48, 0.16);
+          max-height: 570px;
+          overflow-y: auto;
+
+          @media #{$xs} {
+            padding: 16px;
+          }
+
+          .modal-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
+
+            @media #{$xs} {
+              gap: 10px;
+            }
+
+            .withdraw-close {
+              display: inline-flex;
+              width: 92px;
+              height: 40px;
+              padding: 12px 24px;
+              justify-content: center;
+              align-items: center;
+              gap: 3px;
+              flex-shrink: 0;
+              border-radius: 12px;
+              border: 1px solid rgba(48, 48, 48, 0.16);
+              color: var(--td-heading);
+              text-align: center;
+              font-size: 16px;
+              font-weight: 600;
+              line-height: normal;
+            }
+          }
+        }
+      }
+      .logout-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h5 {
+          text-align: center;
+        }
+        p {
+          text-align: center;
+        }
+
+        .logout-buttons {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-top: 20px;
+        }
+      }
+      .add-review-box {
+        h4 {
+          color: var(--td-heading);
+          font-size: 22px;
+          font-weight: 600;
+          line-height: normal;
+          margin-bottom: 5px;
+        }
+
+        .give-review {
+          .review-box {
+            .rating-container {
+              .rating {
+                display: flex;
+                flex-direction: row-reverse;
+                justify-content: start;
+              }
+
+              .rating > input {
+                display: none;
+              }
+
+              .rating > label {
+                position: relative;
+                width: 30px;
+                font-size: 30px;
+                font-weight: 300;
+                color: var(--td-secondary);
+                cursor: pointer;
+                height: 30px;
+              }
+
+              .rating > label::before {
+                content: "\2605";
+                position: absolute;
+                opacity: 0;
+              }
+
+              .rating > label:hover:before,
+              .rating > label:hover ~ label:before {
+                opacity: 1 !important;
+              }
+
+              .rating > input:checked ~ label:before {
+                opacity: 1;
+              }
+
+              .rating:hover > input:checked ~ label:before {
+                opacity: 0.4;
+              }
+
+              .buttons {
+                top: 36px;
+                position: relative;
+              }
+
+              .rating-submit {
+                border-radius: 8px;
+                color: #fff;
+                height: auto;
+              }
+
+              .rating-submit:hover {
+                color: #fff;
+              }
+            }
+          }
+        }
+      }
+      .delete-modal {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          .warning-icon {
+            font-size: 50px;
+            color: #ff8d29;
+            margin-bottom: 10px;
+          }
+        }
+        h4 {
+          color: var(--td-heading);
+          font-size: 20px;
+          font-weight: 600;
+          line-height: normal;
+          margin-bottom: 10px;
+          text-align: center;
+        }
+        p {
+          color: rgba(48, 48, 48, 0.8);
+          font-size: 16px;
+          font-weight: 400;
+          line-height: normal;
+          margin-bottom: 20px;
+          text-align: center;
+        }
+        .modal-action-btn {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-top: 10px;
+        }
+      }
+    }
+
+    &-2 {
+      max-width: 500px;
+    }
+  }
+}
+.custom-modal {
+  position: fixed;
+  top: 0;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(8, 8, 8, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  overflow-y: auto;
+
+  &.open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .common-modal-box {
+    max-width: 650px;
+    width: 90%;
+    background-color: #fff;
+    border-radius: 14px;
+    padding: 30px;
+
+    @media #{$xs} {
+      padding: 16px;
+    }
+
+    .content {
+      .add-new-withdrawal {
+        h4 {
+          color: var(--td-heading);
+          font-size: 20px;
+          font-weight: 600;
+          line-height: normal;
+          margin-bottom: 20px;
+        }
+
+        .add-forms {
+          padding: 30px;
+          border-radius: 20px;
+          border: 1px solid rgba(48, 48, 48, 0.16);
+
+          @media #{$xs} {
+            padding: 16px;
+          }
+
+          .modal-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
+
+            @media #{$xs} {
+              gap: 10px;
+            }
+
+            .withdraw-close {
+              display: inline-flex;
+              width: 92px;
+              height: 40px;
+              padding: 12px 24px;
+              justify-content: center;
+              align-items: center;
+              gap: 3px;
+              flex-shrink: 0;
+              border-radius: 12px;
+              border: 1px solid rgba(48, 48, 48, 0.16);
+              color: var(--td-heading);
+              text-align: center;
+              font-size: 16px;
+              font-weight: 600;
+              line-height: normal;
+            }
+          }
+        }
+      }
+      .logout-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h5 {
+          text-align: center;
+        }
+        p {
+          text-align: center;
+        }
+
+        .logout-buttons {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-top: 20px;
+        }
+      }
+    }
+
+    &-2 {
+      max-width: 500px;
+    }
+  }
+}
+.log-out-modal {
+  position: fixed;
+  top: 0;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(8, 8, 8, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.3s ease;
+  overflow-y: auto;
+
+  &.open {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .common-modal-box {
+    max-width: 650px;
+    width: 90%;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 65px;
+
+    @media #{$xs} {
+      padding: 40px;
+    }
+
+    .content {
+      .add-new-withdrawal {
+        h4 {
+          color: var(--td-heading);
+          font-size: 20px;
+          font-weight: 600;
+          line-height: normal;
+          margin-bottom: 20px;
+        }
+
+        .add-forms {
+          padding: 30px;
+          border-radius: 20px;
+          border: 1px solid rgba(48, 48, 48, 0.16);
+
+          @media #{$xs} {
+            padding: 16px;
+          }
+
+          .modal-action-btn {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
+
+            @media #{$xs} {
+              gap: 10px;
+            }
+
+            .withdraw-close {
+              display: inline-flex;
+              width: 92px;
+              height: 40px;
+              padding: 12px 24px;
+              justify-content: center;
+              align-items: center;
+              gap: 3px;
+              flex-shrink: 0;
+              border-radius: 12px;
+              border: 1px solid rgba(48, 48, 48, 0.16);
+              color: var(--td-heading);
+              text-align: center;
+              font-size: 16px;
+              font-weight: 600;
+              line-height: normal;
+            }
+          }
+        }
+      }
+      .logout-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h2 {
+          text-align: center;
+          margin-bottom: 5px;
+        }
+        p {
+          text-align: center;
+        }
+
+        .logout-buttons {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-top: 20px;
+        }
+      }
+    }
+
+    &-2 {
+      max-width: 500px;
+    }
+  }
+}
