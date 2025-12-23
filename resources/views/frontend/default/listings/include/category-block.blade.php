@@ -24,10 +24,15 @@
                     {{ __('in') }} <a
                         href="{{ route('category.listing', $listing->category->slug) }}">{{ $listing->category->name }}</a>
                 </p>
-                @if ($listing->productCatalog || $listing->selected_duration || $listing->selected_plan)
+                @if ($listing->selected_duration || $listing->selected_plan || $listing->delivery_method)
                     <div class="d-flex gap-1 flex-wrap mt-2 mb-2">
-                        @if ($listing->productCatalog)
-                            <span class="badge bg-primary" style="font-size: 10px; padding: 3px 6px;">{{ $listing->productCatalog->name }}</span>
+                        @if ($listing->delivery_method)
+                            <span class="badge bg-info" style="font-size: 10px; padding: 3px 6px;">{{ ucfirst($listing->delivery_method) }}</span>
+                        @endif
+                        @if ($listing->delivery_method == 'manual' && $listing->delivery_speed)
+                            <span class="badge bg-secondary" style="font-size: 10px; padding: 3px 6px;">{{ $listing->delivery_speed }} {{ $listing->delivery_speed_unit }}</span>
+                        @elseif ($listing->delivery_method == 'auto')
+                            <span class="badge bg-secondary" style="font-size: 10px; padding: 3px 6px;">Instant</span>
                         @endif
                         @if ($listing->selected_duration)
                             <span class="badge bg-warning" style="font-size: 10px; padding: 3px 6px;">{{ $listing->selected_duration }}</span>
