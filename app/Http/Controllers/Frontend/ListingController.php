@@ -21,7 +21,7 @@ class ListingController extends Controller
 
     public function index(Request $request)
     {
-        $listings = Listing::with('category:id,name')
+        $listings = Listing::with(['category:id,name', 'productCatalog'])
             ->whereBelongsTo(auth()->user(), 'seller')
             ->when($request->has('sort'), function ($query) use ($request) {
                 return match ($request->input('sort')) {
@@ -355,7 +355,7 @@ class ListingController extends Controller
 
     public function listingDetails(Request $request, $slug)
     {
-        $listing = Listing::when($request->encrypt && auth('admin')->check(), function ($query) use ($request) {
+        $listing = Listing::with('productCatalog')->when($request->encrypt && auth('admin')->check(), function ($query) use ($request) {
             $id = Crypt::decrypt($request->encrypt);
             $query->where('id', $id);
         }, function ($q) {

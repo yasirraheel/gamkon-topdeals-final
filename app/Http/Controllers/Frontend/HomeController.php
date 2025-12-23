@@ -25,7 +25,7 @@ class HomeController extends Controller
         if ($redirectPage == '/') {
             $homeContent = getLandingPageData()->where('code', '!=', 'footer')->where('status', true)->orderBy('short')->get();
             if (setting('flash_sale_status', 'flash_sale')) {
-                $flashSellListing = Listing::public()->where('is_flash', true)->latest()->get();
+                $flashSellListing = Listing::with('productCatalog')->public()->where('is_flash', true)->latest()->get();
             } else {
                 $flashSellListing = [];
             }

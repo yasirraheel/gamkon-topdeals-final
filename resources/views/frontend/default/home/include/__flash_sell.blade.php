@@ -79,6 +79,19 @@
                                                     </p>
                                                     <a href="{{ route('listing.details', $listing->slug) }}"
                                                         class="product-title">{{ $listing->product_name }}</a>
+                                                    @if ($listing->productCatalog || $listing->selected_duration || $listing->selected_plan)
+                                                        <div class="d-flex gap-1 flex-wrap mt-1">
+                                                            @if ($listing->productCatalog)
+                                                                <span class="badge badge-sm bg-primary">{{ $listing->productCatalog->name }}</span>
+                                                            @endif
+                                                            @if ($listing->selected_duration)
+                                                                <span class="badge badge-sm bg-warning">{{ $listing->selected_duration }}</span>
+                                                            @endif
+                                                            @if ($listing->selected_plan)
+                                                                <span class="badge badge-sm bg-success">{{ $listing->selected_plan }}</span>
+                                                            @endif
+                                                        </div>
+                                                    @endif
                                                     <p class="author">{{ __('By') }} <a
                                                             href="{{ route('seller.details', $listing->seller?->username ?? 404) }}">{{ $listing->seller?->username }}</a>
                                                     </p>

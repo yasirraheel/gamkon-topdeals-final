@@ -112,6 +112,46 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if ($listing->productCatalog || $listing->selected_duration || $listing->selected_plan)
+                                    <div class="delivery-method-and-speed">
+                                        @if ($listing->productCatalog)
+                                            <div class="delivery-method">
+                                                <p>{{ __('Product') }}:</p>
+                                                <button class="tag-btn">
+                                                    <span>
+                                                        <iconify-icon icon="lucide:package"
+                                                            class="tag-icon"></iconify-icon>
+                                                    </span>
+                                                    {{ $listing->productCatalog->name }}
+                                                </button>
+                                            </div>
+                                        @endif
+                                        @if ($listing->selected_duration)
+                                            <div class="speed">
+                                                <p>{{ __('Duration') }}:</p>
+                                                <button class="tag-btn">
+                                                    <span>
+                                                        <iconify-icon icon="lucide:clock"
+                                                            class="tag-icon"></iconify-icon>
+                                                    </span>
+                                                    {{ $listing->selected_duration }}
+                                                </button>
+                                            </div>
+                                        @endif
+                                        @if ($listing->selected_plan)
+                                            <div class="speed">
+                                                <p>{{ __('Plan') }}:</p>
+                                                <button class="tag-btn">
+                                                    <span>
+                                                        <iconify-icon icon="lucide:tag"
+                                                            class="tag-icon"></iconify-icon>
+                                                    </span>
+                                                    {{ $listing->selected_plan }}
+                                                </button>
+                                            </div>
+                                        @endif
+                                    </div>
+                                @endif
                                 <div class="delivery-method-and-speed">
                                     <div class="delivery-method">
                                         <p>{{ __('Delivery Method') }}:</p>
