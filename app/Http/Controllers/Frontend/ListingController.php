@@ -149,12 +149,16 @@ class ListingController extends Controller
     public function store(Request $request)
     {
         $authUser = auth()->user();
+        
+        // Check if this is an update or create
+        $isUpdate = $request->has('listing_id') && $request->listing_id;
+        
         $request->validate([
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'nullable|exists:categories,id',
-            'product_catalog_id' => 'required|exists:product_catalogs,id',
-            'selected_duration' => 'required|string',
-            'selected_plan' => 'required|string',
+            'product_catalog_id' => ($isUpdate ? 'nullable' : 'required') . '|exists:product_catalogs,id',
+            'selected_duration' => ($isUpdate ? 'nullable' : 'required') . '|string',
+            'selected_plan' => ($isUpdate ? 'nullable' : 'required') . '|string',
             'product_name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',
@@ -205,11 +209,14 @@ class ListingController extends Controller
         if ($request->thumbnail) {
             $allData['thumbnail'] = $this->imageUploadTrait($request->thumbnail, $request->listing_id ? Listing::findOwn($request->listing_id, ['thumbnail'])->thumbnail : null);
         } elseif ($request->product_catalog_id && !$request->listing_id) {
-            // Copy thumbnail from catalog if not uploaded
+            // Copy thumbnail from catalog if not uploaded (only for new listings)
             $catalog = ProductCatalog::find($request->product_catalog_id);
             if ($catalog && $catalog->thumbnail) {
                 $allData['thumbnail'] = $catalog->thumbnail;
             }
+        } elseif ($request->listing_id) {
+            // For updates, keep existing thumbnail if no new one uploaded
+            unset($allData['thumbnail']);
         }
 
         // checking status
