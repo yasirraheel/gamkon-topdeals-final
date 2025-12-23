@@ -332,13 +332,15 @@ if (! function_exists('calPercentage')) {
     }
 }
 
-function findPercentage($total, $remaining)
-{
-    if ($total == 0) {
-        return 0;
-    }
+if (! function_exists('findPercentage')) {
+    function findPercentage($total, $remaining)
+    {
+        if ($total == 0) {
+            return 0;
+        }
 
-    return ($total - $remaining) / $total * 100;
+        return ($total - $remaining) / $total * 100;
+    }
 }
 
 if (! function_exists('getQRCode')) {
