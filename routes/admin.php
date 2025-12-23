@@ -19,6 +19,7 @@ use App\Http\Controllers\Backend\NotificationController;
 use App\Http\Controllers\Backend\OrderController;
 use App\Http\Controllers\Backend\PageController;
 use App\Http\Controllers\Backend\PluginController;
+use App\Http\Controllers\Backend\ProductCatalogController;
 use App\Http\Controllers\Backend\ReferralController;
 use App\Http\Controllers\Backend\ReviewController;
 use App\Http\Controllers\Backend\RoleController;
@@ -121,6 +122,18 @@ Route::controller(CategoryController::class)->name('category.')->prefix('categor
     Route::get('/edit/{id}', 'edit')->name('edit');
     Route::post('/update/{id}', 'update')->name('update');
     Route::get('/trending-toggle/{id}', 'trendingToggle')->name('trending.toggle');
+    Route::post('/delete/{id}', 'destroy')->name('delete');
+});
+
+// =============================== Product Catalog Management ===============================
+
+Route::controller(ProductCatalogController::class)->name('product-catalog.')->prefix('product-catalog')->group(function () {
+    Route::get('/', 'index')->name('index');
+    Route::get('/create', 'create')->name('create');
+    Route::post('/store', 'store')->name('store');
+    Route::get('/edit/{id}', 'edit')->name('edit');
+    Route::post('/update/{id}', 'update')->name('update');
+    Route::get('/status-toggle/{id}', 'statusToggle')->name('status.toggle');
     Route::post('/delete/{id}', 'destroy')->name('delete');
 });
 
