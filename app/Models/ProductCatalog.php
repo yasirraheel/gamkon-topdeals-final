@@ -55,4 +55,12 @@ class ProductCatalog extends Model
 
         return SubscriptionPlan::whereIn('id', $this->plans)->get();
     }
+
+    /**
+     * Get associated account plans
+     */
+    public function accountPlans()
+    {
+        return $this->hasMany(AccountPlan::class)->orderBy('order', 'asc');
+    }
 }

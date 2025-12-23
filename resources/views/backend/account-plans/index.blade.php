@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 @section('title')
-    {{ __('Product Catalog') }}
+    {{ __('Account Plans') }} - {{ $catalog->name }}
 @endsection
 @section('content')
     <div class="main-content">
@@ -9,11 +9,15 @@
                 <div class="row">
                     <div class="col">
                         <div class="title-content">
-                            <h2 class="title">{{ __('Product Catalog') }}</h2>
-                            @can('product-catalog-create')
-                                <a href="{{ route('admin.product-catalog.create') }}" class="title-btn"><i
-                                        data-lucide="plus-circle"></i>{{ __('Add New') }}</a>
-                            @endcan
+                            <h2 class="title">{{ __('Account Plans') }} - {{ $catalog->name }}</h2>
+                            <div>
+                                <a href="{{ route('admin.product-catalog.index') }}" class="title-btn me-2"><i
+                                        data-lucide="arrow-left"></i>{{ __('Back to Catalogs') }}</a>
+                                @can('product-catalog-create')
+                                    <a href="{{ route('admin.account-plans.create', $catalog->id) }}" class="title-btn"><i
+                                            data-lucide="plus-circle"></i>{{ __('Add Plan') }}</a>
+                                @endcan
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -47,56 +51,24 @@
                                 <table class="table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">{{ __('Icon') }}</th>
-                                            <th scope="col">{{ __('Thumbnail') }}</th>
                                             @include('backend.filter.th', [
-                                                'label' => __('Product Name'),
-                                                'field' => 'name',
+                                                'label' => __('Plan Name'),
+                                                'field' => 'plan_name',
                                             ])
-                                            <th scope="col">{{ __('Durations') }}</th>
-                                            <th scope="col">{{ __('Plans') }}</th>
+                                            <th scope="col">{{ __('Description') }}</th>
+                                            <th scope="col">{{ __('Order') }}</th>
                                             <th scope="col">{{ __('Status') }}</th>
                                             <th scope="col">{{ __('Action') }}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @forelse($catalogs as $catalog)
+                                        @forelse($plans as $plan)
                                             <tr>
+                                                <td><strong>{{ $plan->plan_name }}</strong></td>
+                                                <td>{{ Str::limit($plan->description ?? '-', 50) }}</td>
+                                                <td>{{ $plan->order }}</td>
                                                 <td>
-                                                    @if($catalog->icon)
-                                                        <img src="{{ asset($catalog->icon) }}" alt="{{ $catalog->name }}" width="40">
-                                                    @else
-                                                        <span class="text-muted">-</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($catalog->thumbnail)
-                                                        <img src="{{ asset($catalog->thumbnail) }}" alt="{{ $catalog->name }}" width="50">
-                                                    @else
-                                                        <span class="text-muted">-</span>
-                                                    @endif
-                                                </td>
-                                                <td><strong>{{ $catalog->name }}</strong></td>
-                                                <td>
-                                                    @if($catalog->durations && count($catalog->durations) > 0)
-                                                        @foreach($catalog->durations as $duration)
-                                                            <span class="badge bg-info text-white me-1">{{ $duration }}</span>
-                                                        @endforeach
-                                                    @else
-                                                        <span class="text-muted">-</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if($catalog->plans && count($catalog->plans) > 0)
-                                                        @foreach($catalog->plans as $plan)
-                                                            <span class="badge bg-primary text-white me-1 mb-1">{{ $plan }}</span>
-                                                        @endforeach
-                                                    @else
-                                                        <span class="text-muted">-</span>
-                                                    @endif
-                                                </td>
-                                                <td>
-                                                    @if ($catalog->status)
+                                                    @if ($plan->status)
                                                         <div class="site-badge success">{{ __('Active') }}</div>
                                                     @else
                                                         <div class="site-badge danger">{{ __('Inactive') }}</div>
@@ -104,28 +76,29 @@
                                                 </td>
                                                 <td>
                                                     @can('product-catalog-edit')
-                                                        <a href="{{ route('admin.product-catalog.edit', $catalog->id) }}"
+                                                        <a href="{{ route('admin.account-plans.edit', [$catalog->id, $plan->id]) }}"
                                                             class="round-icon-btn primary-btn" id="edit"
                                                             data-bs-toggle="tooltip" title="" data-bs-placement="top"
-                                                            data-bs-original-title="{{ __('Edit Product Catalog') }}">
+                                                            data-bs-original-title="{{ __('Edit Plan') }}">
                                                             <i data-lucide="edit-3"></i>
                                                         </a>
-                                                        <a href="{{ route('admin.product-catalog.status.toggle', $catalog->id) }}"
-                                                            class="round-icon-btn {{ $catalog->status ? 'danger-btn' : 'success-btn' }}"
+                                                        <a href="{{ route('admin.account-plans.status.toggle', [$catalog->id, $plan->id]) }}"
+                                                            class="round-icon-btn {{ $plan->status ? 'danger-btn' : 'success-btn' }}"
                                                             id="status-toggle"
                                                             data-bs-toggle="tooltip" title="" data-bs-placement="top"
-                                                            data-bs-original-title="{{ $catalog->status ? __('Deactivate') : __('Activate') }}">
-                                                            <i data-lucide="{{ $catalog->status ? 'x-circle' : 'check-circle' }}"></i>
+                                                            data-bs-original-title="{{ $plan->status ? __('Deactivate') : __('Activate') }}">
+                                                            <i data-lucide="{{ $plan->status ? 'x-circle' : 'check-circle' }}"></i>
                                                         </a>
                                                     @endcan
                                                     @can('product-catalog-delete')
                                                         <button type="button" data-bs-toggle="modal"
-                                                            data-bs-target="#deleteCatalog-{{ $catalog->id }}"
+                                                            data-bs-target="#deletePlan-{{ $plan->id }}"
                                                             class="round-icon-btn danger-btn"
-                                                            data-bs-original-title="{{ __('Delete Product Catalog') }}">
+                                                            data-bs-original-title="{{ __('Delete Plan') }}">
                                                             <i data-lucide="trash-2"></i>
                                                         </button>
-                                                        @include('backend.product-catalog.include.__delete', [
+                                                        @include('backend.account-plans.include.__delete', [
+                                                            'plan' => $plan,
                                                             'catalog' => $catalog,
                                                         ])
                                                     @endcan
@@ -133,13 +106,13 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="7" class="text-center">{{ __('No Data Found') }}</td>
+                                                <td colspan="5" class="text-center">{{ __('No Data Found') }}</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
                                 </table>
                                 <div class="pagination-section">
-                                    {{ $catalogs->links('backend.include.__pagination') }}
+                                    {{ $plans->links('backend.include.__pagination') }}
                                 </div>
                             </div>
                         </div>

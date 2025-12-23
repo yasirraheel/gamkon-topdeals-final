@@ -162,15 +162,31 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="site-input-groups">
-                                            <label for="" class="box-input-label">{{ __('Select Plans') }}</label>
-                                            <select name="plans[]" class="form-select" multiple style="height: 200px;">
-                                                @foreach($plans as $plan)
-                                                    <option value="{{ $plan->id }}" @selected(in_array($plan->id, old('plans', $catalog->plans ?? [])))>
-                                                        {{ $plan->name }} - {{ $currencySymbol }}{{ $plan->price }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            <small class="text-muted">{{ __('Hold Ctrl (Cmd on Mac) to select multiple plans') }}</small>
+                                            <label for="" class="box-input-label">{{ __('Plans') }}</label>
+                                            <div id="plans-container">
+                                                @if(old('plans', $catalog->plans))
+                                                    @foreach(old('plans', $catalog->plans ?? []) as $index => $plan)
+                                                        <div class="plan-item mb-2 d-flex gap-2">
+                                                            <input type="text" name="plans[]" class="box-input mb-0"
+                                                                placeholder="e.g., Pro, Ultra, Premium" value="{{ $plan }}" />
+                                                            <button type="button" class="btn btn-sm btn-danger remove-plan" style="{{ count(old('plans', $catalog->plans ?? [])) > 1 ? '' : 'display: none;' }}">
+                                                                <i data-lucide="x"></i>
+                                                            </button>
+                                                        </div>
+                                                    @endforeach
+                                                @else
+                                                    <div class="plan-item mb-2 d-flex gap-2">
+                                                        <input type="text" name="plans[]" class="box-input mb-0"
+                                                            placeholder="e.g., Pro, Ultra, Premium" />
+                                                        <button type="button" class="btn btn-sm btn-danger remove-plan" style="display: none;">
+                                                            <i data-lucide="x"></i>
+                                                        </button>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <button type="button" class="btn btn-sm btn-primary mt-2" id="add-plan">
+                                                <i data-lucide="plus"></i> {{ __('Add Plan') }}
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -192,64 +208,87 @@
 
 @section('scripts')
 <script>
-    // Add Duration
-    document.getElementById('add-duration').addEventListener('click', function() {
-        const container = document.getElementById('durations-container');
-        const newItem = document.createElement('div');
-        newItem.className = 'duration-item mb-2 d-flex gap-2';
-        newItem.innerHTML = `
-            <input type="text" name="durations[]" class="box-input mb-0" placeholder="e.g., 30 Days, 1 Month, etc." />
-            <button type="button" class="btn btn-sm btn-danger remove-duration">
-                <i data-lucide="x"></i>
-            </button>
-        `;
-        container.appendChild(newItem);
-        lucide.createIcons();
-        updateRemoveButtons('duration');
-    });
-
-    // Add Sharing Method
-    document.getElementById('add-sharing-method').addEventListener('click', function() {
-        const container = document.getElementById('sharing-methods-container');
-        const newItem = document.createElement('div');
-        newItem.className = 'sharing-method-item mb-2 d-flex gap-2';
-        newItem.innerHTML = `
-            <input type="text" name="sharing_methods[]" class="box-input mb-0" placeholder="e.g., Email, Phone, Link, etc." />
-            <button type="button" class="btn btn-sm btn-danger remove-sharing-method">
-                <i data-lucide="x"></i>
-            </button>
-        `;
-        container.appendChild(newItem);
-        lucide.createIcons();
-        updateRemoveButtons('sharing-method');
-    });
-
-    // Remove Duration
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.remove-duration')) {
-            e.target.closest('.duration-item').remove();
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add Duration
+        document.getElementById('add-duration').addEventListener('click', function() {
+            const container = document.getElementById('durations-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'duration-item mb-2 d-flex gap-2';
+            newItem.innerHTML = `
+                <input type="text" name="durations[]" class="box-input mb-0" placeholder="e.g., 30 Days, 1 Month, etc." />
+                <button type="button" class="btn btn-sm btn-danger remove-duration">
+                    <i data-lucide="x"></i>
+                </button>
+            `;
+            container.appendChild(newItem);
+            lucide.createIcons();
             updateRemoveButtons('duration');
-        }
-    });
+        });
 
-    // Remove Sharing Method
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('.remove-sharing-method')) {
-            e.target.closest('.sharing-method-item').remove();
+        // Add Sharing Method
+        document.getElementById('add-sharing-method').addEventListener('click', function() {
+            const container = document.getElementById('sharing-methods-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'sharing-method-item mb-2 d-flex gap-2';
+            newItem.innerHTML = `
+                <input type="text" name="sharing_methods[]" class="box-input mb-0" placeholder="e.g., Email, Phone, Link, etc." />
+                <button type="button" class="btn btn-sm btn-danger remove-sharing-method">
+                    <i data-lucide="x"></i>
+                </button>
+            `;
+            container.appendChild(newItem);
+            lucide.createIcons();
             updateRemoveButtons('sharing-method');
-        }
-    });
+        });
 
-    function updateRemoveButtons(type) {
-        const items = document.querySelectorAll(`.${type}-item`);
-        items.forEach((item, index) => {
-            const removeBtn = item.querySelector(`.remove-${type}`);
-            if (items.length > 1) {
-                removeBtn.style.display = 'block';
-            } else {
-                removeBtn.style.display = 'none';
+        // Add Plan
+        document.getElementById('add-plan').addEventListener('click', function() {
+            const container = document.getElementById('plans-container');
+            const newItem = document.createElement('div');
+            newItem.className = 'plan-item mb-2 d-flex gap-2';
+            newItem.innerHTML = `
+                <input type="text" name="plans[]" class="box-input mb-0" placeholder="e.g., Pro, Ultra, Premium" />
+                <button type="button" class="btn btn-sm btn-danger remove-plan">
+                    <i data-lucide="x"></i>
+                </button>
+            `;
+            container.appendChild(newItem);
+            lucide.createIcons();
+            updateRemoveButtons('plan');
+        });
+
+        // Remove handlers
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.remove-duration')) {
+                e.target.closest('.duration-item').remove();
+                updateRemoveButtons('duration');
+            }
+            if (e.target.closest('.remove-sharing-method')) {
+                e.target.closest('.sharing-method-item').remove();
+                updateRemoveButtons('sharing-method');
+            }
+            if (e.target.closest('.remove-plan')) {
+                e.target.closest('.plan-item').remove();
+                updateRemoveButtons('plan');
             }
         });
-    }
+
+        function updateRemoveButtons(type) {
+            const items = document.querySelectorAll(`.${type}-item`);
+            items.forEach((item, index) => {
+                const removeBtn = item.querySelector(`.remove-${type}`);
+                if (items.length > 1) {
+                    removeBtn.style.display = 'block';
+                } else {
+                    removeBtn.style.display = 'none';
+                }
+            });
+        }
+
+        // Initialize remove buttons on load
+        updateRemoveButtons('duration');
+        updateRemoveButtons('sharing-method');
+        updateRemoveButtons('plan');
+    });
 </script>
 @endsection

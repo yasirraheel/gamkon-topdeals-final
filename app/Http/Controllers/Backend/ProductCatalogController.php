@@ -39,8 +39,7 @@ class ProductCatalogController extends Controller
 
     public function create()
     {
-        $plans = SubscriptionPlan::all();
-        return view('backend.product-catalog.create', compact('plans'));
+        return view('backend.product-catalog.create');
     }
 
     public function store(Request $request)
@@ -96,9 +95,8 @@ class ProductCatalogController extends Controller
     public function edit($id)
     {
         $catalog = ProductCatalog::findOrFail($id);
-        $plans = SubscriptionPlan::all();
 
-        return view('backend.product-catalog.edit', compact('catalog', 'plans'));
+        return view('backend.product-catalog.edit', compact('catalog'));
     }
 
     public function update(Request $request, $id)
@@ -114,7 +112,7 @@ class ProductCatalogController extends Controller
             'sharing_methods' => 'nullable|array',
             'sharing_methods.*' => 'string',
             'plans' => 'nullable|array',
-            'plans.*' => 'exists:subscription_plans,id',
+            'plans.*' => 'string',
             'description' => 'nullable|string',
             'status' => 'required|boolean',
             'order' => 'nullable|numeric|unique:product_catalogs,order,'.$catalog->id,
