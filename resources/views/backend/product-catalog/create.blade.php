@@ -142,7 +142,7 @@
                                             <select name="plans[]" class="form-select" multiple style="height: 200px;">
                                                 @foreach($plans as $plan)
                                                     <option value="{{ $plan->id }}" @selected(in_array($plan->id, old('plans', [])))>
-                                                        {{ $plan->name }} - {{ siteCurrency()['symbol'] }}{{ $plan->price }}
+                                                        {{ $plan->name }} - {{ $currencySymbol }}{{ $plan->price }}
                                                     </option>
                                                 @endforeach
                                             </select>
