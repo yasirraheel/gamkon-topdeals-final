@@ -144,6 +144,15 @@
                     @endcan
                 @endcanany
 
+                @canany(['product-catalog-list', 'product-catalog-create', 'product-catalog-edit', 'product-catalog-delete'])
+                    @can('product-catalog-list')
+                        <li class="side-nav-item {{ isActive('admin.product-catalog*') }}">
+                            <a href="{{ route('admin.product-catalog.index') }}"><i
+                                    data-lucide="package"></i><span>{{ __('Product Catalog') }}</span></a>
+                        </li>
+                    @endcan
+                @endcanany
+
                 @canany(['listing-list', 'listing-create', 'listing-edit', 'listing-delete'])
                     @can('listing-list')
                         <li class="side-nav-item {{ isActive('admin.listing*') }}">
