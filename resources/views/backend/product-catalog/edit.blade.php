@@ -208,87 +208,110 @@
 
 @section('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    (function() {
+        function updateRemoveButtons(type) {
+            const items = document.querySelectorAll(`.${type}-item`);
+            items.forEach((item, index) => {
+                const removeBtn = item.querySelector(`.remove-${type}`);
+                if (removeBtn) {
+                    if (items.length > 1) {
+                        removeBtn.style.display = 'block';
+                    } else {
+                        removeBtn.style.display = 'none';
+                    }
+                }
+            });
+        }
+
         // Add Duration
-        document.getElementById('add-duration').addEventListener('click', function() {
-            const container = document.getElementById('durations-container');
-            const newItem = document.createElement('div');
-            newItem.className = 'duration-item mb-2 d-flex gap-2';
-            newItem.innerHTML = `
-                <input type="text" name="durations[]" class="box-input mb-0" placeholder="e.g., 30 Days, 1 Month, etc." />
-                <button type="button" class="btn btn-sm btn-danger remove-duration">
-                    <i data-lucide="x"></i>
-                </button>
-            `;
-            container.appendChild(newItem);
-            lucide.createIcons();
-            updateRemoveButtons('duration');
-        });
+        const addDurationBtn = document.getElementById('add-duration');
+        if (addDurationBtn) {
+            addDurationBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const container = document.getElementById('durations-container');
+                const newItem = document.createElement('div');
+                newItem.className = 'duration-item mb-2 d-flex gap-2';
+                newItem.innerHTML = `
+                    <input type="text" name="durations[]" class="box-input mb-0" placeholder="e.g., 30 Days, 1 Month, etc." />
+                    <button type="button" class="btn btn-sm btn-danger remove-duration">
+                        <i data-lucide="x"></i>
+                    </button>
+                `;
+                container.appendChild(newItem);
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+                updateRemoveButtons('duration');
+            });
+        }
 
         // Add Sharing Method
-        document.getElementById('add-sharing-method').addEventListener('click', function() {
-            const container = document.getElementById('sharing-methods-container');
-            const newItem = document.createElement('div');
-            newItem.className = 'sharing-method-item mb-2 d-flex gap-2';
-            newItem.innerHTML = `
-                <input type="text" name="sharing_methods[]" class="box-input mb-0" placeholder="e.g., Email, Phone, Link, etc." />
-                <button type="button" class="btn btn-sm btn-danger remove-sharing-method">
-                    <i data-lucide="x"></i>
-                </button>
-            `;
-            container.appendChild(newItem);
-            lucide.createIcons();
-            updateRemoveButtons('sharing-method');
-        });
+        const addSharingBtn = document.getElementById('add-sharing-method');
+        if (addSharingBtn) {
+            addSharingBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const container = document.getElementById('sharing-methods-container');
+                const newItem = document.createElement('div');
+                newItem.className = 'sharing-method-item mb-2 d-flex gap-2';
+                newItem.innerHTML = `
+                    <input type="text" name="sharing_methods[]" class="box-input mb-0" placeholder="e.g., Email, Phone, Link, etc." />
+                    <button type="button" class="btn btn-sm btn-danger remove-sharing-method">
+                        <i data-lucide="x"></i>
+                    </button>
+                `;
+                container.appendChild(newItem);
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+                updateRemoveButtons('sharing-method');
+            });
+        }
 
         // Add Plan
-        document.getElementById('add-plan').addEventListener('click', function() {
-            const container = document.getElementById('plans-container');
-            const newItem = document.createElement('div');
-            newItem.className = 'plan-item mb-2 d-flex gap-2';
-            newItem.innerHTML = `
-                <input type="text" name="plans[]" class="box-input mb-0" placeholder="e.g., Pro, Ultra, Premium" />
-                <button type="button" class="btn btn-sm btn-danger remove-plan">
-                    <i data-lucide="x"></i>
-                </button>
-            `;
-            container.appendChild(newItem);
-            lucide.createIcons();
-            updateRemoveButtons('plan');
-        });
+        const addPlanBtn = document.getElementById('add-plan');
+        if (addPlanBtn) {
+            addPlanBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const container = document.getElementById('plans-container');
+                const newItem = document.createElement('div');
+                newItem.className = 'plan-item mb-2 d-flex gap-2';
+                newItem.innerHTML = `
+                    <input type="text" name="plans[]" class="box-input mb-0" placeholder="e.g., Pro, Ultra, Premium" />
+                    <button type="button" class="btn btn-sm btn-danger remove-plan">
+                        <i data-lucide="x"></i>
+                    </button>
+                `;
+                container.appendChild(newItem);
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+                updateRemoveButtons('plan');
+            });
+        }
 
         // Remove handlers
         document.addEventListener('click', function(e) {
             if (e.target.closest('.remove-duration')) {
+                e.preventDefault();
                 e.target.closest('.duration-item').remove();
                 updateRemoveButtons('duration');
             }
             if (e.target.closest('.remove-sharing-method')) {
+                e.preventDefault();
                 e.target.closest('.sharing-method-item').remove();
                 updateRemoveButtons('sharing-method');
             }
             if (e.target.closest('.remove-plan')) {
+                e.preventDefault();
                 e.target.closest('.plan-item').remove();
                 updateRemoveButtons('plan');
             }
         });
 
-        function updateRemoveButtons(type) {
-            const items = document.querySelectorAll(`.${type}-item`);
-            items.forEach((item, index) => {
-                const removeBtn = item.querySelector(`.remove-${type}`);
-                if (items.length > 1) {
-                    removeBtn.style.display = 'block';
-                } else {
-                    removeBtn.style.display = 'none';
-                }
-            });
-        }
-
         // Initialize remove buttons on load
         updateRemoveButtons('duration');
         updateRemoveButtons('sharing-method');
         updateRemoveButtons('plan');
-    });
+    })();
 </script>
 @endsection
