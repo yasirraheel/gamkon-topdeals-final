@@ -137,7 +137,7 @@
                                     </tbody>
                                 </table>
                                 <div class="pagination-section">
-                                    {{ $catalogs->links('backend.include.pagination') }}
+                                    {{ $catalogs->links('backend.include.__pagination') }}
                                 </div>
                             </div>
                         </div>
