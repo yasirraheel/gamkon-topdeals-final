@@ -159,16 +159,13 @@ class ListingController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'quantity' => 'required|integer',
-            'thumbnail' => 'required_without:listing_id|image|max:2048',
-            'gallery' => 'required_without:listing_id|array|max:4',
-            'gallery.*' => 'required_without:listing_id|image|max:2048',
+            'thumbnail' => 'nullable|image|max:2048',
+            'gallery' => 'nullable|array|max:4',
+            'gallery.*' => 'nullable|image|max:2048',
             'status' => 'nullable',
             'is_flash' => 'nullable',
             'discount_value' => 'nullable|numeric|min:0',
             'discount_type' => 'nullable|in:percentage,amount',
-        ], [
-            'gallery.required' => 'Gallery images are required.',
-            'gallery.*.required' => 'Gallery images are required.',
         ]);
         $allData = $request->except([
             '_token',
@@ -204,8 +201,15 @@ class ListingController extends Controller
             $listing = Listing::findOwn($request->listing_id);
         }
 
+        // Handle thumbnail - use uploaded or copy from catalog
         if ($request->thumbnail) {
             $allData['thumbnail'] = $this->imageUploadTrait($request->thumbnail, $request->listing_id ? Listing::findOwn($request->listing_id, ['thumbnail'])->thumbnail : null);
+        } elseif ($request->product_catalog_id && !$request->listing_id) {
+            // Copy thumbnail from catalog if not uploaded
+            $catalog = ProductCatalog::find($request->product_catalog_id);
+            if ($catalog && $catalog->thumbnail) {
+                $allData['thumbnail'] = $catalog->thumbnail;
+            }
         }
 
         // checking status
@@ -251,10 +255,22 @@ class ListingController extends Controller
         }
 
         if ($listing) {
-            foreach ($request->gallery ?? [] as $image) {
-                $listing->images()->create([
-                    'image_path' => $this->imageUploadTrait($image),
-                ]);
+            // Handle gallery images
+            if ($request->gallery && count($request->gallery) > 0) {
+                // User uploaded gallery images
+                foreach ($request->gallery as $image) {
+                    $listing->images()->create([
+                        'image_path' => $this->imageUploadTrait($image),
+                    ]);
+                }
+            } elseif ($request->product_catalog_id && !$request->listing_id) {
+                // No gallery uploaded, use catalog thumbnail as gallery
+                $catalog = ProductCatalog::find($request->product_catalog_id);
+                if ($catalog && $catalog->thumbnail) {
+                    $listing->images()->create([
+                        'image_path' => $catalog->thumbnail,
+                    ]);
+                }
             }
         } else {
             notify()->error(__('Something went wrong!'));

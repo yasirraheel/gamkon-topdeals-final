@@ -313,6 +313,15 @@
             });
         });
 
+        // Handle catalog gallery remove (just visual, not saved yet)
+        $(document).on('click', '.catalog-gallery-remove', function() {
+            $(this).closest('.image-container').remove();
+            var galleryContainer = $('input[name="gallery[]"]').closest('.custom-file-input');
+            if (galleryContainer.find('.preview-area .image-container').length === 0) {
+                galleryContainer.find('.preview-area').addClass('hidden');
+            }
+        });
+
         // Handle product catalog selection
         $('#selectProductCatalog').on('change', function() {
             var catalogId = $(this).val();
@@ -369,6 +378,15 @@
                             thumbnailContainer.find('.upload-btn').addClass('hidden');
                             thumbnailContainer.find('.preview-area').removeClass('hidden');
                             thumbnailContainer.find('.previewImg').attr('src', data.thumbnail);
+                            
+                            // Auto-populate gallery with catalog thumbnail
+                            var galleryContainer = $('input[name="gallery[]"]').closest('.custom-file-input');
+                            galleryContainer.find('.preview-area').removeClass('hidden').html(
+                                '<div class="image-container">' +
+                                    '<img src="' + data.thumbnail + '" alt="Gallery Image">' +
+                                    '<span class="remove-btn catalog-gallery-remove">×</span>' +
+                                '</div>'
+                            );
                         }
                     }
                 },
