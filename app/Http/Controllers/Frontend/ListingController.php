@@ -9,6 +9,7 @@ use App\Models\DeliveryItem;
 use App\Models\Listing;
 use App\Models\ListingGallery;
 use App\Models\Order;
+use App\Models\ProductCatalog;
 use App\Traits\ImageUpload;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -83,6 +84,9 @@ class ListingController extends Controller
                 'category' => $__category,
                 'subcategory' => $__sub_category,
             ];
+            
+            // Load product catalogs for dropdown
+            $data['productCatalogs'] = ProductCatalog::where('status', true)->orderBy('order')->get(['id', 'name', 'icon']);
 
         } elseif ($step == 'review') {
 
@@ -148,6 +152,9 @@ class ListingController extends Controller
         $request->validate([
             'category_id' => 'required|exists:categories,id',
             'subcategory_id' => 'nullable|exists:categories,id',
+            'product_catalog_id' => 'required|exists:product_catalogs,id',
+            'selected_duration' => 'required|string',
+            'selected_plan' => 'required|string',
             'product_name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',

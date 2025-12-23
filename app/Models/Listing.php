@@ -15,6 +15,9 @@ class Listing extends Model
     protected $fillable = [
         'seller_id',
         'category_id',
+        'product_catalog_id',
+        'selected_duration',
+        'selected_plan',
         'product_name',
         'description',
         'price',
@@ -60,6 +63,11 @@ class Listing extends Model
     public function subcategory()
     {
         return $this->belongsTo(Category::class, 'subcategory_id');
+    }
+
+    public function productCatalog()
+    {
+        return $this->belongsTo(ProductCatalog::class, 'product_catalog_id');
     }
 
     /**

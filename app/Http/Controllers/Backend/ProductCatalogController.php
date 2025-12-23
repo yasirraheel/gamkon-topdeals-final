@@ -205,4 +205,20 @@ class ProductCatalogController extends Controller
 
         return back();
     }
+
+    public function getCatalogData($id)
+    {
+        $catalog = ProductCatalog::findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'name' => $catalog->name,
+                'durations' => $catalog->durations ?? [],
+                'sharing_methods' => $catalog->sharing_methods ?? [],
+                'plans' => $catalog->plans ?? [],
+                'thumbnail' => $catalog->thumbnail ? asset($catalog->thumbnail) : null,
+            ]
+        ]);
+    }
 }

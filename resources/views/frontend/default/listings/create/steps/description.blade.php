@@ -72,14 +72,48 @@
                     <input type="hidden" name="subcategory_id" value="{{ request('subcategory_id') }}">
                 @endif
                 <div class="col-12">
+                    <div class="td-form-group">
+                        <label class="input-label" for="selectProductCatalog">{{ __('Product Catalog') }} <span>*</span></label>
+                        <div class="auth-nice-select auth-nice-select-2">
+                            <select id="selectProductCatalog" class="nice-select-active" name="product_catalog_id" required>
+                                <option value="">{{ __('Select Product Catalog') }}</option>
+                                @foreach ($data['productCatalogs'] as $catalog)
+                                    <option data-image="{{ asset($catalog->icon) }}" value="{{ $catalog->id }}"
+                                        @selected($catalog->id == old('product_catalog_id', $listing?->product_catalog_id))>{{ $catalog->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
                     <div class="td-form-group has-right-icon">
                         <label class="input-label">{{ __('Product Name') }} <span>*</span></label>
                         <div class="input-field">
-                            <input type="text" name="product_name"
+                            <input type="text" name="product_name" id="product_name"
                                 value="{{ old('product_name', $listing?->product_name ?? '') }}" class="form-control"
-                                required>
+                                required readonly>
                         </div>
                         <p class="feedback-invalid">{{ __('This field is required') }}</p>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="td-form-group">
+                        <label class="input-label" for="selectDuration">{{ __('Duration') }} <span>*</span></label>
+                        <div class="auth-nice-select auth-nice-select-2">
+                            <select id="selectDuration" class="nice-select-active" name="selected_duration" required>
+                                <option value="">{{ __('Select Duration') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="td-form-group">
+                        <label class="input-label" for="selectPlan">{{ __('Plan') }} <span>*</span></label>
+                        <div class="auth-nice-select auth-nice-select-2">
+                            <select id="selectPlan" class="nice-select-active" name="selected_plan" required>
+                                <option value="">{{ __('Select Plan') }}</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="col-12">
@@ -278,5 +312,75 @@
                 }
             });
         });
+
+        // Handle product catalog selection
+        $('#selectProductCatalog').on('change', function() {
+            var catalogId = $(this).val();
+            
+            if (!catalogId) {
+                // Clear all fields if no catalog selected
+                $('#product_name').val('');
+                $('#selectDuration').html('<option value="">{{ __('Select Duration') }}</option>');
+                $('#selectPlan').html('<option value="">{{ __('Select Plan') }}</option>');
+                $('.nice-select-active').niceSelect('update');
+                return;
+            }
+
+            // Fetch catalog data via AJAX
+            $.ajax({
+                url: '{{ buyerSellerRoute('listing.catalog.data', ':id') }}'.replace(':id', catalogId),
+                type: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        var data = response.data;
+                        
+                        // Set product name
+                        $('#product_name').val(data.name);
+                        
+                        // Populate duration dropdown
+                        var durationOptions = '<option value="">{{ __('Select Duration') }}</option>';
+                        if (data.durations && data.durations.length > 0) {
+                            data.durations.forEach(function(duration) {
+                                if (duration && duration.trim() !== '') {
+                                    durationOptions += '<option value="' + duration + '">' + duration + '</option>';
+                                }
+                            });
+                        }
+                        $('#selectDuration').html(durationOptions);
+                        
+                        // Populate plan dropdown
+                        var planOptions = '<option value="">{{ __('Select Plan') }}</option>';
+                        if (data.plans && data.plans.length > 0) {
+                            data.plans.forEach(function(plan) {
+                                if (plan && plan.trim() !== '') {
+                                    planOptions += '<option value="' + plan + '">' + plan + '</option>';
+                                }
+                            });
+                        }
+                        $('#selectPlan').html(planOptions);
+                        
+                        // Update nice-select
+                        $('.nice-select-active').niceSelect('update');
+                        
+                        // Load thumbnail if available
+                        if (data.thumbnail) {
+                            // Auto-populate thumbnail preview
+                            var thumbnailContainer = $('input[name="thumbnail"]').closest('.custom-file-input');
+                            thumbnailContainer.find('.upload-btn').addClass('hidden');
+                            thumbnailContainer.find('.preview-area').removeClass('hidden');
+                            thumbnailContainer.find('.previewImg').attr('src', data.thumbnail);
+                        }
+                    }
+                },
+                error: function() {
+                    alert('{{ __('Failed to load catalog data') }}');
+                }
+            });
+        });
+
+        // Trigger change event if editing existing listing with catalog
+        @if($listing?->product_catalog_id)
+            $('#selectProductCatalog').trigger('change');
+        @endif
     </script>
 @endpush

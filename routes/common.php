@@ -68,6 +68,7 @@ Route::prefix('listing')->name('listing.')->middleware([
     Route::get('/gallery/delete/{id}', [ListingController::class, 'galleryDelete'])->name('gallery.delete');
 
     Route::get('sub-category/{category}', [ListingController::class, 'getSubCatHtml'])->name('get.sub.cat.html');
+    Route::get('catalog-data/{id}', [\App\Http\Controllers\Backend\ProductCatalogController::class, 'getCatalogData'])->name('catalog.data');
 });
 
 // Coupon
