@@ -206,9 +206,11 @@
     </div>
 @endsection
 
-@section('scripts')
+@push('scripts')
 <script>
-    (function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Script loaded');
+        
         function updateRemoveButtons(type) {
             const items = document.querySelectorAll(`.${type}-item`);
             items.forEach((item, index) => {
@@ -225,9 +227,11 @@
 
         // Add Duration
         const addDurationBtn = document.getElementById('add-duration');
+        console.log('Duration button:', addDurationBtn);
         if (addDurationBtn) {
             addDurationBtn.addEventListener('click', function(e) {
                 e.preventDefault();
+                console.log('Add duration clicked');
                 const container = document.getElementById('durations-container');
                 const newItem = document.createElement('div');
                 newItem.className = 'duration-item mb-2 d-flex gap-2';
@@ -247,9 +251,11 @@
 
         // Add Sharing Method
         const addSharingBtn = document.getElementById('add-sharing-method');
+        console.log('Sharing button:', addSharingBtn);
         if (addSharingBtn) {
             addSharingBtn.addEventListener('click', function(e) {
                 e.preventDefault();
+                console.log('Add sharing method clicked');
                 const container = document.getElementById('sharing-methods-container');
                 const newItem = document.createElement('div');
                 newItem.className = 'sharing-method-item mb-2 d-flex gap-2';
@@ -269,9 +275,11 @@
 
         // Add Plan
         const addPlanBtn = document.getElementById('add-plan');
+        console.log('Plan button:', addPlanBtn);
         if (addPlanBtn) {
             addPlanBtn.addEventListener('click', function(e) {
                 e.preventDefault();
+                console.log('Add plan clicked');
                 const container = document.getElementById('plans-container');
                 const newItem = document.createElement('div');
                 newItem.className = 'plan-item mb-2 d-flex gap-2';
@@ -289,8 +297,8 @@
             });
         }
 
-        // Remove handlers
-        document.addEventListener('click', function(e) {
+        // Remove handlers using event delegation
+        document.body.addEventListener('click', function(e) {
             if (e.target.closest('.remove-duration')) {
                 e.preventDefault();
                 e.target.closest('.duration-item').remove();
@@ -312,6 +320,6 @@
         updateRemoveButtons('duration');
         updateRemoveButtons('sharing-method');
         updateRemoveButtons('plan');
-    })();
+    });
 </script>
-@endsection
+@endpush
