@@ -1,6 +1,14 @@
 <div class="col-sm-6 col-md-4 col-lg-3">
     <div class="games-card {{ isset($hasAnimation) ? 'wow img-custom-anim-top' : '' }}" data-wow-duration="1s"
-        data-wow-delay="0.{{ isset($hasAnimation) ? $loop->index : 0 }}s">
+        data-wow-delay="0.{{ isset($hasAnimation) ? $loop->index : 0 }}s" style="position: relative; overflow: hidden;">
+        
+        {{-- Top Badge for Catalog/Product --}}
+        @if ($listing->productCatalog)
+            <div style="position: absolute; top: 10px; left: 10px; z-index: 10; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                🔥 {{ $listing->productCatalog->name }}
+            </div>
+        @endif
+        
         <button class="fav-button {{ isWishlisted($listing->id) ? 'active' : '' }}" data-id="{{ $listing->id }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
@@ -12,6 +20,20 @@
         <a href="{{ $listing->url }}" class="game-image">
             <img loading="lazy" src="{{ $listing->thumbnail_url }}" alt="{{ $listing->product_name }}">
         </a>
+        
+        {{-- Banner Section at Bottom --}}
+        @if ($listing->selected_plan || $listing->delivery_method == 'auto')
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); padding: 12px; text-align: center; z-index: 10;">
+                <div style="color: white; font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;">
+                    @if ($listing->selected_plan)
+                        {{ $listing->selected_plan }}
+                    @elseif ($listing->delivery_method == 'auto')
+                        INSTANT DELIVERY
+                    @endif
+                </div>
+            </div>
+        @endif
+        
         <div class="game-content">
             <div class="game-content-full">
                 <h3 class="title">
@@ -19,29 +41,23 @@
                         {{ $listing->product_name }}
                     </a>
                 </h3>
-                <p class="author">{{ __('By') }} <a
-                        href="{{ route('seller.details', $listing->seller?->username ?? 404) }}">{{ $listing->seller?->username }}</a>
-                    {{ __('in') }} <a
-                        href="{{ route('category.listing', $listing->category->slug) }}">{{ $listing->category->name }}</a>
-                </p>
-                @if ($listing->selected_duration || $listing->selected_plan || $listing->delivery_method)
+                
+                {{-- Compact Info Badges --}}
+                @if ($listing->selected_duration || ($listing->delivery_method && !($listing->selected_plan || $listing->delivery_method == 'auto')))
                     <div class="d-flex gap-1 flex-wrap mt-2 mb-2">
-                        @if ($listing->delivery_method)
-                            <span class="badge bg-info" style="font-size: 10px; padding: 3px 6px;">{{ ucfirst($listing->delivery_method) }}</span>
-                        @endif
-                        @if ($listing->delivery_method == 'manual' && $listing->delivery_speed)
-                            <span class="badge bg-secondary" style="font-size: 10px; padding: 3px 6px;">{{ $listing->delivery_speed }} {{ $listing->delivery_speed_unit }}</span>
-                        @elseif ($listing->delivery_method == 'auto')
-                            <span class="badge bg-secondary" style="font-size: 10px; padding: 3px 6px;">Instant</span>
-                        @endif
                         @if ($listing->selected_duration)
-                            <span class="badge bg-warning" style="font-size: 10px; padding: 3px 6px;">{{ $listing->selected_duration }}</span>
+                            <span class="badge" style="background: #f59e0b; color: white; font-size: 10px; padding: 4px 8px; border-radius: 12px;">⏱️ {{ $listing->selected_duration }}</span>
                         @endif
-                        @if ($listing->selected_plan)
-                            <span class="badge bg-success" style="font-size: 10px; padding: 3px 6px;">{{ $listing->selected_plan }}</span>
+                        @if ($listing->delivery_method && !($listing->selected_plan || $listing->delivery_method == 'auto'))
+                            <span class="badge" style="background: #06b6d4; color: white; font-size: 10px; padding: 4px 8px; border-radius: 12px;">🚀 {{ ucfirst($listing->delivery_method) }}</span>
                         @endif
                     </div>
                 @endif
+                
+                <p class="author" style="font-size: 12px; margin-bottom: 8px;">{{ __('By') }} <a
+                        href="{{ route('seller.details', $listing->seller?->username ?? 404) }}">{{ $listing->seller?->username }}</a>
+                </p>
+                
                 @if (!isset($isLatest))
                     <div class="star">
                         <div class="star-icon">
