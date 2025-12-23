@@ -24,6 +24,19 @@
                     {{ __('in') }} <a
                         href="{{ route('category.listing', $listing->category->slug) }}">{{ $listing->category->name }}</a>
                 </p>
+                @if ($listing->productCatalog || $listing->selected_duration || $listing->selected_plan)
+                    <div class="d-flex gap-1 flex-wrap mt-2 mb-2">
+                        @if ($listing->productCatalog)
+                            <span class="badge bg-primary" style="font-size: 10px; padding: 3px 6px;">{{ $listing->productCatalog->name }}</span>
+                        @endif
+                        @if ($listing->selected_duration)
+                            <span class="badge bg-warning" style="font-size: 10px; padding: 3px 6px;">{{ $listing->selected_duration }}</span>
+                        @endif
+                        @if ($listing->selected_plan)
+                            <span class="badge bg-success" style="font-size: 10px; padding: 3px 6px;">{{ $listing->selected_plan }}</span>
+                        @endif
+                    </div>
+                @endif
                 @if (!isset($isLatest))
                     <div class="star">
                         <div class="star-icon">

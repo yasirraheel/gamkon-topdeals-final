@@ -86,7 +86,7 @@ class ViewServiceProvider extends ServiceProvider
 
             View::composer(['frontend::home.include.__latest-items'], function ($view) {
                 $view->with([
-                    'latestItemListing' => \App\Models\Listing::public()->latest()->whereNot('is_flash', 1)->whereNot('is_trending', 1)->take(4)->get(),
+                    'latestItemListing' => \App\Models\Listing::with('productCatalog')->public()->latest()->whereNot('is_flash', 1)->whereNot('is_trending', 1)->take(4)->get(),
                 ]);
             });
 
@@ -144,7 +144,7 @@ class ViewServiceProvider extends ServiceProvider
 
             View::composer(['frontend::home.include.__trending-items'], function ($view) {
                 $view->with([
-                    'trendingItemListing' => \App\Models\Listing::public()->trending()->take(8)->latest('avg_rating')->get(),
+                    'trendingItemListing' => \App\Models\Listing::with('productCatalog')->public()->trending()->take(8)->latest('avg_rating')->get(),
                 ]);
             });
 

@@ -17,7 +17,7 @@ class FrontendController extends Controller
     {
         $categories = Category::active()->get();
         $seller = $user;
-        $listings = Listing::public()->whereBelongsTo($user, 'seller')
+        $listings = Listing::with('productCatalog')->public()->whereBelongsTo($user, 'seller')
 
             ->when($request->sort, function ($query) use ($request) {
                 match ($request->sort) {
@@ -53,7 +53,7 @@ class FrontendController extends Controller
             $category = Category::where('slug', $request->category)->firstOrFail();
         }
 
-        $listings = Listing::public()
+        $listings = Listing::with('productCatalog')->public()
             ->when($category, function ($query) use ($category, $request) {
                 $column = match (true) {
                     $category->parent_id > 0 || $request->filled('category') => 'subcategory_id',
@@ -105,7 +105,7 @@ class FrontendController extends Controller
     public function searchListing(Request $request)
     {
         $request->category = $request->category == 'all' ? null : $request->category;
-        $listings = Listing::public()
+        $listings = Listing::with('productCatalog')->public()
             ->when($request->q, function ($query) use ($request) {
                 $query->search($request->q);
             })
