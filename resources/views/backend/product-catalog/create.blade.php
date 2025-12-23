@@ -170,7 +170,7 @@
     </div>
 @endsection
 
-@push('scripts')
+@section('script')
 <script>
 function updateRemoveButtons(type) {
     const items = document.querySelectorAll(`.${type}-item`);
@@ -260,4 +260,4 @@ document.addEventListener('DOMContentLoaded', function() {
     updateRemoveButtons('plan');
 });
 </script>
-@endpush
+@endsection
