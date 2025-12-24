@@ -174,7 +174,7 @@
                             </div>
 
                             {{-- Buy Now Button --}}
-                            <button onclick="window.location.href='{{ buyerSellerRoute('checkout', $listing->enc_id) }}'" 
+                            <button onclick="document.getElementById('buyNowForm').submit();" 
                                     style="width: 100%; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 8px; padding: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 16px; transition: all 0.3s;">
                                 {{ __('Buy Now') }}
                             </button>
