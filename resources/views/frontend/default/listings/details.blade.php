@@ -15,231 +15,280 @@
 @section('content')
     <div class="product-details-area section_space-my">
         <div class="container">
+            {{-- Breadcrumb --}}
+            <div class="mb-3">
+                <a href="{{ route('home') }}" style="color: #6b7280; font-size: 14px;">
+                    <iconify-icon icon="iconamoon:arrow-left-2" style="vertical-align: middle;"></iconify-icon> {{ __('Back to all offers') }}
+                </a>
+            </div>
+
             <div class="row g-4">
-                <div class="col-lg-8">
-                    <div class="left">
-                        <div class="common-product-design">
-                            <div class="product-details">
-                                <div class="top">
-                                    <div class="product-breadcrumb">
-                                        <h4 class="fw-bold mb-1">{{ $listing->product_name }}</h4>
-                                        <ul>
-                                            <li><a href="{{ route('home') }}" class="active">{{ __('Home') }}</a></li>
-                                            <li>
-                                                <div class="icon">
-                                                    <iconify-icon icon="iconamoon:arrow-right-2"
-                                                        class="arrow-right"></iconify-icon>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a href="{{ route('category.listing', $listing->category->slug) }}"
-                                                    class="active">{{ $listing->category->name }}</a>
-                                            </li>
-                                            @if ($listing->subcategory_id)
-                                                <li>
-                                                    <div class="icon">
-                                                        <iconify-icon icon="iconamoon:arrow-right-2"
-                                                            class="arrow-right"></iconify-icon>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ route('category.listing', $listing->subcategory->slug) }}"
-                                                        class="active">{{ $listing->subcategory->name }}</a>
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </div>
-                                    <div class="price-share">
-                                        <h3>{{ amountWithCurrency($listing->final_price) }}
-                                            @if ($listing->discount_value > 0)
-                                                <span>
-                                                    <del>{{ amountWithCurrency($listing->price) }}</del>
-                                                </span>
-                                            @endif
-                                        </h3>
-                                        <div class="wish-share">
-                                            <div class="wish {{ $isWishlisted ? 'active' : '' }}">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                                    viewBox="0 0 18 18" fill="none">
-                                                    <path
-                                                        d="M9 15.75L7.9125 14.775C6.65 13.6375 5.60625 12.6563 4.78125 11.8313C3.95625 11.0063 3.3 10.2655 2.8125 9.60902C2.325 8.95252 1.9845 8.34952 1.791 7.80002C1.5975 7.25052 1.5005 6.68802 1.5 6.11252C1.5 4.93752 1.89375 3.95627 2.68125 3.16877C3.46875 2.38127 4.45 1.98752 5.625 1.98752C6.275 1.98752 6.89375 2.12502 7.48125 2.40002C8.06875 2.67502 8.575 3.06252 9 3.56252C9.425 3.06252 9.93125 2.67502 10.5187 2.40002C11.1062 2.12502 11.725 1.98752 12.375 1.98752C13.55 1.98752 14.5312 2.38127 15.3187 3.16877C16.1062 3.95627 16.5 4.93752 16.5 6.11252C16.5 6.68752 16.4033 7.25002 16.2098 7.80002C16.0163 8.35002 15.6755 8.95302 15.1875 9.60902C14.6995 10.265 14.0432 11.0058 13.2188 11.8313C12.3943 12.6568 11.3505 13.638 10.0875 14.775L9 15.75Z"
-                                                        fill="#303030"></path>
-                                                </svg>
-                                                <span
-                                                    class="wishlist-text">{{ $isWishlisted ? __('Wishlisted') : __('Wishlist') }}</span>
-                                            </div>
-                                            <div class="share cursor-pointer">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                                    viewBox="0 0 18 18" fill="none">
-                                                    <path
-                                                        d="M12.75 16.5C12.125 16.5 11.5937 16.2812 11.1562 15.8438C10.7188 15.4063 10.5 14.875 10.5 14.25C10.5 14.175 10.5187 14 10.5562 13.725L5.2875 10.65C5.0875 10.8375 4.85625 10.9845 4.59375 11.091C4.33125 11.1975 4.05 11.2505 3.75 11.25C3.125 11.25 2.59375 11.0312 2.15625 10.5938C1.71875 10.1563 1.5 9.625 1.5 9C1.5 8.375 1.71875 7.84375 2.15625 7.40625C2.59375 6.96875 3.125 6.75 3.75 6.75C4.05 6.75 4.33125 6.80325 4.59375 6.90975C4.85625 7.01625 5.0875 7.163 5.2875 7.35L10.5562 4.275C10.5312 4.1875 10.5157 4.10325 10.5097 4.02225C10.5037 3.94125 10.5005 3.8505 10.5 3.75C10.5 3.125 10.7188 2.59375 11.1562 2.15625C11.5937 1.71875 12.125 1.5 12.75 1.5C13.375 1.5 13.9063 1.71875 14.3438 2.15625C14.7812 2.59375 15 3.125 15 3.75C15 4.375 14.7812 4.90625 14.3438 5.34375C13.9063 5.78125 13.375 6 12.75 6C12.45 6 12.1687 5.94675 11.9062 5.84025C11.6438 5.73375 11.4125 5.587 11.2125 5.4L5.94375 8.475C5.96875 8.5625 5.9845 8.647 5.991 8.7285C5.9975 8.81 6.0005 8.9005 6 9C5.9995 9.0995 5.9965 9.19025 5.991 9.27225C5.9855 9.35425 5.96975 9.4385 5.94375 9.525L11.2125 12.6C11.4125 12.4125 11.6438 12.2657 11.9062 12.1597C12.1687 12.0537 12.45 12.0005 12.75 12C13.375 12 13.9063 12.2188 14.3438 12.6562C14.7812 13.0937 15 13.625 15 14.25C15 14.875 14.7812 15.4063 14.3438 15.8438C13.9063 16.2812 13.375 16.5 12.75 16.5Z"
-                                                        fill="#26B4FB"></path>
-                                                </svg>
-                                                {{ __('Share') }}
-                                            </div>
-                                        </div>
-                                    </div>
+                {{-- Left Side: Image + Info --}}
+                <div class="col-lg-7">
+                    <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                        <h2 style="font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 24px;">
+                            {{ $listing->product_name }}
+                        </h2>
+
+                        <div style="display: flex; gap: 24px; margin-bottom: 30px;">
+                            {{-- Product Thumbnail --}}
+                            <div style="flex-shrink: 0;">
+                                <div style="width: 160px; height: 160px; border-radius: 12px; overflow: hidden; background: #000;">
+                                    <img src="{{ asset($listing->thumbnail) }}" alt="{{ $listing->product_name }}" style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
-                                <!-- Product Info Section with Thumbnail on Left -->
-                                <div style="display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap;">
-                                    {{-- Thumbnail on Left --}}
+                            </div>
+
+                            {{-- Product Details List --}}
+                            <div style="flex: 1;">
+                                {{-- Can be activated in --}}
+                                <div style="display: flex; gap: 12px; margin-bottom: 16px;">
                                     <div style="flex-shrink: 0;">
-                                        <div style="width: 280px; height: 280px; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                                            <img src="{{ asset($listing->thumbnail) }}" alt="{{ $listing->product_name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                                        </div>
+                                        <iconify-icon icon="lucide:check-circle" style="font-size: 20px; color: #10b981;"></iconify-icon>
                                     </div>
-                                    
-                                    {{-- Product Info on Right --}}
-                                    <div style="flex: 1; min-width: 300px;">
-                                        <h2 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0 0 20px 0; line-height: 1.3;">
-                                            {{ $listing->product_name }}
-                                        </h2>
-                                        
-                                        {{-- Clean Product Information Grid --}}
-                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
-                                            
-                                            @if ($listing->category)
-                                                <div style="display: flex; gap: 12px;">
-                                                    <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                        <iconify-icon icon="lucide:folder" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                                    </div>
-                                                    <div>
-                                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Product Category') }}</p>
-                                                        <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->category->name }}</p>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            
-                                            @php
-                                                $sharingMethod = null;
-                                                if ($listing->productCatalog && !empty($listing->productCatalog->sharing_methods)) {
-                                                    $methods = $listing->productCatalog->sharing_methods;
-                                                    if (is_array($methods)) {
-                                                        $sharingMethod = $methods[0] ?? null;
-                                                    } else {
-                                                        $sharingMethod = $methods; // string fallback
-                                                    }
-                                                }
-                                            @endphp
-                                            @if ($sharingMethod)
-                                                <div style="display: flex; gap: 12px;">
-                                                    <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                        <iconify-icon icon="lucide:shield-check" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                                    </div>
-                                                    <div>
-                                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Sharing Method') }}</p>
-                                                        <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $sharingMethod }}</p>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            
-                                            <div style="display: flex; gap: 12px;">
-                                                <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                    <iconify-icon icon="lucide:monitor" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                                </div>
-                                                <div>
-                                                    <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Supported devices') }}</p>
-                                                    <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">PC, Mac</p>
-                                                </div>
-                                            </div>
-                                            
-                                            @if ($listing->selected_duration)
-                                                <div style="display: flex; gap: 12px;">
-                                                    <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                        <iconify-icon icon="lucide:clock" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                                    </div>
-                                                    <div>
-                                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Duration') }}</p>
-                                                        <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_duration }}</p>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        </div>
+                                    <div>
+                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Can be activated in') }}</p>
+                                        <p style="font-size: 14px; color: #111827; margin: 0; font-weight: 600;">Pakistan</p>
+                                        <a href="#" style="font-size: 12px; color: #3b82f6; text-decoration: none;">{{ __('Check region restrictions') }}</a>
                                     </div>
                                 </div>
+
+                                @php
+                                    $sharingMethod = null;
+                                    if ($listing->productCatalog && !empty($listing->productCatalog->sharing_methods)) {
+                                        $methods = $listing->productCatalog->sharing_methods;
+                                        $sharingMethod = is_array($methods) ? ($methods[0] ?? null) : $methods;
+                                    }
+                                @endphp
                                 
-                                {{-- Important Notice --}}
-                                <div style="background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 16px; margin-top: 24px;">
-                                    <div style="display: flex; gap: 12px; align-items: start;">
-                                        <iconify-icon icon="lucide:info" style="font-size: 20px; color: #3b82f6; flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+                                {{-- Sharing Method --}}
+                                @if ($sharingMethod || $listing->selected_plan)
+                                    <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                                        <div style="flex-shrink: 0;">
+                                            <iconify-icon icon="lucide:user-check" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                        </div>
                                         <div>
-                                            <h6 style="color: #1e40af; font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">{{ __('Important Notice') }}</h6>
-                                            <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 0;">
-                                                {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
-                                            </p>
-                                            <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 8px 0 0 0;">
-                                                {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
-                                            </p>
+                                            <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Sharing Method') }}</p>
+                                            <p style="font-size: 14px; color: #111827; margin: 0; font-weight: 600;">{{ $sharingMethod ?? $listing->selected_plan }}</p>
+                                        </div>
+                                    </div>
+                                @endif
+
+                                {{-- Supported devices --}}
+                                <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                                    <div style="flex-shrink: 0;">
+                                        <iconify-icon icon="lucide:monitor" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                    </div>
+                                    <div>
+                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Supported devices') }}</p>
+                                        <p style="font-size: 14px; color: #111827; margin: 0; font-weight: 600;">PC, Mac</p>
+                                    </div>
+                                </div>
+
+                                {{-- Duration --}}
+                                @if ($listing->selected_duration)
+                                    <div style="display: flex; gap: 12px;">
+                                        <div style="flex-shrink: 0;">
+                                            <iconify-icon icon="lucide:clock" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                        </div>
+                                        <div>
+                                            <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Duration') }}</p>
+                                            <p style="font-size: 14px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_duration }}</p>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        {{-- Important Notice --}}
+                        <div style="background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 16px;">
+                            <div style="display: flex; gap: 12px; align-items: start;">
+                                <iconify-icon icon="lucide:info" style="font-size: 20px; color: #3b82f6; flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+                                <div>
+                                    <h6 style="color: #1e40af; font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">{{ __('Important Notice') }}</h6>
+                                    <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 0;">
+                                        {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
+                                    </p>
+                                    <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 8px 0 0 0;">
+                                        {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{-- Offer Description --}}
+                    <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
+                        <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">{{ __('Offer description') }}</h4>
+                        <div style="color: #4b5563; font-size: 14px; line-height: 1.8;">
+                            {!! $listing->description !!}
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Right Side: Pricing + Actions --}}
+                <div class="col-lg-5">
+                    <div style="position: sticky; top: 20px;">
+                        <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                            {{-- Delivery Times --}}
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <iconify-icon icon="lucide:clock" style="font-size: 16px; color: #6b7280;"></iconify-icon>
+                                        <span style="font-size: 14px; color: #6b7280;">{{ __('Guaranteed Delivery time') }}</span>
+                                    </div>
+                                    <span style="font-size: 14px; color: #111827; font-weight: 600;">{{ $listing->delivery_method == 'auto' ? '5 minutes' : ($listing->delivery_speed . ' ' . $listing->delivery_speed_unit) }}</span>
+                                </div>
+
+                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                    <div style="display: flex; align-items: center; gap: 8px;">
+                                        <iconify-icon icon="lucide:zap" style="font-size: 16px; color: #6b7280;"></iconify-icon>
+                                        <span style="font-size: 14px; color: #6b7280;">{{ __('Instant delivery time') }}</span>
+                                    </div>
+                                    <span style="font-size: 14px; color: #111827; font-weight: 600;">{{ $listing->delivery_method == 'auto' ? 'Instant' : '30s' }}</span>
+                                </div>
+
+                                @if ($listing->guarantee_period)
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <iconify-icon icon="lucide:shield-check" style="font-size: 16px; color: #6b7280;"></iconify-icon>
+                                            <span style="font-size: 14px; color: #6b7280;">{{ __('Warranty Period') }}</span>
+                                        </div>
+                                        <span style="font-size: 14px; color: #111827; font-weight: 600;">{{ $listing->guarantee_period }}</span>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 20px 0;">
+
+                            {{-- Total Price --}}
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <span style="font-size: 16px; color: #6b7280; font-weight: 600;">{{ __('Total') }}:</span>
+                                <div style="text-align: right;">
+                                    <span style="font-size: 24px; color: #ef4444; font-weight: 700;">{{ setting('currency_symbol', 'global') }}{{ number_format($listing->final_price, 2) }}</span>
+                                    @if ($listing->discount_value > 0)
+                                        <div>
+                                            <span style="font-size: 14px; color: #9ca3af; text-decoration: line-through;">{{ setting('currency_symbol', 'global') }}{{ number_format($listing->price, 2) }}</span>
+                                        </div>
+                                    @endif
+                                </div>
+                            </div>
+
+                            {{-- Buy Now Button --}}
+                            <button onclick="window.location.href='{{ buyerSellerRoute('checkout', $listing->enc_id) }}'" 
+                                    style="width: 100%; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 8px; padding: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 16px; transition: all 0.3s;">
+                                {{ __('Buy Now') }}
+                            </button>
+
+                            {{-- Guarantees --}}
+                            <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                                <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280;">
+                                    <iconify-icon icon="lucide:shield-check" style="font-size: 16px; color: #10b981;"></iconify-icon>
+                                    <span>{{ __('Refund Guarantee') }}</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280;">
+                                    <iconify-icon icon="lucide:truck" style="font-size: 16px; color: #10b981;"></iconify-icon>
+                                    <span>{{ __('Express Checkout') }}</span>
+                                </div>
+                            </div>
+
+                            <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 20px 0;">
+
+                            {{-- Seller Info --}}
+                            <div>
+                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                                    <img src="{{ $listing->seller->avatar_url ?? asset('assets/images/default-avatar.png') }}" 
+                                         alt="{{ $listing->seller->username }}" 
+                                         style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
+                                    <div style="flex: 1;">
+                                        <a href="{{ route('seller.details', $listing->seller->username) }}" style="font-size: 15px; color: #111827; font-weight: 600; text-decoration: none; display: block;">
+                                            {{ $listing->seller->username }}
+                                        </a>
+                                        <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px;">
+                                            <iconify-icon icon="lucide:star" style="font-size: 14px; color: #fbbf24;"></iconify-icon>
+                                            <span style="font-size: 13px; color: #6b7280; font-weight: 600;">{{ number_format($listing->average_rating, 1) }}</span>
+                                            <span style="font-size: 13px; color: #9ca3af;">({{ $listing->total_reviews }})</span>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <hr class="details-saperator">
-                                <div class="product-details-box">
-                                    <h4>{{ __('Details') }}:</h4>
-                                    {!! $listing->description !!}
-                                </div>
-                                <hr class="details-saperator">
-                                <div class="product-review-section section_space-mT">
-                                    <div class="container">
-                                        <div class="product-review-box">
-                                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <h4>{{ __('Product Reviews') }}
-                                                </h4>
-                                                @if ($listing->total_reviews > 0)
-                                                    <div class="title-and-count">
 
-                                                        <div class="review-count">
-                                                            <div class="star">
-                                                                @for ($i = 1; $i <= 5; $i++)
-                                                                    @if (round($listing->average_rating) >= $i)
-                                                                        <img src="{{ themeAsset('images/icon/star.png') }}"
-                                                                            alt="star" class="star-filled">
-                                                                    @else
-                                                                        <img src="{{ themeAsset('images/icon/empty-star.png') }}"
-                                                                            alt="star" class="star-filled">
-                                                                    @endif
-                                                                @endfor
-                                                            </div>
-                                                            <p>({{ $listing->total_reviews }}
-                                                                {{ __('reviews') }})</p>
+                                {{-- Recent Feedback --}}
+                                @if ($listing->total_reviews > 0)
+                                    <div>
+                                        <h6 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 12px;">{{ __('Recent feedback') }}</h6>
+                                        @foreach($listing->approvedReviews()->latest()->take(3)->get() as $review)
+                                            <div style="background: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+                                                <div style="display: flex; align-items: start; gap: 8px; margin-bottom: 6px;">
+                                                    <iconify-icon icon="lucide:thumbs-up" style="font-size: 14px; color: #3b82f6; flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+                                                    <div style="flex: 1;">
+                                                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                                            <span style="font-size: 13px; color: #111827; font-weight: 600;">{{ $review->user->username }}</span>
+                                                            <span style="font-size: 12px; color: #9ca3af;">{{ __('Buy') }} {{ $listing->category->name }} {{ __('Account') }}</span>
                                                         </div>
+                                                        <p style="font-size: 12px; color: #4b5563; margin: 0; line-height: 1.4;">{{ Str::limit($review->review, 80) }}</p>
+                                                        <span style="font-size: 11px; color: #9ca3af; display: block; margin-top: 4px;">{{ $review->created_at->diffForHumans() }}</span>
                                                     </div>
-                                                @endif
-                                            </div>
-                                            @if ($listing->total_reviews > 0)
-                                                <div class="review-stats mt-4 p-3 bg-light rounded">
-                                                    <h6 class="mb-3">{{ __('Rating Breakdown') }}</h6>
-                                                    @for ($i = 5; $i >= 1; $i--)
-                                                        @php
-                                                            $ratingCount = $listing
-                                                                ->approvedReviews()
-                                                                ->where('rating', $i)
-                                                                ->count();
-                                                            $percentage =
-                                                                $listing->total_reviews > 0
-                                                                    ? ($ratingCount / $listing->total_reviews) * 100
-                                                                    : 0;
-                                                        @endphp
-                                                        <div class="rating-breakdown d-flex align-items-center mb-2">
-                                                            <span class="rating-label me-2">{{ $i }} ★</span>
-                                                            <div class="progress flex-grow-1 me-2" style="height: 8px;">
-                                                                <div class="progress-bar bg-warning" role="progressbar"
-                                                                    style="width: {{ $percentage }}%"
-                                                                    aria-valuenow="{{ $percentage }}" aria-valuemin="0"
-                                                                    aria-valuemax="100"></div>
-                                                            </div>
-                                                            <small
-                                                                class="rating-count text-muted">{{ $ratingCount }}</small>
-                                                        </div>
-                                                    @endfor
                                                 </div>
-                                            @endif
+                                            </div>
+                                        @endforeach
+                                        
+                                        <a href="#reviews" style="font-size: 13px; color: #3b82f6; text-decoration: none; display: block; text-align: center; margin-top: 12px;">
+                                            {{ __('All feedback') }}
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                                            <div class="review-box title_mt" id="reviewContainer">
-                                                @forelse($listing->approvedReviews()->get() as $review)
-                                                    <div class="review-item">
-                                                        @if (auth()->check())
+            {{-- Reviews Section --}}
+            <div class="row mt-5" id="reviews">
+                <div class="col-12">
+                    <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 style="font-size: 18px; font-weight: 700; margin: 0;">{{ __('Product Reviews') }}</h4>
+                            @if ($listing->total_reviews > 0)
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <iconify-icon icon="lucide:star" style="font-size: 18px; color: #fbbf24;"></iconify-icon>
+                                    <span style="font-size: 16px; font-weight: 600;">{{ number_format($listing->average_rating, 1) }}</span>
+                                    <span style="font-size: 14px; color: #9ca3af;">({{ $listing->total_reviews }} {{ __('reviews') }})</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        @if ($listing->total_reviews > 0)
+                            <div class="review-stats mt-4 p-3 bg-light rounded">
+                                <h6 class="mb-3">{{ __('Rating Breakdown') }}</h6>
+                                @for ($i = 5; $i >= 1; $i--)
+                                    @php
+                                        $ratingCount = $listing
+                                            ->approvedReviews()
+                                            ->where('rating', $i)
+                                            ->count();
+                                        $percentage =
+                                            $listing->total_reviews > 0
+                                                ? ($ratingCount / $listing->total_reviews) * 100
+                                                : 0;
+                                    @endphp
+                                    <div class="rating-breakdown d-flex align-items-center mb-2">
+                                        <span class="rating-label me-2">{{ $i }} ★</span>
+                                        <div class="progress flex-grow-1 me-2" style="height: 8px;">
+                                            <div class="progress-bar bg-warning" role="progressbar"
+                                                style="width: {{ $percentage }}%"
+                                                aria-valuenow="{{ $percentage }}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                        <small class="rating-count text-muted">{{ $ratingCount }}</small>
+                                    </div>
+                                @endfor
+                            </div>
+                        @endif
+
+                        <div class="review-box title_mt" id="reviewContainer">
+                            @forelse($listing->approvedReviews()->get() as $review)
+                                <div class="review-item">
+                                    @if (auth()->check())
                                                             {{-- flag --}}
                                                             <button data-id="{{ encrypt($review->id) }}"
                                                                 class="report-button common-modal-button" type="button"
