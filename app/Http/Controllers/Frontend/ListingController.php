@@ -372,7 +372,12 @@ class ListingController extends Controller
 
         abort_if(!$listing->seller, 404);
 
-        $suggested = Listing::whereNot('id', $listing->id)->public()->whereBelongsTo($listing->category)->limit(4)->get();
+        $suggested = Listing::whereNot('id', $listing->id)
+            ->public()
+            ->where('category_id', $listing->category_id)
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
 
         $isWishlisted = isWishlisted($listing->id);
 
