@@ -112,68 +112,96 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($listing->productCatalog || $listing->selected_duration || $listing->selected_plan)
-                                    <div class="delivery-method-and-speed">
+                                
+                                {{-- Clean Product Information Grid --}}
+                                <div style="background: #ffffff; border-radius: 12px; padding: 24px; margin-top: 24px; border: 1px solid #e5e7eb;">
+                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                                        
                                         @if ($listing->productCatalog)
-                                            <div class="delivery-method">
-                                                <p>{{ __('Product') }}:</p>
-                                                <button class="tag-btn">
-                                                    <span>
-                                                        <iconify-icon icon="lucide:package"
-                                                            class="tag-icon"></iconify-icon>
-                                                    </span>
-                                                    {{ $listing->productCatalog->name }}
-                                                </button>
+                                            <div style="display: flex; gap: 12px;">
+                                                <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                    <iconify-icon icon="lucide:package" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                                </div>
+                                                <div>
+                                                    <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Product Type') }}</p>
+                                                    <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->productCatalog->name }}</p>
+                                                </div>
                                             </div>
                                         @endif
-                                        @if ($listing->selected_duration)
-                                            <div class="speed">
-                                                <p>{{ __('Duration') }}:</p>
-                                                <button class="tag-btn">
-                                                    <span>
-                                                        <iconify-icon icon="lucide:clock"
-                                                            class="tag-icon"></iconify-icon>
-                                                    </span>
-                                                    {{ $listing->selected_duration }}
-                                                </button>
-                                            </div>
-                                        @endif
+                                        
                                         @if ($listing->selected_plan)
-                                            <div class="speed">
-                                                <p>{{ __('Plan') }}:</p>
-                                                <button class="tag-btn">
-                                                    <span>
-                                                        <iconify-icon icon="lucide:tag"
-                                                            class="tag-icon"></iconify-icon>
-                                                    </span>
-                                                    {{ $listing->selected_plan }}
-                                                </button>
+                                            <div style="display: flex; gap: 12px;">
+                                                <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                    <iconify-icon icon="lucide:shield-check" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                                </div>
+                                                <div>
+                                                    <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Sharing Method') }}</p>
+                                                    <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_plan }}</p>
+                                                </div>
                                             </div>
                                         @endif
+                                        
+                                        <div style="display: flex; gap: 12px;">
+                                            <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                <iconify-icon icon="lucide:monitor" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                            </div>
+                                            <div>
+                                                <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Supported devices') }}</p>
+                                                <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">PC, Mac</p>
+                                            </div>
+                                        </div>
+                                        
+                                        @if ($listing->selected_duration)
+                                            <div style="display: flex; gap: 12px;">
+                                                <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                    <iconify-icon icon="lucide:clock" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                                </div>
+                                                <div>
+                                                    <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Duration') }}</p>
+                                                    <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_duration }}</p>
+                                                </div>
+                                            </div>
+                                        @endif
+                                        
+                                        <div style="display: flex; gap: 12px;">
+                                            <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                <iconify-icon icon="icon-park-solid:flash-payment" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                            </div>
+                                            <div>
+                                                <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Delivery Method') }}</p>
+                                                <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ ucwords($listing->delivery_method) ?? 'Auto' }}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div style="display: flex; gap: 12px;">
+                                            <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                <iconify-icon icon="material-symbols:speed-rounded" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                            </div>
+                                            <div>
+                                                <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Delivery Speed') }}</p>
+                                                <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->delivery_method == 'auto' ? 'Instant' : $listing->delivery_speed . ' ' . $listing->delivery_speed_unit }}</p>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
-                                @endif
-                                <div class="delivery-method-and-speed">
-                                    <div class="delivery-method">
-                                        <p>{{ __('Delivery Method') }}:</p>
-                                        <button class="tag-btn">
-                                            <span>
-                                                <iconify-icon icon="icon-park-solid:flash-payment"
-                                                    class="tag-icon"></iconify-icon>
-                                            </span>
-                                            {{ ucwords($listing->delivery_method) ?? 'Auto' }}
-                                        </button>
-                                    </div>
-                                    <div class="speed">
-                                        <p>{{ __('Delivery Speed') }}:</p>
-                                        <button class="tag-btn">
-                                            <span>
-                                                <iconify-icon icon="material-symbols:speed-rounded"
-                                                    class="tag-icon"></iconify-icon>
-                                            </span>
-                                            {{ $listing->delivery_method == 'auto' ? 'Instant' : $listing->delivery_speed . ' ' . $listing->delivery_speed_unit }}
-                                        </button>
+                                    
+                                    {{-- Important Notice --}}
+                                    <div style="background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 16px; margin-top: 24px;">
+                                        <div style="display: flex; gap: 12px; align-items: start;">
+                                            <iconify-icon icon="lucide:info" style="font-size: 20px; color: #3b82f6; flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+                                            <div>
+                                                <h6 style="color: #1e40af; font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">{{ __('Important Notice') }}</h6>
+                                                <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 0;">
+                                                    {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
+                                                </p>
+                                                <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 8px 0 0 0;">
+                                                    {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                
                                 <hr class="details-saperator">
                                 <div class="product-details-box">
                                     <h4>{{ __('Details') }}:</h4>
