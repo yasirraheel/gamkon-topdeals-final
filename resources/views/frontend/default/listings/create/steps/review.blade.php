@@ -31,7 +31,7 @@
             @endif
             @if ($listing->selected_plan)
                 <div class="product-name">
-                    <h5 class="name-title">{{ __('Plan') }} :</h5>
+                    <h5 class="name-title">{{ __('Sharing Method') }} :</h5>
                     <p class="name-product">{{ $listing->selected_plan }}</p>
                 </div>
             @endif

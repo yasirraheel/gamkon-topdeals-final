@@ -108,10 +108,10 @@
                 </div>
                 <div class="col-12">
                     <div class="td-form-group">
-                        <label class="input-label" for="selectPlan">{{ __('Plan') }} <span>*</span></label>
+                        <label class="input-label" for="selectPlan">{{ __('Sharing Method') }} <span>*</span></label>
                         <div class="auth-nice-select auth-nice-select-2">
                             <select id="selectPlan" class="nice-select-active" name="selected_plan" required>
-                                <option value="">{{ __('Select Plan') }}</option>
+                                <option value="">{{ __('Select Sharing Method') }}</option>
                             </select>
                         </div>
                     </div>
@@ -330,7 +330,7 @@
                 // Clear all fields if no catalog selected
                 $('#product_name').val('');
                 $('#selectDuration').html('<option value="">{{ __('Select Duration') }}</option>');
-                $('#selectPlan').html('<option value="">{{ __('Select Plan') }}</option>');
+                $('#selectPlan').html('<option value="">{{ __('Select Sharing Method') }}</option>');
                 $('.nice-select-active').niceSelect('update');
                 return;
             }
@@ -365,12 +365,12 @@
                         $('#selectDuration').html(durationOptions);
                         
                         // Populate plan dropdown
-                        var planOptions = '<option value="">{{ __('Select Plan') }}</option>';
-                        if (data.plans && data.plans.length > 0) {
-                            data.plans.forEach(function(plan) {
-                                if (plan && plan.trim() !== '') {
-                                    var selected = (plan === savedPlan) ? ' selected' : '';
-                                    planOptions += '<option value="' + plan + '"' + selected + '>' + plan + '</option>';
+                        var planOptions = '<option value="">{{ __('Select Sharing Method') }}</option>';
+                        if (data.sharing_methods && data.sharing_methods.length > 0) {
+                            data.sharing_methods.forEach(function(method) {
+                                if (method && method.trim() !== '') {
+                                    var selected = (method === savedPlan) ? ' selected' : '';
+                                    planOptions += '<option value="' + method + '"' + selected + '>' + method + '</option>';
                                 }
                             });
                         }
