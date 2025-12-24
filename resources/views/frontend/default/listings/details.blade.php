@@ -272,15 +272,15 @@
                                     @if ($reviews->count() > 0)
                                         <div id="reviewContainer">
                                             @foreach($reviews as $review)
-                                                @if($review->user)
+                                                @if($review->buyer)
                                                 <div style="background: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
                                                     <div style="display: flex; align-items: start; gap: 8px;">
                                                         <div style="flex: 1;">
                                                             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                                                <img src="{{ $review->user->avatar_path ?? themeAsset('images/user/user-default.png') }}" 
-                                                                     alt="{{ $review->user->username }}" 
+                                                                <img src="{{ $review->buyer->avatar_path ?? themeAsset('images/user/user-default.png') }}" 
+                                                                     alt="{{ $review->buyer->username }}" 
                                                                      style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;">
-                                                                <span style="font-size: 13px; color: #111827; font-weight: 600;">{{ $review->user->username }}</span>
+                                                                <span style="font-size: 13px; color: #111827; font-weight: 600;">{{ $review->buyer->username }}</span>
                                                                 <div style="display: flex; gap: 2px;">
                                                                     @for ($i = 1; $i <= 5; $i++)
                                                                         <iconify-icon icon="lucide:star" style="font-size: 11px; color: {{ $review->rating >= $i ? '#fbbf24' : '#d1d5db' }};"></iconify-icon>
