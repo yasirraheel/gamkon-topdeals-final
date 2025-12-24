@@ -267,6 +267,7 @@
                                     @if ($listing->total_reviews > 0)
                                         <div id="reviewContainer">
                                             @foreach($listing->approvedReviews()->latest()->take(5)->get() as $review)
+                                                @if($review->user)
                                                 <div style="background: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
                                                     <div style="display: flex; align-items: start; gap: 8px;">
                                                         <div style="flex: 1;">
@@ -301,6 +302,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
+                                                @endif
                                             @endforeach
 
                                             @if ($listing->total_reviews > 5)
