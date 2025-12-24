@@ -24339,4 +24339,20 @@ a.link {
   border: 0 none;
 }
 
+
+/* Custom Badge Color Overrides */
+.badge.bg-primary {
+  background-color: #0056b3 !important; /* Darker blue */
+  color: #ffffff !important;
+}
+
+.badge.bg-warning {
+  background-color: #ffc107 !important; /* Muted orange */
+  color: #343a40 !important;
+}
+
+.badge.bg-success {
+  background-color: #28a745 !important; /* Refined green */
+  color: #ffffff !important;
+}
 /*# sourceMappingURL=styles.css.map */
