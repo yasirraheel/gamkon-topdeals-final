@@ -18,6 +18,7 @@ class Listing extends Model
         'product_catalog_id',
         'selected_duration',
         'selected_plan',
+        'guarantee_period',
         'product_name',
         'description',
         'price',

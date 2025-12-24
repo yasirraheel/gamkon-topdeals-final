@@ -35,6 +35,12 @@
                     <p class="name-product">{{ $listing->selected_plan }}</p>
                 </div>
             @endif
+            @if ($listing->guarantee_period)
+                <div class="product-name">
+                    <h5 class="name-title">{{ __('Guarantee Period') }} :</h5>
+                    <p class="name-product">{{ $listing->guarantee_period }}</p>
+                </div>
+            @endif
             <div class="product-name">
                 <h5 class="name-title">{{ __('Price') }} :</h5>
                 <p class="name-product">{{ setting('currency_symbol', 'global') }}{{ $listing->price }}</p>

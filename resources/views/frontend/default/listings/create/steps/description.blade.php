@@ -117,6 +117,16 @@
                     </div>
                 </div>
                 <div class="col-12">
+                    <div class="td-form-group has-right-icon">
+                        <label class="input-label">{{ __('Guarantee Period') }}</label>
+                        <div class="input-field">
+                            <input type="text" name="guarantee_period" id="guarantee_period"
+                                value="{{ old('guarantee_period', $listing?->guarantee_period ?? '') }}" class="form-control"
+                                placeholder="{{ __('e.g., 30 Days, 1 Year, Lifetime') }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
                     <div class="td-form-group custom-quill-editor">
                         <label class="input-label">{{ __('Description') }} <span>*</span></label>
                         <textarea type="hidden" id="editor" name="description">{{ old('description', $listing?->description ?? '') }}</textarea>
