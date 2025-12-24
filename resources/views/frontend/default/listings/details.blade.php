@@ -40,18 +40,6 @@
 
                             {{-- Product Details List --}}
                             <div style="flex: 1;">
-                                {{-- Can be activated in --}}
-                                <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-                                    <div style="flex-shrink: 0;">
-                                        <iconify-icon icon="lucide:check-circle" style="font-size: 20px; color: #10b981;"></iconify-icon>
-                                    </div>
-                                    <div>
-                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Can be activated in') }}</p>
-                                        <p style="font-size: 14px; color: #111827; margin: 0; font-weight: 600;">Pakistan</p>
-                                        <a href="#" style="font-size: 12px; color: #3b82f6; text-decoration: none;">{{ __('Check region restrictions') }}</a>
-                                    </div>
-                                </div>
-
                                 @php
                                     $sharingMethod = null;
                                     if ($listing->productCatalog && !empty($listing->productCatalog->sharing_methods)) {
@@ -59,43 +47,61 @@
                                         $sharingMethod = is_array($methods) ? ($methods[0] ?? null) : $methods;
                                     }
                                 @endphp
-                                
-                                {{-- Sharing Method --}}
-                                @if ($sharingMethod || $listing->selected_plan)
-                                    <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+
+                                {{-- Row 1: Can be activated in + Sharing Method --}}
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                                    {{-- Can be activated in --}}
+                                    <div style="display: flex; gap: 8px;">
                                         <div style="flex-shrink: 0;">
-                                            <iconify-icon icon="lucide:user-check" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                            <iconify-icon icon="lucide:check-circle" style="font-size: 18px; color: #10b981;"></iconify-icon>
                                         </div>
                                         <div>
-                                            <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Sharing Method') }}</p>
-                                            <p style="font-size: 14px; color: #111827; margin: 0; font-weight: 600;">{{ $sharingMethod ?? $listing->selected_plan }}</p>
+                                            <p style="font-size: 12px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Can be activated in') }}</p>
+                                            <p style="font-size: 13px; color: #111827; margin: 0; font-weight: 600;">Pakistan</p>
+                                            <a href="#" style="font-size: 11px; color: #3b82f6; text-decoration: none;">{{ __('Check region restrictions') }}</a>
                                         </div>
                                     </div>
-                                @endif
 
-                                {{-- Supported devices --}}
-                                <div style="display: flex; gap: 12px; margin-bottom: 16px;">
-                                    <div style="flex-shrink: 0;">
-                                        <iconify-icon icon="lucide:monitor" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                    </div>
-                                    <div>
-                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Supported devices') }}</p>
-                                        <p style="font-size: 14px; color: #111827; margin: 0; font-weight: 600;">PC, Mac</p>
-                                    </div>
+                                    {{-- Sharing Method --}}
+                                    @if ($sharingMethod || $listing->selected_plan)
+                                        <div style="display: flex; gap: 8px;">
+                                            <div style="flex-shrink: 0;">
+                                                <iconify-icon icon="lucide:user-check" style="font-size: 18px; color: #6b7280;"></iconify-icon>
+                                            </div>
+                                            <div>
+                                                <p style="font-size: 12px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Sharing Method') }}</p>
+                                                <p style="font-size: 13px; color: #111827; margin: 0; font-weight: 600;">{{ $sharingMethod ?? $listing->selected_plan }}</p>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
 
-                                {{-- Duration --}}
-                                @if ($listing->selected_duration)
-                                    <div style="display: flex; gap: 12px;">
+                                {{-- Row 2: Supported devices + Duration --}}
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                    {{-- Supported devices --}}
+                                    <div style="display: flex; gap: 8px;">
                                         <div style="flex-shrink: 0;">
-                                            <iconify-icon icon="lucide:clock" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                            <iconify-icon icon="lucide:monitor" style="font-size: 18px; color: #6b7280;"></iconify-icon>
                                         </div>
                                         <div>
-                                            <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Duration') }}</p>
-                                            <p style="font-size: 14px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_duration }}</p>
+                                            <p style="font-size: 12px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Supported devices') }}</p>
+                                            <p style="font-size: 13px; color: #111827; margin: 0; font-weight: 600;">PC, Mac</p>
                                         </div>
                                     </div>
-                                @endif
+
+                                    {{-- Duration --}}
+                                    @if ($listing->selected_duration)
+                                        <div style="display: flex; gap: 8px;">
+                                            <div style="flex-shrink: 0;">
+                                                <iconify-icon icon="lucide:clock" style="font-size: 18px; color: #6b7280;"></iconify-icon>
+                                            </div>
+                                            <div>
+                                                <p style="font-size: 12px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Duration') }}</p>
+                                                <p style="font-size: 13px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_duration }}</p>
+                                            </div>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
 
