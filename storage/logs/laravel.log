@@ -4109,3 +4109,123 @@
 [stacktrace]
 #0 {main}
 "} 
+[2025-12-24 19:56:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 19:57:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 19:58:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 19:59:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:00:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:01:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:02:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:03:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:04:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:05:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:06:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:07:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:08:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:09:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:10:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:11:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:12:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:13:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:14:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:15:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:16:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:17:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:18:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:19:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:20:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:21:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:22:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:23:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:24:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 
+[2025-12-24 20:25:42] production.ERROR: Cannot redeclare getRecentSearch() (previously declared in C:\Users\shaha\Downloads\gamkon-topdeals\app\helpers.php:712) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare getRecentSearch() (previously declared in C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:712) at C:\\Users\\shaha\\Downloads\\gamkon-topdeals\\app\\helpers.php:717)
+[stacktrace]
+#0 {main}
+"} 

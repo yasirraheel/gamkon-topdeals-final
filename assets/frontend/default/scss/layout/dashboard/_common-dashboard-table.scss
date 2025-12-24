@@ -38,7 +38,7 @@
         th,
         td {
           border-bottom: 0;
-          color: #303030;
+          color: #303030 !important;
           font-size: 14px;
           font-weight: 700;
           line-height: normal;
@@ -49,7 +49,7 @@
       tbody tr {
         th,
         td {
-          color: rgba(48, 48, 48, 0.8);
+          color: #303030 !important;
           font-size: 14px;
           font-weight: 500;
           line-height: normal;

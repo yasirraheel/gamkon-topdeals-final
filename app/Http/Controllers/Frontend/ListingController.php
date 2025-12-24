@@ -159,8 +159,8 @@ class ListingController extends Controller
             'product_catalog_id' => ($isUpdate ? 'nullable' : 'required') . '|exists:product_catalogs,id',
             'selected_duration' => ($isUpdate ? 'nullable' : 'required') . '|string',
             'selected_plan' => ($isUpdate ? 'nullable' : 'required') . '|string',
-            'region' => 'nullable|string',
-            'devices' => 'nullable|string',
+            'region' => 'nullable|array',
+            'devices' => 'nullable|array',
             'product_name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',
@@ -177,7 +177,16 @@ class ListingController extends Controller
             '_token',
             'thumbnail',
             'gallery',
+            'region',
+            'devices',
         ]);
+
+        if ($request->has('region')) {
+            $allData['region'] = implode(',', $request->region);
+        }
+        if ($request->has('devices')) {
+            $allData['devices'] = implode(',', $request->devices);
+        }
 
         // check purchase limit
         if (!$request->listing_id && $authUser->currentPlan?->listing_limit <= $authUser->listings()->count()) {

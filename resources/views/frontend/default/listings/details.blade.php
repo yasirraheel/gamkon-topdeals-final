@@ -22,7 +22,7 @@
         }
         
         .product-details-area .pd-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             color: #111827;
             margin-bottom: 24px;
@@ -65,14 +65,14 @@
         }
         
         .pd-info-label {
-            font-size: 12px;
+            font-size: 13px;
             color: #6b7280;
-            margin-bottom: 2px;
+            margin-bottom: 4px;
             display: block;
         }
         
         .pd-info-value {
-            font-size: 14px;
+            font-size: 15px;
             color: #111827;
             font-weight: 600;
             margin: 0;
@@ -97,7 +97,7 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
-            font-size: 14px;
+            font-size: 15px;
         }
         
         .delivery-stat .label {
@@ -210,19 +210,19 @@
                                     {{-- Region --}}
                                     <div class="pd-info-item">
                                         <div class="pd-info-icon text-success">
-                                            <iconify-icon icon="lucide:check-circle" width="20"></iconify-icon>
+                                            <iconify-icon icon="solar:global-circle-bold" width="24"></iconify-icon>
                                         </div>
                                         <div>
                                             <span class="pd-info-label">{{ __('Can be activated in') }}</span>
                                             <p class="pd-info-value">{{ $listing->region ?? 'Global' }}</p>
-                                            <a href="#" class="text-primary text-decoration-none" style="font-size: 12px;">{{ __('Check region restrictions') }}</a>
+                                            <a href="#" class="text-primary text-decoration-none" style="font-size: 13px;">{{ __('Check region restrictions') }}</a>
                                         </div>
                                     </div>
 
                                     {{-- Sharing Method --}}
                                     <div class="pd-info-item">
                                         <div class="pd-info-icon text-muted">
-                                            <iconify-icon icon="lucide:user" width="20"></iconify-icon>
+                                            <iconify-icon icon="solar:user-bold" width="24"></iconify-icon>
                                         </div>
                                         <div>
                                             <span class="pd-info-label">{{ __('Sharing Method') }}</span>
@@ -233,7 +233,7 @@
                                     {{-- Supported Devices --}}
                                     <div class="pd-info-item">
                                         <div class="pd-info-icon text-muted">
-                                            <iconify-icon icon="lucide:monitor" width="20"></iconify-icon>
+                                            <iconify-icon icon="solar:monitor-smartphone-bold" width="24"></iconify-icon>
                                         </div>
                                         <div>
                                             <span class="pd-info-label">{{ __('Supported devices') }}</span>
@@ -244,7 +244,7 @@
                                     {{-- Duration --}}
                                     <div class="pd-info-item">
                                         <div class="pd-info-icon text-muted">
-                                            <iconify-icon icon="lucide:hourglass" width="20"></iconify-icon>
+                                            <iconify-icon icon="solar:hourglass-line-bold" width="24"></iconify-icon>
                                         </div>
                                         <div>
                                             <span class="pd-info-label">{{ __('Duration') }}</span>
@@ -258,13 +258,13 @@
                         {{-- Important Notice --}}
                         <div class="pd-notice mt-4">
                             <div class="d-flex gap-3">
-                                <iconify-icon icon="lucide:info" class="text-primary flex-shrink-0" width="24" style="margin-top: 2px;"></iconify-icon>
+                                <iconify-icon icon="solar:info-circle-bold" class="text-primary flex-shrink-0" width="24" style="margin-top: 2px;"></iconify-icon>
                                 <div>
-                                    <h6 class="text-primary fw-bold mb-2" style="font-size: 14px;">{{ __('Important Notice') }}</h6>
-                                    <p class="text-primary mb-2" style="font-size: 13px; opacity: 0.9; line-height: 1.6;">
+                                    <h6 class="text-primary fw-bold mb-2" style="font-size: 15px;">{{ __('Important Notice') }}</h6>
+                                    <p class="text-primary mb-2" style="font-size: 14px; opacity: 0.9; line-height: 1.6;">
                                         {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
                                     </p>
-                                    <p class="text-primary mb-0" style="font-size: 13px; opacity: 0.9; line-height: 1.6;">
+                                    <p class="text-primary mb-0" style="font-size: 14px; opacity: 0.9; line-height: 1.6;">
                                         {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
                                     </p>
                                 </div>
@@ -318,16 +318,16 @@
                         {{-- Purchase Card --}}
                         <div class="pd-card">
                             <div class="delivery-stat">
-                                <span class="label"><iconify-icon icon="lucide:clock"></iconify-icon> {{ __('Guaranteed delivery time') }}</span>
+                                <span class="label"><iconify-icon icon="solar:clock-circle-bold" width="20"></iconify-icon> {{ __('Guaranteed delivery time') }}</span>
                                 <span class="value">{{ $listing->delivery_method == 'auto' ? '5 minutes' : ($listing->delivery_speed . ' ' . $listing->delivery_speed_unit) }}</span>
                             </div>
                             <div class="delivery-stat">
-                                <span class="label"><iconify-icon icon="lucide:zap"></iconify-icon> {{ __('Average delivery time') }}</span>
+                                <span class="label"><iconify-icon icon="solar:bolt-circle-bold" width="20"></iconify-icon> {{ __('Average delivery time') }}</span>
                                 <span class="value">{{ $listing->delivery_method == 'auto' ? 'Instant' : '~1 hour' }}</span>
                             </div>
                             @if ($listing->guarantee_period)
                                 <div class="delivery-stat">
-                                    <span class="label"><iconify-icon icon="lucide:shield-check"></iconify-icon> {{ __('Warranty Period') }}</span>
+                                    <span class="label"><iconify-icon icon="solar:shield-check-bold" width="20"></iconify-icon> {{ __('Warranty Period') }}</span>
                                     <span class="value">{{ $listing->guarantee_period }}</span>
                                 </div>
                             @endif
@@ -337,7 +337,7 @@
                             <div class="d-flex justify-content-between align-items-end mb-4">
                                 <span class="text-muted fw-bold">{{ __('Total') }}:</span>
                                 <div class="text-end">
-                                    <h3 class="text-danger fw-bold mb-0">{{ amountWithCurrency($listing->final_price) }}</h3>
+                                    <h3 class="text-danger fw-bold mb-0" style="font-size: 28px;">{{ amountWithCurrency($listing->final_price) }}</h3>
                                     @if ($listing->discount_value > 0)
                                         <small class="text-muted text-decoration-line-through">{{ amountWithCurrency($listing->price) }}</small>
                                     @endif
@@ -350,11 +350,11 @@
 
                             <div class="d-flex gap-4">
                                 <div class="trust-badge refund-guarantee-btn">
-                                    <iconify-icon icon="lucide:shield-check" class="text-success" width="16"></iconify-icon>
+                                    <iconify-icon icon="solar:shield-check-bold" class="text-success" width="20"></iconify-icon>
                                     {{ __('Refund Guarantee') }}
                                 </div>
                                 <div class="trust-badge express-checkout-btn">
-                                    <iconify-icon icon="lucide:truck" class="text-success" width="16"></iconify-icon>
+                                    <iconify-icon icon="solar:delivery-bold" class="text-success" width="20"></iconify-icon>
                                     {{ __('Express Checkout') }}
                                 </div>
                             </div>

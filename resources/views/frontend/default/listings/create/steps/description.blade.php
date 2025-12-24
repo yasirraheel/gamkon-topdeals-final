@@ -91,7 +91,7 @@
                         <div class="input-field">
                             <input type="text" name="product_name" id="product_name"
                                 value="{{ old('product_name', $listing?->product_name ?? '') }}" class="form-control"
-                                required readonly>
+                                required>
                         </div>
                         <p class="feedback-invalid">{{ __('This field is required') }}</p>
                     </div>
@@ -130,8 +130,8 @@
                     <div class="td-form-group">
                         <label class="input-label" for="selectRegion">{{ __('Region') }}</label>
                         <div class="auth-nice-select auth-nice-select-2">
-                            <select id="selectRegion" class="nice-select-active" name="region">
-                                <option value="">{{ __('Select Region') }}</option>
+                            <select id="selectRegion" class="select2" name="region[]" multiple>
+                                
                             </select>
                         </div>
                     </div>
@@ -140,8 +140,8 @@
                     <div class="td-form-group">
                         <label class="input-label" for="selectDevices">{{ __('Supported Devices') }}</label>
                         <div class="auth-nice-select auth-nice-select-2">
-                            <select id="selectDevices" class="nice-select-active" name="devices">
-                                <option value="">{{ __('Select Devices') }}</option>
+                            <select id="selectDevices" class="select2" name="devices[]" multiple>
+                                
                             </select>
                         </div>
                     </div>
@@ -308,10 +308,44 @@
 </div>
 @push('js')
     <script src="{{ themeAsset('/js/summernote.min.js') }}"></script>
+    <script src="{{ themeAsset('js/select2.min.js') }}"></script>
     <script>
         "use strict";
 
         $(document).ready(function() {
+            $('.select2').select2({
+                width: '100%'
+            });
+
+            // Dynamic Product Name Generation
+            function updateProductName() {
+                var catalogName = $('#selectProductCatalog option:selected').text().trim();
+                var plan = $('#selectProductPlan').val();
+                var duration = $('#selectDuration').val();
+                
+                // Only auto-update if catalog is selected
+                if (catalogName && catalogName !== 'Select Product Catalog') {
+                    var nameParts = [catalogName];
+                    
+                    if (plan && plan !== 'Select Plan') {
+                        nameParts.push(plan);
+                    }
+                    if (duration && duration !== 'Select Duration') {
+                        nameParts.push(duration);
+                    }
+                    
+                    // Join with spaces or specific format
+                    $('#product_name').val(nameParts.join(' '));
+                }
+            }
+
+            // Listen for changes
+            $('#selectProductCatalog, #selectProductPlan, #selectDuration').on('change', function() {
+                // Only update if the user hasn't manually edited (optional check, or just overwrite)
+                // For now, we overwrite as requested "dynamicly set"
+                updateProductName();
+            });
+
             $('#editor').summernote({
                 height: 200,
                 height: 220,
@@ -435,11 +469,12 @@
                         $('#selectProductPlan').html(productPlanOptions);
 
                         // Populate region dropdown
-                        var regionOptions = '<option value="">{{ __('Select Region') }}</option>';
+                        var regionOptions = '';
                         if (data.regions && data.regions.length > 0) {
                             data.regions.forEach(function(region) {
                                 if (region && region.trim() !== '') {
-                                    var selected = (region === savedRegion) ? ' selected' : '';
+                                    var isSelected = savedRegion.includes(region); // Check if in saved array/string
+                                    var selected = isSelected ? ' selected' : '';
                                     regionOptions += '<option value="' + region + '"' + selected + '>' + region + '</option>';
                                 }
                             });
@@ -447,19 +482,21 @@
                         $('#selectRegion').html(regionOptions);
 
                         // Populate devices dropdown
-                        var devicesOptions = '<option value="">{{ __('Select Devices') }}</option>';
+                        var devicesOptions = '';
                         if (data.platforms && data.platforms.length > 0) {
                             data.platforms.forEach(function(platform) {
                                 if (platform && platform.trim() !== '') {
-                                    var selected = (platform === savedDevices) ? ' selected' : '';
+                                    var isSelected = savedDevices.includes(platform);
+                                    var selected = isSelected ? ' selected' : '';
                                     devicesOptions += '<option value="' + platform + '"' + selected + '>' + platform + '</option>';
                                 }
                             });
                         }
                         $('#selectDevices').html(devicesOptions);
                         
-                        // Update nice-select
+                        // Update nice-select and select2
                         $('.nice-select-active').niceSelect('update');
+                        $('.select2').trigger('change');
                         
                         // Load thumbnail if available (only for new listings)
                         var isEditing = {{ $listing ? 'true' : 'false' }};
