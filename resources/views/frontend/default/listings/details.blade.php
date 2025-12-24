@@ -80,124 +80,85 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Product Gallery -->
-                                <div class="product-gallery">
-                                    @if ($listing->is_trending)
-                                        <div class="has-trending">
-                                            <img src="{{ themeAsset('images/icon/flash-icon.png') }}" alt="">
+                                <!-- Product Info Section with Thumbnail on Left -->
+                                <div style="display: flex; gap: 24px; margin-top: 24px; flex-wrap: wrap;">
+                                    {{-- Thumbnail on Left --}}
+                                    <div style="flex-shrink: 0;">
+                                        <div style="width: 280px; height: 280px; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                            <img src="{{ asset($listing->thumbnail) }}" alt="{{ $listing->product_name }}" style="width: 100%; height: 100%; object-fit: cover;">
                                         </div>
-                                    @endif
-                                    <div class="slider-container">
-                                        <div class="main-slider">
-                                            <div>
-                                                <img src="{{ asset($listing->thumbnail) }}" alt="">
-                                            </div>
-                                            @foreach ($listing->images as $index => $image)
-                                                <div>
-                                                    <img src="{{ asset($image->image_path) }}"
-                                                        alt="{{ $listing->product_name }} Slide {{ $index + 1 }}">
+                                    </div>
+                                    
+                                    {{-- Product Info on Right --}}
+                                    <div style="flex: 1; min-width: 300px;">
+                                        <h2 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0 0 20px 0; line-height: 1.3;">
+                                            {{ $listing->product_name }}
+                                        </h2>
+                                        
+                                        {{-- Clean Product Information Grid --}}
+                                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
+                                            
+                                            @if ($listing->productCatalog)
+                                                <div style="display: flex; gap: 12px;">
+                                                    <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                        <iconify-icon icon="lucide:package" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                                    </div>
+                                                    <div>
+                                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Product Type') }}</p>
+                                                        <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->productCatalog->name }}</p>
+                                                    </div>
                                                 </div>
-                                            @endforeach
-                                        </div>
-                                        <div class="nav-slider">
-                                            <div>
-                                                <img src="{{ asset($listing->thumbnail) }}" alt="">
-                                            </div>
-                                            @foreach ($listing->images as $index => $image)
-                                                <div>
-                                                    <img src="{{ asset($image->image_path) }}"
-                                                        alt="{{ $listing->product_name }} Thumb {{ $index + 1 }}">
+                                            @endif
+                                            
+                                            @if ($listing->selected_plan)
+                                                <div style="display: flex; gap: 12px;">
+                                                    <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                        <iconify-icon icon="lucide:shield-check" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                                    </div>
+                                                    <div>
+                                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Sharing Method') }}</p>
+                                                        <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_plan }}</p>
+                                                    </div>
                                                 </div>
-                                            @endforeach
+                                            @endif
+                                            
+                                            <div style="display: flex; gap: 12px;">
+                                                <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                    <iconify-icon icon="lucide:monitor" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                                </div>
+                                                <div>
+                                                    <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Supported devices') }}</p>
+                                                    <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">PC, Mac</p>
+                                                </div>
+                                            </div>
+                                            
+                                            @if ($listing->selected_duration)
+                                                <div style="display: flex; gap: 12px;">
+                                                    <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                                        <iconify-icon icon="lucide:clock" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                                    </div>
+                                                    <div>
+                                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Duration') }}</p>
+                                                        <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_duration }}</p>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
                                 
-                                {{-- Clean Product Information Grid --}}
-                                <div style="background: #ffffff; border-radius: 12px; padding: 24px; margin-top: 24px; border: 1px solid #e5e7eb;">
-                                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
-                                        
-                                        @if ($listing->productCatalog)
-                                            <div style="display: flex; gap: 12px;">
-                                                <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                    <iconify-icon icon="lucide:package" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                                </div>
-                                                <div>
-                                                    <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Product Type') }}</p>
-                                                    <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->productCatalog->name }}</p>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        
-                                        @if ($listing->selected_plan)
-                                            <div style="display: flex; gap: 12px;">
-                                                <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                    <iconify-icon icon="lucide:shield-check" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                                </div>
-                                                <div>
-                                                    <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Sharing Method') }}</p>
-                                                    <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_plan }}</p>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        
-                                        <div style="display: flex; gap: 12px;">
-                                            <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                <iconify-icon icon="lucide:monitor" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                            </div>
-                                            <div>
-                                                <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Supported devices') }}</p>
-                                                <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">PC, Mac</p>
-                                            </div>
-                                        </div>
-                                        
-                                        @if ($listing->selected_duration)
-                                            <div style="display: flex; gap: 12px;">
-                                                <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                    <iconify-icon icon="lucide:clock" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                                </div>
-                                                <div>
-                                                    <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Duration') }}</p>
-                                                    <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_duration }}</p>
-                                                </div>
-                                            </div>
-                                        @endif
-                                        
-                                        <div style="display: flex; gap: 12px;">
-                                            <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                <iconify-icon icon="icon-park-solid:flash-payment" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                            </div>
-                                            <div>
-                                                <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Delivery Method') }}</p>
-                                                <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ ucwords($listing->delivery_method) ?? 'Auto' }}</p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div style="display: flex; gap: 12px;">
-                                            <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                <iconify-icon icon="material-symbols:speed-rounded" style="font-size: 20px; color: #6b7280;"></iconify-icon>
-                                            </div>
-                                            <div>
-                                                <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Delivery Speed') }}</p>
-                                                <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->delivery_method == 'auto' ? 'Instant' : $listing->delivery_speed . ' ' . $listing->delivery_speed_unit }}</p>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                    {{-- Important Notice --}}
-                                    <div style="background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 16px; margin-top: 24px;">
-                                        <div style="display: flex; gap: 12px; align-items: start;">
-                                            <iconify-icon icon="lucide:info" style="font-size: 20px; color: #3b82f6; flex-shrink: 0; margin-top: 2px;"></iconify-icon>
-                                            <div>
-                                                <h6 style="color: #1e40af; font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">{{ __('Important Notice') }}</h6>
-                                                <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 0;">
-                                                    {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
-                                                </p>
-                                                <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 8px 0 0 0;">
-                                                    {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
-                                                </p>
-                                            </div>
+                                {{-- Important Notice --}}
+                                <div style="background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 16px; margin-top: 24px;">
+                                    <div style="display: flex; gap: 12px; align-items: start;">
+                                        <iconify-icon icon="lucide:info" style="font-size: 20px; color: #3b82f6; flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+                                        <div>
+                                            <h6 style="color: #1e40af; font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">{{ __('Important Notice') }}</h6>
+                                            <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 0;">
+                                                {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
+                                            </p>
+                                            <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 8px 0 0 0;">
+                                                {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
