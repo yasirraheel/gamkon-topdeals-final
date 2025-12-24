@@ -372,7 +372,6 @@
 </div>
 @push('js')
     <script src="{{ themeAsset('/js/summernote.min.js') }}"></script>
-    <script src="{{ themeAsset('js/select2.min.js') }}"></script>
     <script>
         "use strict";
 

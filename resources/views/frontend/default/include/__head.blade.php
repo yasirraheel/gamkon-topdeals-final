@@ -33,11 +33,14 @@
         }
 
         :root {
-            --td-primary: {{ setting('primary_color', 'global') }} !important;
-            --td-secondary: {{ setting('primary_color', 'global') }} !important;
-            @php $rgb =hexToRgb(setting('primary_color', 'global')); @endphp
-            --td-primary-rgb: {{ $rgb['r'] }}, {{ $rgb['g'] }}, {{ $rgb['b'] }} !important;
-            --td-secondary-rgb: {{ $rgb['r'] }}, {{ $rgb['g'] }}, {{ $rgb['b'] }} !important;
+            @php 
+                $primaryColor = setting('primary_color', 'global') ?: '#FF6229'; 
+                $rgb = hexToRgb($primaryColor);
+            @endphp
+            --td-primary: {{ $primaryColor }} !important;
+            --td-secondary: {{ $primaryColor }} !important;
+            --td-primary-rgb: {{ $rgb['r'] ?? 255 }}, {{ $rgb['g'] ?? 98 }}, {{ $rgb['b'] ?? 41 }} !important;
+            --td-secondary-rgb: {{ $rgb['r'] ?? 255 }}, {{ $rgb['g'] ?? 98 }}, {{ $rgb['b'] ?? 41 }} !important;
         }
     </style>
 </head>
