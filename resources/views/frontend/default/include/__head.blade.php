@@ -33,13 +33,11 @@
         }
 
         :root {
-            --td-secondary:
-                {{ setting('primary_color', 'global') }} !important;
-            @php $rgb =hexToRgb(setting('primary_color', 'global'));
-        @endphp
-        --td-secondary-rgb: {{ $rgb['r'] }},
-        {{ $rgb['g'] }},
-        {{ $rgb['b'] }} !important;
+            --td-primary: {{ setting('primary_color', 'global') }} !important;
+            --td-secondary: {{ setting('primary_color', 'global') }} !important;
+            @php $rgb =hexToRgb(setting('primary_color', 'global')); @endphp
+            --td-primary-rgb: {{ $rgb['r'] }}, {{ $rgb['g'] }}, {{ $rgb['b'] }} !important;
+            --td-secondary-rgb: {{ $rgb['r'] }}, {{ $rgb['g'] }}, {{ $rgb['b'] }} !important;
         }
     </style>
 </head>
