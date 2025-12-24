@@ -114,8 +114,8 @@
 
         .buy-now-btn {
             width: 100%;
-            background: var(--td-primary);
-            color: white;
+            background: var(--td-primary) !important;
+            color: white !important;
             border: none;
             border-radius: 8px;
             padding: 14px;

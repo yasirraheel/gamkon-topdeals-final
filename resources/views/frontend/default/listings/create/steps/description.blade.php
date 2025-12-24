@@ -11,6 +11,52 @@
             border-radius: 0 0 3px 3px;
         }
 
+        /* Fix Select2 Dark Mode */
+        .select2-container--default .select2-selection--multiple {
+            background-color: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            min-height: 48px;
+            padding: 4px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: var(--td-primary);
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin-top: 6px;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+            color: #fff;
+            margin-right: 5px;
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: #fff;
+        }
+
+        .select2-dropdown {
+            background-color: #111827;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: var(--td-primary);
+        }
+
+        .select2-results__option {
+            color: #fff;
+        }
+
+        .select2-container--default .select2-results__option[aria-selected=true] {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
         .switcher-card h5 {
             color: white;
             font-size: 0.875rem;
