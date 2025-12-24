@@ -182,7 +182,7 @@
 <!-- offcanvas or mobilemenu part start -->
 <div class="td-offcanvas">
     <div class="td-offcanvas-wrapper">
-                <div class="td-offcanvas-header">
+        <div class="td-offcanvas-header">
             <a href="{{ route('home') }}" class="td-offcanvas-logo">
                 <img src="{{ asset(setting('site_logo', 'global')) }}" alt="{{ setting('site_title', 'global') }}">
             </a>
@@ -197,6 +197,10 @@
                                 </a>
                                 @include('frontend::include.common.user-content')
                             </div>
+                        </div>
+                    @else
+                        <div class="login">
+                            <a href="{{ route('login') }}" class="auth-btn">{{ __('Sign In') }}</a>
                         </div>
                     @endauth
                 </div>
