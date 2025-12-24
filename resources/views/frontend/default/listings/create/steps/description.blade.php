@@ -51,9 +51,9 @@
         <form class="product-details-form" method="post" action="{{ buyerSellerRoute('listing.store') }}"
             enctype="multipart/form-data">
             @csrf
-            <div class="row gy-3">
+            <div class="row g-3">
                 @if ($listing?->category_id)
-                    <div class="col-12">
+                    <div class="col-12 col-md-6 col-lg-4">
                         <div class="td-form-group">
                             <label class="input-label" for="selectCategory">{{ __('Category') }}</label>
                             <div class="auth-nice-select auth-nice-select-2">
@@ -71,7 +71,7 @@
                     <input type="hidden" name="category_id" value="{{ request('category_id') }}">
                     <input type="hidden" name="subcategory_id" value="{{ request('subcategory_id') }}">
                 @endif
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="td-form-group">
                         <label class="input-label" for="selectProductCatalog">{{ __('Product Catalog') }} <span>*</span></label>
                         <div class="auth-nice-select auth-nice-select-2">
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="td-form-group has-right-icon">
                         <label class="input-label">{{ __('Product Name') }} <span>*</span></label>
                         <div class="input-field">
@@ -96,7 +96,7 @@
                         <p class="feedback-invalid">{{ __('This field is required') }}</p>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="td-form-group">
                         <label class="input-label" for="selectDuration">{{ __('Duration') }} <span>*</span></label>
                         <div class="auth-nice-select auth-nice-select-2">
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="td-form-group">
                         <label class="input-label" for="selectPlan">{{ __('Sharing Method') }} <span>*</span></label>
                         <div class="auth-nice-select auth-nice-select-2">
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="td-form-group">
                         <label class="input-label" for="selectProductPlan">{{ __('Plan') }} <span>*</span></label>
                         <div class="auth-nice-select auth-nice-select-2">
@@ -126,7 +126,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-lg-6">
                     <div class="td-form-group has-right-icon">
                         <label class="input-label">{{ __('Guarantee Period') }}</label>
                         <div class="input-field">
@@ -142,7 +142,7 @@
                         <textarea type="hidden" id="editor" name="description">{{ old('description', $listing?->description ?? '') }}</textarea>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="td-form-group has-right-icon">
                         <label class="input-label">{{ __('Price') }} <span>*</span></label>
                         <div class="input-field input-group">
@@ -155,7 +155,7 @@
                         <p class="feedback-invalid">{{ __('This field is required') }}</p>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="td-form-group has-right-icon">
                         <label class="input-label">{{ __('Quantity') }} <span>*</span></label>
                         <div class="input-field">
@@ -165,7 +165,7 @@
                         <p class="feedback-invalid">{{ __('This field is required') }}</p>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-md-6 col-lg-4">
                     <div class="td-form-group has-right-icon">
                         <label class="input-label">{{ __('Discount') }}</label>
                         <div class="input-field input-group">
@@ -193,7 +193,7 @@
                         <h5>{{ __('Upload Image') }}</h5>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-lg-6">
                     <div class="td-form-group">
                         <label class="input-label">{{ __('Thumbnail') }} <span>*</span></label>
                         <div class="custom-file-input">
@@ -221,7 +221,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 col-lg-6">
                     <div class="td-form-group">
                         <label class="input-label">{{ __('Gallery Photo') }} <small class="ms-1">
                                 ({{ __('Multiple select, Max 5') }})</small> <span>*</span></label>
