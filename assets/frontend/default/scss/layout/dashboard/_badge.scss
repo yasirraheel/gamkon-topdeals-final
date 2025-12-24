@@ -13,12 +13,13 @@
   align-items: center;
   gap: 10px;
   border-radius: 24px;
-  background-color: var(--td-primary);
-  color: #fff;
+  background-color: var(--td-primary) !important;
+  color: #fff !important;
   font-size: 12px;
   font-weight: 700;
   line-height: 1.2;
   border: none;
+  margin-top: 4px;
 
   &.delivered {
     color: #fff !important;

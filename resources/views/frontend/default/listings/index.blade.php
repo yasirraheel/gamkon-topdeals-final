@@ -68,16 +68,18 @@
                                         </div>
                                     </th>
                                     <td class="text-nowrap">
-                                        {{ str($listing->product_name)->limit(40) }}
-                                        @if ($listing->productCatalog)
-                                            <br><span class="badge badge-2 info mt-1">{{ $listing->productCatalog->name }}</span>
-                                        @endif
-                                        @if ($listing->selected_duration)
-                                            <br><span class="badge badge-2 warning mt-1">{{ $listing->selected_duration }}</span>
-                                        @endif
-                                        @if ($listing->selected_plan)
-                                            <br><span class="badge badge-2 success mt-1">{{ $listing->selected_plan }}</span>
-                                        @endif
+                                        <div class="d-flex flex-column align-items-start">
+                                            {{ str($listing->product_name)->limit(40) }}
+                                            @if ($listing->productCatalog)
+                                                <span class="badge badge-2 info">{{ $listing->productCatalog->name }}</span>
+                                            @endif
+                                            @if ($listing->selected_duration)
+                                                <span class="badge badge-2 warning">{{ $listing->selected_duration }}</span>
+                                            @endif
+                                            @if ($listing->selected_plan)
+                                                <span class="badge badge-2 success">{{ $listing->selected_plan }}</span>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td class="text-nowrap">{{ $listing->category?->name }} @if ($listing->subcategory)
                                             / {{ $listing->subcategory->name }}
