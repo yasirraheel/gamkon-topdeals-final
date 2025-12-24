@@ -251,31 +251,71 @@
                                     </div>
                                 </div>
 
-                                {{-- Recent Feedback --}}
-                                @if ($listing->total_reviews > 0)
-                                    <div>
-                                        <h6 style="font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 12px;">{{ __('Recent feedback') }}</h6>
-                                        @foreach($listing->approvedReviews()->latest()->take(3)->get() as $review)
-                                            <div style="background: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
-                                                <div style="display: flex; align-items: start; gap: 8px; margin-bottom: 6px;">
-                                                    <iconify-icon icon="lucide:thumbs-up" style="font-size: 14px; color: #3b82f6; flex-shrink: 0; margin-top: 2px;"></iconify-icon>
-                                                    <div style="flex: 1;">
-                                                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                                            <span style="font-size: 13px; color: #111827; font-weight: 600;">{{ $review->user->username }}</span>
-                                                            <span style="font-size: 12px; color: #9ca3af;">{{ __('Buy') }} {{ $listing->category->name }} {{ __('Account') }}</span>
+                                {{-- Product Reviews / Recent Feedback --}}
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                                        <h6 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0;">{{ __('Product Reviews') }}</h6>
+                                        @if ($listing->total_reviews > 0)
+                                            <div style="display: flex; align-items: center; gap: 4px;">
+                                                <iconify-icon icon="lucide:star" style="font-size: 14px; color: #fbbf24;"></iconify-icon>
+                                                <span style="font-size: 13px; font-weight: 600;">{{ number_format($listing->average_rating, 1) }}</span>
+                                                <span style="font-size: 12px; color: #9ca3af;">({{ $listing->total_reviews }})</span>
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    @if ($listing->total_reviews > 0)
+                                        <div id="reviewContainer">
+                                            @foreach($listing->approvedReviews()->latest()->take(5)->get() as $review)
+                                                <div style="background: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
+                                                    <div style="display: flex; align-items: start; gap: 8px;">
+                                                        <div style="flex: 1;">
+                                                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                                                                <img src="{{ $review->user->avatar_path ?? themeAsset('images/user/user-default.png') }}" 
+                                                                     alt="{{ $review->user->username }}" 
+                                                                     style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;">
+                                                                <span style="font-size: 13px; color: #111827; font-weight: 600;">{{ $review->user->username }}</span>
+                                                                <div style="display: flex; gap: 2px;">
+                                                                    @for ($i = 1; $i <= 5; $i++)
+                                                                        <iconify-icon icon="lucide:star" style="font-size: 11px; color: {{ $review->rating >= $i ? '#fbbf24' : '#d1d5db' }};"></iconify-icon>
+                                                                    @endfor
+                                                                </div>
+                                                            </div>
+                                                            <p style="font-size: 12px; color: #4b5563; margin: 0 0 4px 0; line-height: 1.5;">{{ $review->review }}</p>
+                                                            <span style="font-size: 11px; color: #9ca3af;">{{ $review->created_at->diffForHumans() }}</span>
+                                                            
+                                                            @if ($review->reply)
+                                                                <div style="background: #fff; border-left: 2px solid #3b82f6; border-radius: 4px; padding: 8px; margin-top: 8px;">
+                                                                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+                                                                        <iconify-icon icon="lucide:corner-down-right" style="font-size: 12px; color: #3b82f6;"></iconify-icon>
+                                                                        <span style="font-size: 12px; color: #111827; font-weight: 600;">{{ $listing->seller->username }}</span>
+                                                                    </div>
+                                                                    <p style="font-size: 11px; color: #4b5563; margin: 0;">{{ $review->reply->review }}</p>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                        <p style="font-size: 12px; color: #4b5563; margin: 0; line-height: 1.4;">{{ Str::limit($review->review, 80) }}</p>
-                                                        <span style="font-size: 11px; color: #9ca3af; display: block; margin-top: 4px;">{{ $review->created_at->diffForHumans() }}</span>
+                                                        @if (auth()->check())
+                                                            <button data-id="{{ encrypt($review->id) }}" class="report-button common-modal-button" type="button" style="background: none; border: none; padding: 4px; cursor: pointer;">
+                                                                <iconify-icon icon="lucide:flag" style="font-size: 14px; color: #9ca3af;"></iconify-icon>
+                                                            </button>
+                                                        @endif
                                                     </div>
                                                 </div>
-                                            </div>
-                                        @endforeach
-                                        
-                                        <a href="#reviews" style="font-size: 13px; color: #3b82f6; text-decoration: none; display: block; text-align: center; margin-top: 12px;">
-                                            {{ __('All feedback') }}
-                                        </a>
-                                    </div>
-                                @endif
+                                            @endforeach
+
+                                            @if ($listing->total_reviews > 5)
+                                                <button type="button" class="border-button w-100 mt-2" id="loadMoreReviews" data-listing-id="{{ $listing->id }}" data-offset="5" style="width: 100%; padding: 8px; font-size: 13px; border: 1px solid #e5e7eb; border-radius: 6px; background: #fff; color: #111827; cursor: pointer;">
+                                                    {{ __('Load More Reviews') }}
+                                                </button>
+                                            @endif
+                                        </div>
+                                    @else
+                                        <div style="text-align: center; padding: 20px; color: #9ca3af;">
+                                            <iconify-icon icon="lucide:message-circle" style="font-size: 32px; margin-bottom: 8px;"></iconify-icon>
+                                            <p style="font-size: 13px; margin: 0;">{{ __('No reviews yet') }}</p>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -288,158 +328,6 @@
                 <input type="hidden" name="product_id" value="{{ $listing->id }}">
                 <input type="hidden" name="quantity" value="1">
             </form>
-
-            {{-- Reviews Section --}}
-            <div class="row mt-5" id="reviews">
-                <div class="col-12">
-                    <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <h4 style="font-size: 18px; font-weight: 700; margin: 0;">{{ __('Product Reviews') }}</h4>
-                            @if ($listing->total_reviews > 0)
-                                <div style="display: flex; align-items: center; gap: 8px;">
-                                    <iconify-icon icon="lucide:star" style="font-size: 18px; color: #fbbf24;"></iconify-icon>
-                                    <span style="font-size: 16px; font-weight: 600;">{{ number_format($listing->average_rating, 1) }}</span>
-                                    <span style="font-size: 14px; color: #9ca3af;">({{ $listing->total_reviews }} {{ __('reviews') }})</span>
-                                </div>
-                            @endif
-                        </div>
-
-                        @if ($listing->total_reviews > 0)
-                            <div class="review-stats mt-4 p-3 bg-light rounded">
-                                <h6 class="mb-3">{{ __('Rating Breakdown') }}</h6>
-                                @for ($i = 5; $i >= 1; $i--)
-                                    @php
-                                        $ratingCount = $listing
-                                            ->approvedReviews()
-                                            ->where('rating', $i)
-                                            ->count();
-                                        $percentage =
-                                            $listing->total_reviews > 0
-                                                ? ($ratingCount / $listing->total_reviews) * 100
-                                                : 0;
-                                    @endphp
-                                    <div class="rating-breakdown d-flex align-items-center mb-2">
-                                        <span class="rating-label me-2">{{ $i }} ★</span>
-                                        <div class="progress flex-grow-1 me-2" style="height: 8px;">
-                                            <div class="progress-bar bg-warning" role="progressbar"
-                                                style="width: {{ $percentage }}%"
-                                                aria-valuenow="{{ $percentage }}" aria-valuemin="0"
-                                                aria-valuemax="100"></div>
-                                        </div>
-                                        <small class="rating-count text-muted">{{ $ratingCount }}</small>
-                                    </div>
-                                @endfor
-                            </div>
-                        @endif
-
-                        <div class="review-box title_mt" id="reviewContainer">
-                            @forelse($listing->approvedReviews()->get() as $review)
-                                <div class="review-item">
-                                    @if (auth()->check())
-                                                            {{-- flag --}}
-                                                            <button data-id="{{ encrypt($review->id) }}"
-                                                                class="report-button common-modal-button" type="button"
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                aria-label="report"
-                                                                data-bs-original-title="{{ __('Flag this review') }}">
-                                                                <iconify-icon icon="hugeicons:flag-03"
-                                                                    class="report-icon"></iconify-icon>
-                                                            </button>
-                                                        @endif
-                                                        <div class="left">
-                                                            <div class="img-box">
-                                                                <img src="{{ $review->buyer?->avatar_path ?? asset('assets/global/images/avatar.png') }}"
-                                                                    alt="{{ $review->buyer?->username }}">
-                                                            </div>
-                                                            <div class="text">
-                                                                <h5>{{ $review->buyer?->username }}</h5>
-                                                                <div class="stars">
-                                                                    @for ($i = 1; $i <= 5; $i++)
-                                                                        @if ($review->rating >= $i)
-                                                                            <img src="{{ themeAsset('images/icon/star.png') }}"
-                                                                                alt="star" class="star-filled">
-                                                                        @else
-                                                                            <img src="{{ themeAsset('images/icon/empty-star.png') }}"
-                                                                                alt="star" class="star-filled">
-                                                                        @endif
-                                                                    @endfor
-                                                                </div>
-                                                                <p class="date">
-                                                                    {{ $review->created_at->format('M d, Y') }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="right">
-                                                            <p>{{ $review->review }}</p>
-                                                            @if ($review->reply)
-                                                                <div class="reply-text">
-                                                                    <h5>{{ $listing->seller?->username }} @if ($listing->seller?->portfolio)
-                                                                            <span>{{ $listing->seller?->portfolio?->portfolio_name }}</span>
-                                                                        @endif
-                                                                    </h5>
-                                                                    <p class="date">
-                                                                        {{ $review->reply->created_at->format('M d, Y') }}
-                                                                    </p>
-                                                                    <p>{{ $review->reply->review }}</p>
-                                                                </div>
-                                                            @elseif(auth()->check() && $review->seller_id == $user->id)
-                                                                <div class="reply-box">
-                                                                    <a href="javascript:void(0)"
-                                                                        class="reply-button">{{ __('Reply') }}</a>
-                                                                    <div class="reply-input">
-                                                                        <form action="{{ route('listing.seller.reply') }}"
-                                                                            method="POST">
-                                                                            @csrf
-                                                                            <input name="reply_to" type="hidden"
-                                                                                name="review_id"
-                                                                                value="{{ encrypt($review->id) }}">
-                                                                            <div class="row g-3">
-                                                                                <div class="col-12">
-                                                                                    <textarea name="review" id="reply" placeholder="{{ __('Write your reply') }}"></textarea>
-                                                                                </div>
-                                                                                <div
-                                                                                    class="col-12 d-flex justify-content-end">
-                                                                                    <button
-                                                                                        class="primary-button">{{ __('Send') }}</button>
-                                                                                </div>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div>
-                                                                </div>
-                                                            @endif
-                                                        </div>
-                                                    </div>
-                                                @empty
-                                                    <div class="no-reviews text-center py-4">
-                                                        <div>
-                                                            <iconify-icon icon="mdi:star-outline" class="text-muted"
-                                                                style="font-size: 3rem;"></iconify-icon>
-                                                        </div>
-                                                        <h5 class="text-muted">{{ __('No reviews yet') }}</h5>
-                                                        <p class="text-muted">
-                                                            {{ __('Be the first to review this product!') }}</p>
-                                                    </div>
-                                                @endforelse
-
-                                                @if ($listing->total_reviews > 5)
-                                                    <div class="text-center mt-4">
-                                                        <button type="button" class="border-button" id="loadMoreReviews"
-                                                            data-listing-id="{{ $listing->id }}" data-offset="5">
-                                                            {{ __('Load More Reviews') }}
-                                                        </button>
-                                                    </div>
-                                                @endif
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
