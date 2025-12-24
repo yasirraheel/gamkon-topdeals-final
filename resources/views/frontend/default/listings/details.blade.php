@@ -283,7 +283,11 @@
                                                                 <span style="font-size: 13px; color: #111827; font-weight: 600;">{{ $review->buyer->username }}</span>
                                                                 <div style="display: flex; gap: 2px;">
                                                                     @for ($i = 1; $i <= 5; $i++)
-                                                                        <iconify-icon icon="lucide:star" style="font-size: 11px; color: {{ $review->rating >= $i ? '#fbbf24' : '#d1d5db' }};"></iconify-icon>
+                                                                        @if($review->rating >= $i)
+                                                                            <iconify-icon icon="solar:star-bold" style="font-size: 12px; color: #fbbf24;"></iconify-icon>
+                                                                        @else
+                                                                            <iconify-icon icon="solar:star-outline" style="font-size: 12px; color: #d1d5db;"></iconify-icon>
+                                                                        @endif
                                                                     @endfor
                                                                 </div>
                                                             </div>
