@@ -98,26 +98,37 @@
                                         {{-- Clean Product Information Grid --}}
                                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px;">
                                             
-                                            @if ($listing->productCatalog)
+                                            @if ($listing->category)
                                                 <div style="display: flex; gap: 12px;">
                                                     <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                                                        <iconify-icon icon="lucide:package" style="font-size: 20px; color: #6b7280;"></iconify-icon>
+                                                        <iconify-icon icon="lucide:folder" style="font-size: 20px; color: #6b7280;"></iconify-icon>
                                                     </div>
                                                     <div>
-                                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Product Type') }}</p>
-                                                        <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->productCatalog->name }}</p>
+                                                        <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Product Category') }}</p>
+                                                        <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->category->name }}</p>
                                                     </div>
                                                 </div>
                                             @endif
                                             
-                                            @if ($listing->selected_plan)
+                                            @php
+                                                $sharingMethod = null;
+                                                if ($listing->productCatalog && !empty($listing->productCatalog->sharing_methods)) {
+                                                    $methods = $listing->productCatalog->sharing_methods;
+                                                    if (is_array($methods)) {
+                                                        $sharingMethod = $methods[0] ?? null;
+                                                    } else {
+                                                        $sharingMethod = $methods; // string fallback
+                                                    }
+                                                }
+                                            @endphp
+                                            @if ($sharingMethod)
                                                 <div style="display: flex; gap: 12px;">
                                                     <div style="width: 44px; height: 44px; background: #f3f4f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
                                                         <iconify-icon icon="lucide:shield-check" style="font-size: 20px; color: #6b7280;"></iconify-icon>
                                                     </div>
                                                     <div>
                                                         <p style="font-size: 13px; color: #9ca3af; margin: 0; margin-bottom: 4px; font-weight: 500;">{{ __('Sharing Method') }}</p>
-                                                        <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_plan }}</p>
+                                                        <p style="font-size: 15px; color: #111827; margin: 0; font-weight: 600;">{{ $sharingMethod }}</p>
                                                     </div>
                                                 </div>
                                             @endif
