@@ -117,6 +117,16 @@
                     </div>
                 </div>
                 <div class="col-12">
+                    <div class="td-form-group">
+                        <label class="input-label" for="selectProductPlan">{{ __('Plan') }} <span>*</span></label>
+                        <div class="auth-nice-select auth-nice-select-2">
+                            <select id="selectProductPlan" class="nice-select-active" name="plan_id" required>
+                                <option value="">{{ __('Select Plan') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
                     <div class="td-form-group has-right-icon">
                         <label class="input-label">{{ __('Guarantee Period') }}</label>
                         <div class="input-field">
@@ -341,6 +351,7 @@
                 $('#product_name').val('');
                 $('#selectDuration').html('<option value="">{{ __('Select Duration') }}</option>');
                 $('#selectPlan').html('<option value="">{{ __('Select Sharing Method') }}</option>');
+                $('#selectProductPlan').html('<option value="">{{ __('Select Plan') }}</option>');
                 $('.nice-select-active').niceSelect('update');
                 return;
             }
@@ -361,6 +372,7 @@
                         // Get saved values for editing
                         var savedDuration = '{{ old('selected_duration', $listing?->selected_duration ?? '') }}';
                         var savedPlan = '{{ old('selected_plan', $listing?->selected_plan ?? '') }}';
+                        var savedProductPlan = '{{ old('plan_id', $listing?->plan_id ?? '') }}';
                         
                         // Populate duration dropdown
                         var durationOptions = '<option value="">{{ __('Select Duration') }}</option>';
@@ -385,6 +397,18 @@
                             });
                         }
                         $('#selectPlan').html(planOptions);
+                        
+                        // Populate product plan dropdown
+                        var productPlanOptions = '<option value="">{{ __('Select Plan') }}</option>';
+                        if (data.plans && data.plans.length > 0) {
+                            data.plans.forEach(function(plan) {
+                                if (plan && plan.trim() !== '') {
+                                    var selected = (plan === savedProductPlan) ? ' selected' : '';
+                                    productPlanOptions += '<option value="' + plan + '"' + selected + '>' + plan + '</option>';
+                                }
+                            });
+                        }
+                        $('#selectProductPlan').html(productPlanOptions);
                         
                         // Update nice-select
                         $('.nice-select-active').niceSelect('update');
