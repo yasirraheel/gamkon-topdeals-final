@@ -221,7 +221,7 @@
 
                             {{-- Guarantees --}}
                             <div style="display: flex; gap: 16px; margin-bottom: 16px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; cursor: pointer;" class="refund-guarantee-trigger">
+                                <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; cursor: pointer;" class="common-modal-button refund-guarantee-btn">
                                     <iconify-icon icon="lucide:shield-check" style="font-size: 16px; color: #10b981;"></iconify-icon>
                                     <span>{{ __('Refund Guarantee') }}</span>
                                 </div>
@@ -365,12 +365,12 @@
     @endif
     
     {{-- Refund Guarantee Modal --}}
-    <div class="common-modal-full refund-guarantee-modal" style="display: none;">
+    <div class="common-modal-full refund-guarantee-modal">
         <div class="common-modal-box" style="max-width: 600px; background: white; border-radius: 16px; padding: 0; overflow: hidden;">
             <div style="padding: 24px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                     <h5 style="font-size: 20px; font-weight: 600; color: #111827; margin: 0;">{{ __('Refund Guarantee') }}</h5>
-                    <button type="button" class="modal-close-btn" style="background: none; border: none; padding: 8px; cursor: pointer; color: #9ca3af; font-size: 24px; line-height: 1;">×</button>
+                    <button type="button" class="close" style="background: none; border: none; padding: 8px; cursor: pointer; color: #9ca3af; font-size: 24px; line-height: 1;">×</button>
                 </div>
                 <div style="color: #9ca3af; font-size: 14px; line-height: 1.6;">
                     <p style="margin: 0;">{{ __("GamsGo's DealShield is designed to provide users with a secure and reliable trading environment, effectively preventing various types of fraud. If an Order is not delivered or the actual content does not match the description, you may request a full refund. Before you confirm successful delivery, the platform will temporarily hold the payment to ensure a fair and transparent transaction process, giving you greater peace of mind.") }}</p>
@@ -415,15 +415,14 @@
         var __quantity = {{ $listing->quantity }};
         var unitPrice = {{ $listing->final_price }};
         $(document).ready(function() {
-            // Refund Guarantee Modal
-            $(document).on('click', '.refund-guarantee-trigger', function() {
-                $('.refund-guarantee-modal').fadeIn();
+            // Refund Guarantee Modal - specific handler
+            $('.refund-guarantee-btn').click(function(e) {
+                e.stopPropagation();
+                $('.refund-guarantee-modal').addClass('open');
             });
             
-            $(document).on('click', '.refund-guarantee-modal .modal-close-btn, .refund-guarantee-modal', function(e) {
-                if (e.target === this) {
-                    $('.refund-guarantee-modal').fadeOut();
-                }
+            $('.refund-guarantee-modal .close').click(function() {
+                $('.refund-guarantee-modal').removeClass('open');
             });
             
             $(document).on('click', '.price-share .share', function() {
