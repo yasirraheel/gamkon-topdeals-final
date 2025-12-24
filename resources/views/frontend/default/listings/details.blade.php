@@ -253,20 +253,25 @@
 
                                 {{-- Product Reviews / Recent Feedback --}}
                                 <div>
+                                    @php
+                                        $reviews = $listing->approvedReviews()->latest()->take(5)->get();
+                                        $totalReviews = $listing->approvedReviews()->count();
+                                    @endphp
+                                    
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                                         <h6 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0;">{{ __('Product Reviews') }}</h6>
-                                        @if ($listing->total_reviews > 0)
+                                        @if ($totalReviews > 0)
                                             <div style="display: flex; align-items: center; gap: 4px;">
                                                 <iconify-icon icon="lucide:star" style="font-size: 14px; color: #fbbf24;"></iconify-icon>
                                                 <span style="font-size: 13px; font-weight: 600;">{{ number_format($listing->average_rating, 1) }}</span>
-                                                <span style="font-size: 12px; color: #9ca3af;">({{ $listing->total_reviews }})</span>
+                                                <span style="font-size: 12px; color: #9ca3af;">({{ $totalReviews }})</span>
                                             </div>
                                         @endif
                                     </div>
 
-                                    @if ($listing->total_reviews > 0)
+                                    @if ($reviews->count() > 0)
                                         <div id="reviewContainer">
-                                            @foreach($listing->approvedReviews()->latest()->take(5)->get() as $review)
+                                            @foreach($reviews as $review)
                                                 @if($review->user)
                                                 <div style="background: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
                                                     <div style="display: flex; align-items: start; gap: 8px;">
@@ -305,7 +310,7 @@
                                                 @endif
                                             @endforeach
 
-                                            @if ($listing->total_reviews > 5)
+                                            @if ($totalReviews > 5)
                                                 <button type="button" class="border-button w-100 mt-2" id="loadMoreReviews" data-listing-id="{{ $listing->id }}" data-offset="5" style="width: 100%; padding: 8px; font-size: 13px; border: 1px solid #e5e7eb; border-radius: 6px; background: #fff; color: #111827; cursor: pointer;">
                                                     {{ __('Load More Reviews') }}
                                                 </button>
