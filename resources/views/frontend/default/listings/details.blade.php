@@ -202,7 +202,7 @@
                             {{-- Seller Info --}}
                             <div>
                                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                                    <img src="{{ $listing->seller->avatar_url ?? asset('assets/images/default-avatar.png') }}" 
+                                    <img src="{{ $listing->seller->avatar_path ?? themeAsset('images/user/user-default.png') }}" 
                                          alt="{{ $listing->seller->username }}" 
                                          style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
                                     <div style="flex: 1;">
