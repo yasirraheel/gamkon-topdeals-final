@@ -63,32 +63,51 @@
         
         <div class="game-content" style="padding-bottom: {{ ($listing->selected_plan || $listing->delivery_method == 'auto') ? '80px' : '15px' }};">
             <div class="game-content-full">
-                {{-- Prominent Attributes Grid --}}
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px;">
-                    @if ($listing->selected_duration)
-                        <div style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: white; padding: 6px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; text-align: center; box-shadow: 0 2px 6px rgba(245, 158, 11, 0.3);">
-                            ⏱️ {{ $listing->selected_duration }}
-                        </div>
-                    @endif
-                    
-                    @if ($listing->delivery_method && $listing->delivery_method != 'auto')
-                        <div style="background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%); color: white; padding: 6px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; text-align: center; box-shadow: 0 2px 6px rgba(6, 182, 212, 0.3);">
-                            🚀 {{ ucfirst($listing->delivery_method) }}
-                        </div>
-                    @endif
-                    
-                    @if ($listing->delivery_method == 'manual' && $listing->delivery_speed)
-                        <div style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); color: white; padding: 6px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; text-align: center; box-shadow: 0 2px 6px rgba(139, 92, 246, 0.3);">
-                            ⚡ {{ $listing->delivery_speed }} {{ $listing->delivery_speed_unit }}
-                        </div>
-                    @endif
-                    
-                    @if ($listing->quantity > 0)
-                        <div style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); color: white; padding: 6px 10px; border-radius: 10px; font-size: 11px; font-weight: 700; text-align: center; box-shadow: 0 2px 6px rgba(236, 72, 153, 0.3);">
-                            📦 {{ $listing->quantity }} {{ __('Offers') }}
-                        </div>
-                    @endif
-                </div>
+                {{-- Clean attributes list --}}
+                @php
+                    $hasAttributes = $listing->selected_duration || 
+                                   ($listing->delivery_method && $listing->delivery_method != 'auto') || 
+                                   ($listing->delivery_method == 'manual' && $listing->delivery_speed) || 
+                                   ($listing->quantity > 0);
+                @endphp
+                
+                @if ($hasAttributes)
+                    <div style="background: #f9fafb; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; border: 1px solid #e5e7eb;">
+                        <ul style="list-style: none; margin: 0; padding: 0; font-size: 12px; line-height: 1.8;">
+                            @if ($listing->selected_duration)
+                                <li style="display: flex; align-items: center; color: #4b5563; margin-bottom: 4px;">
+                                    <span style="color: #f59e0b; margin-right: 8px; font-size: 14px;">⏱</span>
+                                    <span style="color: #6b7280; font-weight: 500; min-width: 70px;">{{ __('Duration') }}:</span>
+                                    <span style="color: #111827; font-weight: 600; margin-left: 6px;">{{ $listing->selected_duration }}</span>
+                                </li>
+                            @endif
+                            
+                            @if ($listing->delivery_method && $listing->delivery_method != 'auto')
+                                <li style="display: flex; align-items: center; color: #4b5563; margin-bottom: 4px;">
+                                    <span style="color: #06b6d4; margin-right: 8px; font-size: 14px;">📦</span>
+                                    <span style="color: #6b7280; font-weight: 500; min-width: 70px;">{{ __('Delivery') }}:</span>
+                                    <span style="color: #111827; font-weight: 600; margin-left: 6px;">{{ ucfirst($listing->delivery_method) }}</span>
+                                </li>
+                            @endif
+                            
+                            @if ($listing->delivery_method == 'manual' && $listing->delivery_speed)
+                                <li style="display: flex; align-items: center; color: #4b5563; margin-bottom: 4px;">
+                                    <span style="color: #8b5cf6; margin-right: 8px; font-size: 14px;">⚡</span>
+                                    <span style="color: #6b7280; font-weight: 500; min-width: 70px;">{{ __('Speed') }}:</span>
+                                    <span style="color: #111827; font-weight: 600; margin-left: 6px;">{{ $listing->delivery_speed }} {{ $listing->delivery_speed_unit }}</span>
+                                </li>
+                            @endif
+                            
+                            @if ($listing->quantity > 0)
+                                <li style="display: flex; align-items: center; color: #4b5563;">
+                                    <span style="color: #ec4899; margin-right: 8px; font-size: 14px;">📋</span>
+                                    <span style="color: #6b7280; font-weight: 500; min-width: 70px;">{{ __('Available') }}:</span>
+                                    <span style="color: #111827; font-weight: 600; margin-left: 6px;">{{ $listing->quantity }} {{ __('Offers') }}</span>
+                                </li>
+                            @endif
+                        </ul>
+                    </div>
+                @endif
                 
                 <p class="author" style="font-size: 12px; margin-bottom: 8px; color: #6b7280; font-weight: 500;">
                     👤 {{ __('By') }} <a href="{{ route('seller.details', $listing->seller?->username ?? 404) }}" style="color: #3b82f6; font-weight: 600;">{{ $listing->seller?->username }}</a>
