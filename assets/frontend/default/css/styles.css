@@ -22267,18 +22267,17 @@ a.link {
 /*----------------------------------------*/
 .badge {
   display: inline-flex;
-  width: 72px;
-  height: 22px;
-  padding: 0px 8px;
-  justify-content: center;
   align-items: center;
-  gap: 10px;
-  border-radius: 24px;
-  background: var(--td-primary);
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: normal;
+  justify-content: center;
+  font-size: 0.875rem; /* ~14px */
+  font-weight: 600;
+  padding: 0.3em 0.7em;
+  border-radius: 0.4rem;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 .badge.delivered {
   color: #fff;
@@ -22301,7 +22300,10 @@ a.link {
   background: #ff5353;
 }
 .badge-2 {
-  width: fit-content;
+  font-size: 0.75rem; /* Even smaller font for badge-2 */
+  padding: 0.2em 0.6em; /* Reduced padding */
+  border-radius: 1rem; /* Pill-shaped */
+  vertical-align: middle;
 }
 
 .tooltip-action-btns {
