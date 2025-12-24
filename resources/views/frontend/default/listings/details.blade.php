@@ -221,7 +221,7 @@
 
                             {{-- Guarantees --}}
                             <div style="display: flex; gap: 16px; margin-bottom: 16px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; cursor: pointer;" class="common-modal-button refund-guarantee-btn">
+                                <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; cursor: pointer;" class="refund-guarantee-btn">
                                     <iconify-icon icon="lucide:shield-check" style="font-size: 16px; color: #10b981;"></iconify-icon>
                                     <span>{{ __('Refund Guarantee') }}</span>
                                 </div>
