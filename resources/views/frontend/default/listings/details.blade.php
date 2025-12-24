@@ -11,6 +11,67 @@
 @push('style')
     <link rel="stylesheet" href="{{ themeAsset('css/slick.css') }}">
     <link rel="stylesheet" href="{{ themeAsset('css/all.min.css') }}">
+    <style>
+        .product-details-area .pd-card {
+            max-width: 100%;
+        }
+
+        .product-details-area .pd-description img,
+        .product-details-area .pd-description video,
+        .product-details-area .pd-description iframe {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .product-details-area .pd-description table {
+            display: block;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 767px) {
+            .product-details-area .pd-card {
+                padding: 16px !important;
+            }
+
+            .product-details-area .pd-title {
+                font-size: 18px !important;
+                margin-bottom: 16px !important;
+            }
+
+            .product-details-area .pd-summary {
+                flex-direction: column !important;
+                gap: 16px !important;
+            }
+
+            .product-details-area .pd-thumb {
+                width: 100% !important;
+                max-width: 240px;
+                height: auto !important;
+                aspect-ratio: 1 / 1;
+                margin-inline: auto;
+            }
+
+            .product-details-area .pd-info-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .product-details-area .pd-sticky {
+                position: static !important;
+                top: auto !important;
+            }
+
+            .product-details-area .pd-guarantees {
+                flex-wrap: wrap !important;
+                gap: 10px !important;
+            }
+
+            .product-details-area .pd-text-wrap {
+                word-break: break-word;
+                overflow-wrap: anywhere;
+            }
+        }
+    </style>
 @endpush
 @section('content')
     <div class="product-details-area section_space-my">
@@ -25,21 +86,21 @@
             <div class="row g-4">
                 {{-- Left Side: Image + Info --}}
                 <div class="col-lg-7">
-                    <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-                        <h2 style="font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 24px;">
+                    <div class="pd-card" style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                        <h2 class="pd-title pd-text-wrap" style="font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 24px;">
                             {{ $listing->product_name }}
                         </h2>
 
-                        <div style="display: flex; gap: 24px; margin-bottom: 30px;">
+                        <div class="pd-summary" style="display: flex; gap: 24px; margin-bottom: 30px;">
                             {{-- Product Thumbnail --}}
                             <div style="flex-shrink: 0;">
-                                <div style="width: 160px; height: 160px; border-radius: 12px; overflow: hidden; background: #000;">
+                                <div class="pd-thumb" style="width: 160px; height: 160px; border-radius: 12px; overflow: hidden; background: #000;">
                                     <img src="{{ asset($listing->thumbnail) }}" alt="{{ $listing->product_name }}" style="width: 100%; height: 100%; object-fit: cover;">
                                 </div>
                             </div>
 
                             {{-- Product Details List --}}
-                            <div style="flex: 1;">
+                            <div class="pd-text-wrap" style="flex: 1;">
                                 @php
                                     $sharingMethod = null;
                                     if ($listing->productCatalog && !empty($listing->productCatalog->sharing_methods)) {
@@ -49,7 +110,7 @@
                                 @endphp
 
                                 {{-- Row 1: Can be activated in + Sharing Method --}}
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                                <div class="pd-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                                     {{-- Can be activated in --}}
                                     <div style="display: flex; gap: 8px;">
                                         <div style="flex-shrink: 0;">
@@ -77,7 +138,7 @@
                                 </div>
 
                                 {{-- Row 2: Supported devices + Duration --}}
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                                <div class="pd-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
                                     {{-- Supported devices --}}
                                     <div style="display: flex; gap: 8px;">
                                         <div style="flex-shrink: 0;">
@@ -123,16 +184,16 @@
                     </div>
 
                     {{-- Offer Description --}}
-                    <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
+                    <div class="pd-card" style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
                         <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">{{ __('Offer description') }}</h4>
-                        <div style="color: #4b5563; font-size: 14px; line-height: 1.8;">
+                        <div class="pd-description pd-text-wrap" style="color: #4b5563; font-size: 14px; line-height: 1.8;">
                             {!! $listing->description !!}
                         </div>
                     </div>
 
                     {{-- Explore More Section --}}
                     @if ($suggested->count())
-                        <div style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
+                        <div class="pd-card" style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
                             <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 20px;">{{ __('Explore More') }}</h4>
                             <div class="row g-3">
                                 @foreach ($suggested->take(4) as $item)
@@ -167,8 +228,8 @@
 
                 {{-- Right Side: Pricing + Actions --}}
                 <div class="col-lg-5">
-                    <div style="position: sticky; top: 20px;">
-                        <div style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                    <div class="pd-sticky" style="position: sticky; top: 20px;">
+                        <div class="pd-card" style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
                             {{-- Delivery Times --}}
                             <div style="margin-bottom: 20px;">
                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
@@ -220,7 +281,7 @@
                             </button>
 
                             {{-- Guarantees --}}
-                            <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                            <div class="pd-guarantees" style="display: flex; gap: 16px; margin-bottom: 16px;">
                                 <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; cursor: pointer;" class="refund-guarantee-btn">
                                     <iconify-icon icon="lucide:shield-check" style="font-size: 16px; color: #10b981;"></iconify-icon>
                                     <span>{{ __('Refund Guarantee') }}</span>
