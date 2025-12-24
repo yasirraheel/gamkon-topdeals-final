@@ -159,6 +159,8 @@ class ListingController extends Controller
             'product_catalog_id' => ($isUpdate ? 'nullable' : 'required') . '|exists:product_catalogs,id',
             'selected_duration' => ($isUpdate ? 'nullable' : 'required') . '|string',
             'selected_plan' => ($isUpdate ? 'nullable' : 'required') . '|string',
+            'region' => 'nullable|string',
+            'devices' => 'nullable|string',
             'product_name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric',

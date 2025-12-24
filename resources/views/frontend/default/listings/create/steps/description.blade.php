@@ -126,6 +126,26 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="td-form-group">
+                        <label class="input-label" for="selectRegion">{{ __('Region') }}</label>
+                        <div class="auth-nice-select auth-nice-select-2">
+                            <select id="selectRegion" class="nice-select-active" name="region">
+                                <option value="">{{ __('Select Region') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="td-form-group">
+                        <label class="input-label" for="selectDevices">{{ __('Supported Devices') }}</label>
+                        <div class="auth-nice-select auth-nice-select-2">
+                            <select id="selectDevices" class="nice-select-active" name="devices">
+                                <option value="">{{ __('Select Devices') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-12 col-md-6 col-lg-6">
                     <div class="td-form-group has-right-icon">
                         <label class="input-label">{{ __('Guarantee Period') }}</label>
@@ -352,6 +372,8 @@
                 $('#selectDuration').html('<option value="">{{ __('Select Duration') }}</option>');
                 $('#selectPlan').html('<option value="">{{ __('Select Sharing Method') }}</option>');
                 $('#selectProductPlan').html('<option value="">{{ __('Select Plan') }}</option>');
+                $('#selectRegion').html('<option value="">{{ __('Select Region') }}</option>');
+                $('#selectDevices').html('<option value="">{{ __('Select Devices') }}</option>');
                 $('.nice-select-active').niceSelect('update');
                 return;
             }
@@ -373,6 +395,8 @@
                         var savedDuration = '{{ old('selected_duration', $listing?->selected_duration ?? '') }}';
                         var savedPlan = '{{ old('selected_plan', $listing?->selected_plan ?? '') }}';
                         var savedProductPlan = '{{ old('plan_id', $listing?->plan_id ?? '') }}';
+                        var savedRegion = '{{ old('region', $listing?->region ?? '') }}';
+                        var savedDevices = '{{ old('devices', $listing?->devices ?? '') }}';
                         
                         // Populate duration dropdown
                         var durationOptions = '<option value="">{{ __('Select Duration') }}</option>';
@@ -409,6 +433,30 @@
                             });
                         }
                         $('#selectProductPlan').html(productPlanOptions);
+
+                        // Populate region dropdown
+                        var regionOptions = '<option value="">{{ __('Select Region') }}</option>';
+                        if (data.regions && data.regions.length > 0) {
+                            data.regions.forEach(function(region) {
+                                if (region && region.trim() !== '') {
+                                    var selected = (region === savedRegion) ? ' selected' : '';
+                                    regionOptions += '<option value="' + region + '"' + selected + '>' + region + '</option>';
+                                }
+                            });
+                        }
+                        $('#selectRegion').html(regionOptions);
+
+                        // Populate devices dropdown
+                        var devicesOptions = '<option value="">{{ __('Select Devices') }}</option>';
+                        if (data.platforms && data.platforms.length > 0) {
+                            data.platforms.forEach(function(platform) {
+                                if (platform && platform.trim() !== '') {
+                                    var selected = (platform === savedDevices) ? ' selected' : '';
+                                    devicesOptions += '<option value="' + platform + '"' + selected + '>' + platform + '</option>';
+                                }
+                            });
+                        }
+                        $('#selectDevices').html(devicesOptions);
                         
                         // Update nice-select
                         $('.nice-select-active').niceSelect('update');

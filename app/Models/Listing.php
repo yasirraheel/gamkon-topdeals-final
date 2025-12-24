@@ -16,6 +16,8 @@ class Listing extends Model
         'seller_id',
         'category_id',
         'product_catalog_id',
+        'region',
+        'devices',
         'selected_duration',
         'selected_plan',
         'plan_id',

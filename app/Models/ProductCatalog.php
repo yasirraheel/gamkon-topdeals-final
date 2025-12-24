@@ -16,6 +16,8 @@ class ProductCatalog extends Model
         'durations',
         'sharing_methods',
         'plans',
+        'regions',
+        'platforms',
         'description',
         'status',
         'order',
@@ -30,6 +32,8 @@ class ProductCatalog extends Model
         'durations' => 'array',
         'sharing_methods' => 'array',
         'plans' => 'array',
+        'regions' => 'array',
+        'platforms' => 'array',
         'status' => 'boolean',
     ];
 

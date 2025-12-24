@@ -54,6 +54,10 @@ class ProductCatalogController extends Controller
             'sharing_methods.*' => 'nullable|string',
             'plans' => 'nullable|array',
             'plans.*' => 'nullable|string',
+            'regions' => 'nullable|array',
+            'regions.*' => 'nullable|string',
+            'platforms' => 'nullable|array',
+            'platforms.*' => 'nullable|string',
             'description' => 'nullable|string',
             'status' => 'required|boolean',
             'order' => 'nullable|numeric|unique:product_catalogs,order',
@@ -88,6 +92,14 @@ class ProductCatalogController extends Controller
             return !empty(trim($value));
         })) : null;
 
+        $regions = $request->get('regions') ? array_values(array_filter($request->get('regions'), function($value) {
+            return !empty(trim($value));
+        })) : null;
+
+        $platforms = $request->get('platforms') ? array_values(array_filter($request->get('platforms'), function($value) {
+            return !empty(trim($value));
+        })) : null;
+
         ProductCatalog::create([
             'name' => $request->get('name'),
             'icon' => $iconPath,
@@ -95,6 +107,8 @@ class ProductCatalogController extends Controller
             'durations' => $durations,
             'sharing_methods' => $sharingMethods,
             'plans' => $plans,
+            'regions' => $regions,
+            'platforms' => $platforms,
             'description' => $request->get('description'),
             'status' => $request->get('status'),
             'order' => !$request->order || empty($request->order) ? ProductCatalog::max('order') + 1 : $request->get('order'),
@@ -126,6 +140,10 @@ class ProductCatalogController extends Controller
             'sharing_methods.*' => 'nullable|string',
             'plans' => 'nullable|array',
             'plans.*' => 'nullable|string',
+            'regions' => 'nullable|array',
+            'regions.*' => 'nullable|string',
+            'platforms' => 'nullable|array',
+            'platforms.*' => 'nullable|string',
             'description' => 'nullable|string',
             'status' => 'required|boolean',
             'order' => 'nullable|numeric|unique:product_catalogs,order,'.$catalog->id,
@@ -160,6 +178,14 @@ class ProductCatalogController extends Controller
             return !empty(trim($value));
         })) : null;
 
+        $regions = $request->get('regions') ? array_values(array_filter($request->get('regions'), function($value) {
+            return !empty(trim($value));
+        })) : null;
+
+        $platforms = $request->get('platforms') ? array_values(array_filter($request->get('platforms'), function($value) {
+            return !empty(trim($value));
+        })) : null;
+
         $catalog->update([
             'name' => $request->get('name'),
             'icon' => $iconPath,
@@ -167,6 +193,8 @@ class ProductCatalogController extends Controller
             'durations' => $durations,
             'sharing_methods' => $sharingMethods,
             'plans' => $plans,
+            'regions' => $regions,
+            'platforms' => $platforms,
             'description' => $request->get('description'),
             'status' => $request->get('status'),
             'order' => !$request->order || empty($request->order) ? ProductCatalog::max('order') + 1 : $request->get('order'),
@@ -217,6 +245,8 @@ class ProductCatalogController extends Controller
                 'durations' => $catalog->durations ?? [],
                 'sharing_methods' => $catalog->sharing_methods ?? [],
                 'plans' => $catalog->plans ?? [],
+                'regions' => $catalog->regions ?? [],
+                'platforms' => $catalog->platforms ?? [],
                 'thumbnail' => $catalog->thumbnail ? asset($catalog->thumbnail) : null,
             ]
         ]);

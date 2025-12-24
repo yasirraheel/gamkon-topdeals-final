@@ -13,62 +13,173 @@
     <link rel="stylesheet" href="{{ themeAsset('css/all.min.css') }}">
     <style>
         .product-details-area .pd-card {
-            max-width: 100%;
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 24px;
+            border: 1px solid #f3f4f6;
+        }
+        
+        .product-details-area .pd-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 24px;
+            line-height: 1.3;
         }
 
-        .product-details-area .pd-description img,
-        .product-details-area .pd-description video,
-        .product-details-area .pd-description iframe {
-            max-width: 100%;
-            height: auto;
+        .product-details-area .pd-thumb {
+            width: 140px;
+            height: 140px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            flex-shrink: 0;
+        }
+        
+        .product-details-area .pd-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .product-details-area .pd-description table {
+        .pd-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .pd-info-item {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .pd-info-icon {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .pd-info-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 2px;
             display: block;
-            max-width: 100%;
-            overflow-x: auto;
+        }
+        
+        .pd-info-value {
+            font-size: 14px;
+            color: #111827;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.4;
         }
 
-        @media (max-width: 767px) {
-            .product-details-area .pd-card {
-                padding: 16px !important;
-            }
+        .pd-notice {
+            background: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
 
-            .product-details-area .pd-title {
-                font-size: 18px !important;
-                margin-bottom: 16px !important;
-            }
+        .sidebar-sticky {
+            position: sticky;
+            top: 20px;
+        }
 
-            .product-details-area .pd-summary {
-                flex-direction: column !important;
-                gap: 16px !important;
-            }
+        .delivery-stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        .delivery-stat .label {
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .delivery-stat .value {
+            color: #111827;
+            font-weight: 600;
+        }
 
+        .buy-now-btn {
+            width: 100%;
+            background: var(--td-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .buy-now-btn:hover {
+            opacity: 0.9;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: #4b5563;
+            cursor: pointer;
+        }
+
+        .seller-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .seller-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .review-item {
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        
+        .review-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        @media (max-width: 991px) {
+            .pd-info-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar-sticky {
+                position: static;
+            }
             .product-details-area .pd-thumb {
-                width: 100% !important;
-                max-width: 240px;
-                height: auto !important;
-                aspect-ratio: 1 / 1;
-                margin-inline: auto;
+                margin: 0 auto 20px;
             }
-
-            .product-details-area .pd-info-grid {
-                grid-template-columns: 1fr !important;
+            .pd-summary {
+                flex-direction: column;
+                text-align: center;
             }
-
-            .product-details-area .pd-sticky {
-                position: static !important;
-                top: auto !important;
-            }
-
-            .product-details-area .pd-guarantees {
-                flex-wrap: wrap !important;
-                gap: 10px !important;
-            }
-
-            .product-details-area .pd-text-wrap {
-                word-break: break-word;
-                overflow-wrap: anywhere;
+            .pd-info-item {
+                justify-content: center;
+                text-align: left;
             }
         }
     </style>
@@ -77,105 +188,83 @@
     <div class="product-details-area section_space-my">
         <div class="container">
             {{-- Breadcrumb --}}
-            <div class="mb-3">
-                <a href="{{ route('home') }}" style="color: #6b7280; font-size: 14px;">
-                    <iconify-icon icon="iconamoon:arrow-left-2" style="vertical-align: middle;"></iconify-icon> {{ __('Back to all offers') }}
+            <div class="mb-4">
+                <a href="{{ route('home') }}" class="d-inline-flex align-items-center gap-2 text-muted text-decoration-none" style="font-size: 14px;">
+                    <iconify-icon icon="iconamoon:arrow-left-2"></iconify-icon> {{ __('Back to all offers') }}
                 </a>
             </div>
 
             <div class="row g-4">
-                {{-- Left Side: Image + Info --}}
-                <div class="col-lg-7">
-                    <div class="pd-card" style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-                        <h2 class="pd-title pd-text-wrap" style="font-size: 20px; font-weight: 700; color: #111827; margin-bottom: 24px;">
-                            {{ $listing->product_name }}
-                        </h2>
-
-                        <div class="pd-summary" style="display: flex; gap: 24px; margin-bottom: 30px;">
-                            {{-- Product Thumbnail --}}
-                            <div style="flex-shrink: 0;">
-                                <div class="pd-thumb" style="width: 160px; height: 160px; border-radius: 12px; overflow: hidden; background: #000;">
-                                    <img src="{{ asset($listing->thumbnail) }}" alt="{{ $listing->product_name }}" style="width: 100%; height: 100%; object-fit: cover;">
-                                </div>
+                {{-- Left Column: Product Info --}}
+                <div class="col-lg-8">
+                    {{-- Product Header Card --}}
+                    <div class="pd-card">
+                        <div class="d-flex flex-column flex-md-row gap-4 align-items-start">
+                            <div class="pd-thumb">
+                                <img src="{{ asset($listing->thumbnail) }}" alt="{{ $listing->product_name }}">
                             </div>
-
-                            {{-- Product Details List --}}
-                            <div class="pd-text-wrap" style="flex: 1;">
-                                @php
-                                    $sharingMethod = null;
-                                    if ($listing->productCatalog && !empty($listing->productCatalog->sharing_methods)) {
-                                        $methods = $listing->productCatalog->sharing_methods;
-                                        $sharingMethod = is_array($methods) ? ($methods[0] ?? null) : $methods;
-                                    }
-                                @endphp
-
-                                {{-- Row 1: Can be activated in + Sharing Method --}}
-                                <div class="pd-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
-                                    {{-- Can be activated in --}}
-                                    <div style="display: flex; gap: 8px;">
-                                        <div style="flex-shrink: 0;">
-                                            <iconify-icon icon="lucide:check-circle" style="font-size: 18px; color: #10b981;"></iconify-icon>
+                            <div class="flex-grow-1 w-100">
+                                <h1 class="pd-title">{{ $listing->product_name }}</h1>
+                                
+                                <div class="pd-info-grid">
+                                    {{-- Region --}}
+                                    <div class="pd-info-item">
+                                        <div class="pd-info-icon text-success">
+                                            <iconify-icon icon="lucide:check-circle" width="20"></iconify-icon>
                                         </div>
                                         <div>
-                                            <p style="font-size: 12px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Can be activated in') }}</p>
-                                            <p style="font-size: 13px; color: #111827; margin: 0; font-weight: 600;">Pakistan</p>
-                                            <a href="#" style="font-size: 11px; color: #3b82f6; text-decoration: none;">{{ __('Check region restrictions') }}</a>
+                                            <span class="pd-info-label">{{ __('Can be activated in') }}</span>
+                                            <p class="pd-info-value">{{ $listing->region ?? 'Global' }}</p>
+                                            <a href="#" class="text-primary text-decoration-none" style="font-size: 12px;">{{ __('Check region restrictions') }}</a>
                                         </div>
                                     </div>
 
                                     {{-- Sharing Method --}}
-                                    @if ($sharingMethod || $listing->selected_plan)
-                                        <div style="display: flex; gap: 8px;">
-                                            <div style="flex-shrink: 0;">
-                                                <iconify-icon icon="lucide:user-check" style="font-size: 18px; color: #6b7280;"></iconify-icon>
-                                            </div>
-                                            <div>
-                                                <p style="font-size: 12px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Sharing Method') }}</p>
-                                                <p style="font-size: 13px; color: #111827; margin: 0; font-weight: 600;">{{ $sharingMethod ?? $listing->selected_plan }}</p>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-
-                                {{-- Row 2: Supported devices + Duration --}}
-                                <div class="pd-info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-                                    {{-- Supported devices --}}
-                                    <div style="display: flex; gap: 8px;">
-                                        <div style="flex-shrink: 0;">
-                                            <iconify-icon icon="lucide:monitor" style="font-size: 18px; color: #6b7280;"></iconify-icon>
+                                    <div class="pd-info-item">
+                                        <div class="pd-info-icon text-muted">
+                                            <iconify-icon icon="lucide:user" width="20"></iconify-icon>
                                         </div>
                                         <div>
-                                            <p style="font-size: 12px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Supported devices') }}</p>
-                                            <p style="font-size: 13px; color: #111827; margin: 0; font-weight: 600;">PC, Mac</p>
+                                            <span class="pd-info-label">{{ __('Sharing Method') }}</span>
+                                            <p class="pd-info-value">{{ $listing->selected_plan ?? $listing->productCatalog->sharing_methods[0] ?? 'N/A' }}</p>
+                                        </div>
+                                    </div>
+
+                                    {{-- Supported Devices --}}
+                                    <div class="pd-info-item">
+                                        <div class="pd-info-icon text-muted">
+                                            <iconify-icon icon="lucide:monitor" width="20"></iconify-icon>
+                                        </div>
+                                        <div>
+                                            <span class="pd-info-label">{{ __('Supported devices') }}</span>
+                                            <p class="pd-info-value">{{ $listing->devices ?? 'PC, Mobile' }}</p>
                                         </div>
                                     </div>
 
                                     {{-- Duration --}}
-                                    @if ($listing->selected_duration)
-                                        <div style="display: flex; gap: 8px;">
-                                            <div style="flex-shrink: 0;">
-                                                <iconify-icon icon="lucide:clock" style="font-size: 18px; color: #6b7280;"></iconify-icon>
-                                            </div>
-                                            <div>
-                                                <p style="font-size: 12px; color: #9ca3af; margin: 0; margin-bottom: 2px;">{{ __('Duration') }}</p>
-                                                <p style="font-size: 13px; color: #111827; margin: 0; font-weight: 600;">{{ $listing->selected_duration }}</p>
-                                            </div>
+                                    <div class="pd-info-item">
+                                        <div class="pd-info-icon text-muted">
+                                            <iconify-icon icon="lucide:hourglass" width="20"></iconify-icon>
                                         </div>
-                                    @endif
+                                        <div>
+                                            <span class="pd-info-label">{{ __('Duration') }}</span>
+                                            <p class="pd-info-value">{{ $listing->selected_duration }}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
+                        
                         {{-- Important Notice --}}
-                        <div style="background: #eff6ff; border-left: 4px solid #3b82f6; border-radius: 8px; padding: 16px;">
-                            <div style="display: flex; gap: 12px; align-items: start;">
-                                <iconify-icon icon="lucide:info" style="font-size: 20px; color: #3b82f6; flex-shrink: 0; margin-top: 2px;"></iconify-icon>
+                        <div class="pd-notice mt-4">
+                            <div class="d-flex gap-3">
+                                <iconify-icon icon="lucide:info" class="text-primary flex-shrink-0" width="24" style="margin-top: 2px;"></iconify-icon>
                                 <div>
-                                    <h6 style="color: #1e40af; font-size: 14px; font-weight: 700; margin: 0 0 8px 0;">{{ __('Important Notice') }}</h6>
-                                    <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 0;">
+                                    <h6 class="text-primary fw-bold mb-2" style="font-size: 14px;">{{ __('Important Notice') }}</h6>
+                                    <p class="text-primary mb-2" style="font-size: 13px; opacity: 0.9; line-height: 1.6;">
                                         {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
                                     </p>
-                                    <p style="color: #1e3a8a; font-size: 13px; line-height: 1.6; margin: 8px 0 0 0;">
+                                    <p class="text-primary mb-0" style="font-size: 13px; opacity: 0.9; line-height: 1.6;">
                                         {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
                                     </p>
                                 </div>
@@ -183,37 +272,34 @@
                         </div>
                     </div>
 
-                    {{-- Offer Description --}}
-                    <div class="pd-card" style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
-                        <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 16px;">{{ __('Offer description') }}</h4>
-                        <div class="pd-description pd-text-wrap" style="color: #4b5563; font-size: 14px; line-height: 1.8;">
+                    {{-- Description --}}
+                    <div class="pd-card">
+                        <h4 class="fw-bold mb-3" style="font-size: 18px;">{{ __('Offer description') }}</h4>
+                        <div class="text-muted" style="font-size: 14px; line-height: 1.7;">
                             {!! $listing->description !!}
                         </div>
                     </div>
 
-                    {{-- Explore More Section --}}
+                    {{-- Explore More (Desktop) --}}
                     @if ($suggested->count())
-                        <div class="pd-card d-none d-lg-block" style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
-                            <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 20px;">{{ __('Explore More') }}</h4>
+                        <div class="pd-card d-none d-lg-block">
+                            <h4 class="fw-bold mb-3" style="font-size: 18px;">{{ __('Explore More') }}</h4>
                             <div class="row g-3">
                                 @foreach ($suggested->take(4) as $item)
                                     <div class="col-md-6">
-                                        <a href="{{ route('listing.details', $item->slug) }}" style="text-decoration: none;">
-                                            <div style="display: flex; gap: 12px; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; transition: all 0.3s; background: #fff;">
-                                                <div style="flex-shrink: 0;">
-                                                    <img src="{{ asset($item->thumbnail) }}" alt="{{ $item->product_name }}" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover;">
-                                                </div>
-                                                <div style="flex: 1; min-width: 0;">
-                                                    <h6 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0 0 6px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $item->product_name }}</h6>
-                                                    <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
-                                                        <iconify-icon icon="lucide:star" style="font-size: 12px; color: #fbbf24;"></iconify-icon>
-                                                        <span style="font-size: 12px; color: #6b7280; font-weight: 600;">{{ number_format($item->average_rating, 1) }}</span>
-                                                        <span style="font-size: 12px; color: #9ca3af;">({{ $item->total_reviews }})</span>
+                                        <a href="{{ route('listing.details', $item->slug) }}" class="text-decoration-none">
+                                            <div class="d-flex gap-3 p-3 border rounded-3 bg-white h-100 align-items-center hover-shadow transition">
+                                                <img src="{{ asset($item->thumbnail) }}" alt="{{ $item->product_name }}" width="60" height="60" class="rounded-3 object-fit-cover">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h6 class="text-dark fw-bold mb-1 text-truncate" style="font-size: 14px;">{{ $item->product_name }}</h6>
+                                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                                        <iconify-icon icon="solar:star-bold" class="text-warning" width="12"></iconify-icon>
+                                                        <span class="text-muted small fw-bold">{{ number_format($item->average_rating, 1) }}</span>
                                                     </div>
-                                                    <div style="display: flex; align-items: baseline; gap: 6px;">
-                                                        <span style="font-size: 16px; color: #ef4444; font-weight: 700;">{{ setting('currency_symbol', 'global') }}{{ number_format($item->final_price, 2) }}</span>
+                                                    <div class="d-flex align-items-baseline gap-2">
+                                                        <span class="text-danger fw-bold">{{ amountWithCurrency($item->final_price) }}</span>
                                                         @if ($item->discount_value > 0)
-                                                            <span style="font-size: 12px; color: #9ca3af; text-decoration: line-through;">{{ setting('currency_symbol', 'global') }}{{ number_format($item->price, 2) }}</span>
+                                                            <span class="text-muted small text-decoration-line-through">{{ amountWithCurrency($item->price) }}</span>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -226,196 +312,113 @@
                     @endif
                 </div>
 
-                {{-- Right Side: Pricing + Actions --}}
-                <div class="col-lg-5">
-                    <div class="pd-sticky" style="position: sticky; top: 20px;">
-                        <div class="pd-card" style="background: #fff; border-radius: 12px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
-                            {{-- Delivery Times --}}
-                            <div style="margin-bottom: 20px;">
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <iconify-icon icon="lucide:clock" style="font-size: 16px; color: #6b7280;"></iconify-icon>
-                                        <span style="font-size: 14px; color: #6b7280;">{{ __('Guaranteed Delivery time') }}</span>
-                                    </div>
-                                    <span style="font-size: 14px; color: #111827; font-weight: 600;">{{ $listing->delivery_method == 'auto' ? '5 minutes' : ($listing->delivery_speed . ' ' . $listing->delivery_speed_unit) }}</span>
-                                </div>
-
-                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                    <div style="display: flex; align-items: center; gap: 8px;">
-                                        <iconify-icon icon="lucide:zap" style="font-size: 16px; color: #6b7280;"></iconify-icon>
-                                        <span style="font-size: 14px; color: #6b7280;">{{ __('Instant delivery time') }}</span>
-                                    </div>
-                                    <span style="font-size: 14px; color: #111827; font-weight: 600;">{{ $listing->delivery_method == 'auto' ? 'Instant' : '30s' }}</span>
-                                </div>
-
-                                @if ($listing->guarantee_period)
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <div style="display: flex; align-items: center; gap: 8px;">
-                                            <iconify-icon icon="lucide:shield-check" style="font-size: 16px; color: #6b7280;"></iconify-icon>
-                                            <span style="font-size: 14px; color: #6b7280;">{{ __('Warranty Period') }}</span>
-                                        </div>
-                                        <span style="font-size: 14px; color: #111827; font-weight: 600;">{{ $listing->guarantee_period }}</span>
-                                    </div>
-                                @endif
+                {{-- Right Column: Sidebar --}}
+                <div class="col-lg-4">
+                    <div class="sidebar-sticky">
+                        {{-- Purchase Card --}}
+                        <div class="pd-card">
+                            <div class="delivery-stat">
+                                <span class="label"><iconify-icon icon="lucide:clock"></iconify-icon> {{ __('Guaranteed delivery time') }}</span>
+                                <span class="value">{{ $listing->delivery_method == 'auto' ? '5 minutes' : ($listing->delivery_speed . ' ' . $listing->delivery_speed_unit) }}</span>
                             </div>
+                            <div class="delivery-stat">
+                                <span class="label"><iconify-icon icon="lucide:zap"></iconify-icon> {{ __('Average delivery time') }}</span>
+                                <span class="value">{{ $listing->delivery_method == 'auto' ? 'Instant' : '~1 hour' }}</span>
+                            </div>
+                            @if ($listing->guarantee_period)
+                                <div class="delivery-stat">
+                                    <span class="label"><iconify-icon icon="lucide:shield-check"></iconify-icon> {{ __('Warranty Period') }}</span>
+                                    <span class="value">{{ $listing->guarantee_period }}</span>
+                                </div>
+                            @endif
 
-                            <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 20px 0;">
+                            <hr class="my-4 text-muted opacity-25">
 
-                            {{-- Total Price --}}
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                                <span style="font-size: 16px; color: #6b7280; font-weight: 600;">{{ __('Total') }}:</span>
-                                <div style="text-align: right;">
-                                    <span style="font-size: 24px; color: #ef4444; font-weight: 700;">{{ setting('currency_symbol', 'global') }}{{ number_format($listing->final_price, 2) }}</span>
+                            <div class="d-flex justify-content-between align-items-end mb-4">
+                                <span class="text-muted fw-bold">{{ __('Total') }}:</span>
+                                <div class="text-end">
+                                    <h3 class="text-danger fw-bold mb-0">{{ amountWithCurrency($listing->final_price) }}</h3>
                                     @if ($listing->discount_value > 0)
-                                        <div>
-                                            <span style="font-size: 14px; color: #9ca3af; text-decoration: line-through;">{{ setting('currency_symbol', 'global') }}{{ number_format($listing->price, 2) }}</span>
-                                        </div>
+                                        <small class="text-muted text-decoration-line-through">{{ amountWithCurrency($listing->price) }}</small>
                                     @endif
                                 </div>
                             </div>
 
-                            {{-- Buy Now Button --}}
-                            <button onclick="document.getElementById('buyNowForm').submit();" 
-                                    style="width: 100%; background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); color: white; border: none; border-radius: 8px; padding: 14px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 16px; transition: all 0.3s;">
+                            <button onclick="document.getElementById('buyNowForm').submit();" class="buy-now-btn mb-3">
                                 {{ __('Buy Now') }}
                             </button>
 
-                            {{-- Guarantees --}}
-                            <div class="pd-guarantees" style="display: flex; gap: 16px; margin-bottom: 16px;">
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280; cursor: pointer;" class="refund-guarantee-btn">
-                                    <iconify-icon icon="lucide:shield-check" style="font-size: 16px; color: #10b981;"></iconify-icon>
-                                    <span>{{ __('Refund Guarantee') }}</span>
+                            <div class="d-flex gap-4">
+                                <div class="trust-badge refund-guarantee-btn">
+                                    <iconify-icon icon="lucide:shield-check" class="text-success" width="16"></iconify-icon>
+                                    {{ __('Refund Guarantee') }}
                                 </div>
-                                <div style="display: flex; align-items: center; gap: 6px; font-size: 13px; color: #6b7280;">
-                                    <iconify-icon icon="lucide:truck" style="font-size: 16px; color: #10b981;"></iconify-icon>
-                                    <span>{{ __('Express Checkout') }}</span>
-                                </div>
-                            </div>
-
-                            <hr style="border: 0; border-top: 1px solid #e5e7eb; margin: 20px 0;">
-
-                            {{-- Seller Info --}}
-                            <div>
-                                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                                    <img src="{{ $listing->seller->avatar_path ?? themeAsset('images/user/user-default.png') }}" 
-                                         alt="{{ $listing->seller->username }}" 
-                                         style="width: 48px; height: 48px; border-radius: 50%; object-fit: cover;">
-                                    <div style="flex: 1;">
-                                        <a href="{{ route('seller.details', $listing->seller->username) }}" style="font-size: 15px; color: #111827; font-weight: 600; text-decoration: none; display: block;">
-                                            {{ $listing->seller->username }}
-                                        </a>
-                                        <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px;">
-                                            <iconify-icon icon="lucide:star" style="font-size: 14px; color: #fbbf24;"></iconify-icon>
-                                            <span style="font-size: 13px; color: #6b7280; font-weight: 600;">{{ number_format($listing->average_rating, 1) }}</span>
-                                            <span style="font-size: 13px; color: #9ca3af;">({{ $listing->total_reviews }})</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {{-- Product Reviews / Recent Feedback --}}
-                                <div>
-                                    @php
-                                        $reviews = $listing->approvedReviews()->latest()->take(5)->get();
-                                        $totalReviews = $listing->approvedReviews()->count();
-                                    @endphp
-                                    
-                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                                        <h6 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0;">{{ __('Product Reviews') }}</h6>
-                                        @if ($totalReviews > 0)
-                                            <div style="display: flex; align-items: center; gap: 4px;">
-                                                <iconify-icon icon="lucide:star" style="font-size: 14px; color: #fbbf24;"></iconify-icon>
-                                                <span style="font-size: 13px; font-weight: 600;">{{ number_format($listing->average_rating, 1) }}</span>
-                                                <span style="font-size: 12px; color: #9ca3af;">({{ $totalReviews }})</span>
-                                            </div>
-                                        @endif
-                                    </div>
-
-                                    @if ($reviews->count() > 0)
-                                        <div id="reviewContainer">
-                                            @foreach($reviews as $review)
-                                                @if($review->buyer)
-                                                <div style="background: #f9fafb; border-radius: 8px; padding: 12px; margin-bottom: 10px;">
-                                                    <div style="display: flex; align-items: start; gap: 8px;">
-                                                        <div style="flex: 1;">
-                                                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
-                                                                <img src="{{ $review->buyer->avatar_path ?? themeAsset('images/user/user-default.png') }}" 
-                                                                     alt="{{ $review->buyer->username }}" 
-                                                                     style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;">
-                                                                <span style="font-size: 13px; color: #111827; font-weight: 600;">{{ $review->buyer->username }}</span>
-                                                                <div style="display: flex; gap: 2px;">
-                                                                    @for ($i = 1; $i <= 5; $i++)
-                                                                        @if($review->rating >= $i)
-                                                                            <iconify-icon icon="solar:star-bold" style="font-size: 12px; color: #fbbf24;"></iconify-icon>
-                                                                        @else
-                                                                            <iconify-icon icon="solar:star-outline" style="font-size: 12px; color: #d1d5db;"></iconify-icon>
-                                                                        @endif
-                                                                    @endfor
-                                                                </div>
-                                                            </div>
-                                                            <p style="font-size: 12px; color: #4b5563; margin: 0 0 4px 0; line-height: 1.5;">{{ $review->review }}</p>
-                                                            <span style="font-size: 11px; color: #9ca3af;">{{ $review->created_at->diffForHumans() }}</span>
-                                                            
-                                                            @if ($review->reply)
-                                                                <div style="background: #fff; border-left: 2px solid #3b82f6; border-radius: 4px; padding: 8px; margin-top: 8px;">
-                                                                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
-                                                                        <iconify-icon icon="lucide:corner-down-right" style="font-size: 12px; color: #3b82f6;"></iconify-icon>
-                                                                        <span style="font-size: 12px; color: #111827; font-weight: 600;">{{ $listing->seller->username }}</span>
-                                                                    </div>
-                                                                    <p style="font-size: 11px; color: #4b5563; margin: 0;">{{ $review->reply->review }}</p>
-                                                                </div>
-                                                            @endif
-                                                        </div>
-                                                        @if (auth()->check())
-                                                            <button data-id="{{ encrypt($review->id) }}" class="report-button common-modal-button" type="button" style="background: none; border: none; padding: 4px; cursor: pointer;">
-                                                                <iconify-icon icon="lucide:flag" style="font-size: 14px; color: #9ca3af;"></iconify-icon>
-                                                            </button>
-                                                        @endif
-                                                    </div>
-                                                </div>
-                                                @endif
-                                            @endforeach
-
-                                            @if ($totalReviews > 5)
-                                                <button type="button" class="border-button w-100 mt-2" id="loadMoreReviews" data-listing-id="{{ $listing->id }}" data-offset="5" style="width: 100%; padding: 8px; font-size: 13px; border: 1px solid #e5e7eb; border-radius: 6px; background: #fff; color: #111827; cursor: pointer;">
-                                                    {{ __('Load More Reviews') }}
-                                                </button>
-                                            @endif
-                                        </div>
-                                    @else
-                                        <div style="text-align: center; padding: 20px; color: #9ca3af;">
-                                            <iconify-icon icon="lucide:message-circle" style="font-size: 32px; margin-bottom: 8px;"></iconify-icon>
-                                            <p style="font-size: 13px; margin: 0;">{{ __('No reviews yet') }}</p>
-                                        </div>
-                                    @endif
+                                <div class="trust-badge express-checkout-btn">
+                                    <iconify-icon icon="lucide:truck" class="text-success" width="16"></iconify-icon>
+                                    {{ __('Express Checkout') }}
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Seller Profile --}}
+                        <div class="pd-card">
+                            <div class="seller-card">
+                                <img src="{{ $listing->seller->avatar_path ?? themeAsset('images/user/user-default.png') }}" alt="{{ $listing->seller->username }}" class="seller-avatar">
+                                <div>
+                                    <a href="{{ route('seller.details', $listing->seller->username) }}" class="text-dark fw-bold text-decoration-none d-block mb-1">{{ $listing->seller->username }}</a>
+                                    <div class="d-flex align-items-center gap-1">
+                                        <iconify-icon icon="solar:like-bold" class="text-primary" width="14"></iconify-icon>
+                                        <span class="text-primary small fw-bold">{{ number_format($listing->seller->order_success_rate ?? 98.5, 2) }}%</span>
+                                        <span class="text-muted small">({{ $listing->seller->total_reviews ?? 0 }})</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {{-- Recent Feedback --}}
+                        <div class="pd-card">
+                            <h5 class="fw-bold mb-3" style="font-size: 16px;">{{ __('Recent feedback') }}</h5>
+                            
+                            @forelse($listing->approvedReviews()->latest()->take(3)->get() as $review)
+                                <div class="review-item">
+                                    <div class="d-flex gap-2 mb-1">
+                                        <iconify-icon icon="solar:like-bold" class="text-primary" width="14" style="margin-top: 2px;"></iconify-icon>
+                                        <div>
+                                            <span class="d-block text-dark fw-bold small mb-0">{{ $review->buyer->username ?? 'User' }}</span>
+                                            <small class="text-muted d-block mb-1" style="font-size: 11px;">{{ __('Bought') }} {{ $listing->product_name }}</small>
+                                            <p class="text-muted small mb-1">{{ $review->review }}</p>
+                                            <small class="text-muted" style="font-size: 10px;">{{ $review->created_at->diffForHumans() }}</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="text-center text-muted py-3">
+                                    <small>{{ __('No reviews yet') }}</small>
+                                </div>
+                            @endforelse
+                            
+                            @if($listing->approvedReviews()->count() > 3)
+                                <a href="#" class="text-primary small fw-bold text-decoration-none mt-2 d-block">{{ __('See all feedback') }}</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
+
+                {{-- Mobile Explore More --}}
                 @if ($suggested->count())
-                    <div class="col-12 d-block d-lg-none">
-                        <div class="pd-card" style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
-                            <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 20px;">{{ __('Explore More') }}</h4>
+                    <div class="col-12 d-lg-none">
+                        <div class="pd-card">
+                            <h4 class="fw-bold mb-3" style="font-size: 18px;">{{ __('Explore More') }}</h4>
                             <div class="row g-3">
                                 @foreach ($suggested->take(4) as $item)
                                     <div class="col-md-6">
-                                        <a href="{{ route('listing.details', $item->slug) }}" style="text-decoration: none;">
-                                            <div style="display: flex; gap: 12px; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; transition: all 0.3s; background: #fff;">
-                                                <div style="flex-shrink: 0;">
-                                                    <img src="{{ asset($item->thumbnail) }}" alt="{{ $item->product_name }}" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover;">
-                                                </div>
-                                                <div style="flex: 1; min-width: 0;">
-                                                    <h6 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0 0 6px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $item->product_name }}</h6>
-                                                    <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
-                                                        <iconify-icon icon="lucide:star" style="font-size: 12px; color: #fbbf24;"></iconify-icon>
-                                                        <span style="font-size: 12px; color: #6b7280; font-weight: 600;">{{ number_format($item->average_rating, 1) }}</span>
-                                                        <span style="font-size: 12px; color: #9ca3af;">({{ $item->total_reviews }})</span>
-                                                    </div>
-                                                    <div style="display: flex; align-items: baseline; gap: 6px;">
-                                                        <span style="font-size: 16px; color: #ef4444; font-weight: 700;">{{ setting('currency_symbol', 'global') }}{{ number_format($item->final_price, 2) }}</span>
-                                                        @if ($item->discount_value > 0)
-                                                            <span style="font-size: 12px; color: #9ca3af; text-decoration: line-through;">{{ setting('currency_symbol', 'global') }}{{ number_format($item->price, 2) }}</span>
-                                                        @endif
+                                        <a href="{{ route('listing.details', $item->slug) }}" class="text-decoration-none">
+                                            <div class="d-flex gap-3 p-3 border rounded-3 bg-white h-100 align-items-center">
+                                                <img src="{{ asset($item->thumbnail) }}" alt="{{ $item->product_name }}" width="60" height="60" class="rounded-3 object-fit-cover">
+                                                <div class="flex-grow-1 overflow-hidden">
+                                                    <h6 class="text-dark fw-bold mb-1 text-truncate" style="font-size: 14px;">{{ $item->product_name }}</h6>
+                                                    <div class="d-flex align-items-baseline gap-2">
+                                                        <span class="text-danger fw-bold">{{ amountWithCurrency($item->final_price) }}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -437,43 +440,32 @@
         </div>
     </div>
 
-    @if ($suggested->count())
-        <div class="suggested-product-area section_space-mT section_space-py">
-            <div class="container">
-                <div class="section-title">
-                    <div class="left">
-                        <div class="title-text">
-                            <img src="{{ themeAsset('images/icon/fire.svg') }}" alt="">
-                            <h2 class="">{{ __('Suggested Items') }}</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="title_mt">
-                    <div class="row g-4">
-                        @foreach ($suggested as $item)
-                            @include('frontend::listings.include.category-block', ['listing' => $item])
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
-    
     {{-- Refund Guarantee Modal --}}
     <div class="common-modal-full refund-guarantee-modal">
-        <div class="common-modal-box" style="max-width: 600px; background: white; border-radius: 16px; padding: 0; overflow: hidden;">
-            <div style="padding: 24px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                    <h5 style="font-size: 20px; font-weight: 600; color: #111827; margin: 0;">{{ __('Refund Guarantee') }}</h5>
-                    <button type="button" class="close" style="background: none; border: none; padding: 8px; cursor: pointer; color: #9ca3af; font-size: 24px; line-height: 1;">×</button>
-                </div>
-                <div style="color: #9ca3af; font-size: 14px; line-height: 1.6;">
-                    <p style="margin: 0;">{{ __("GamsGo's DealShield is designed to provide users with a secure and reliable trading environment, effectively preventing various types of fraud. If an Order is not delivered or the actual content does not match the description, you may request a full refund. Before you confirm successful delivery, the platform will temporarily hold the payment to ensure a fair and transparent transaction process, giving you greater peace of mind.") }}</p>
-                </div>
+        <div class="common-modal-box" style="max-width: 600px; background: white; border-radius: 16px; padding: 24px;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="fw-bold mb-0">{{ __('Refund Guarantee') }}</h5>
+                <button type="button" class="close bg-transparent border-0 fs-4" style="line-height: 1;">&times;</button>
+            </div>
+            <div class="text-muted" style="line-height: 1.6;">
+                <p>{{ __("Topdealsplus's DealShield is designed to provide users with a secure and reliable trading environment, effectively preventing various types of fraud. If an Order is not delivered or the actual content does not match the description, you may request a full refund. Before you confirm successful delivery, the platform will temporarily hold the payment to ensure a fair and transparent transaction process, giving you greater peace of mind.") }}</p>
             </div>
         </div>
     </div>
-    
+
+    {{-- Express Checkout Modal --}}
+    <div class="common-modal-full express-checkout-modal">
+        <div class="common-modal-box" style="max-width: 600px; background: white; border-radius: 16px; padding: 24px;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="fw-bold mb-0">{{ __('Express Checkout') }}</h5>
+                <button type="button" class="close bg-transparent border-0 fs-4" style="line-height: 1;">&times;</button>
+            </div>
+            <div class="text-muted" style="line-height: 1.6;">
+                <p>{{ __("Topdealsplus ensures that verified listings with Express Checkout are delivered instantly or within the guaranteed timeframe. Our system automatically processes these orders to ensure you receive your digital goods without delay.") }}</p>
+            </div>
+        </div>
+    </div>
+
     <div class="common-modal-full">
         <div class="common-modal-box">
             <div class="content">
@@ -510,14 +502,22 @@
         var __quantity = {{ $listing->quantity }};
         var unitPrice = {{ $listing->final_price }};
         $(document).ready(function() {
-            // Refund Guarantee Modal - specific handler
+            // Refund Guarantee Modal
             $('.refund-guarantee-btn').click(function(e) {
                 e.stopPropagation();
                 $('.refund-guarantee-modal').addClass('open');
             });
-            
             $('.refund-guarantee-modal .close').click(function() {
                 $('.refund-guarantee-modal').removeClass('open');
+            });
+
+            // Express Checkout Modal
+            $('.express-checkout-btn').click(function(e) {
+                e.stopPropagation();
+                $('.express-checkout-modal').addClass('open');
+            });
+            $('.express-checkout-modal .close').click(function() {
+                $('.express-checkout-modal').removeClass('open');
             });
             
             $(document).on('click', '.price-share .share', function() {
