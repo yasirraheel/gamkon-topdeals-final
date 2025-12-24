@@ -5,46 +5,66 @@
 /*----------------------------------------*/
 .badge {
   display: inline-flex;
-  width: 72px;
-  height: 22px;
-  padding: 0px 8px;
+  min-width: 72px;
+  width: fit-content;
+  min-height: 22px;
+  padding: 2px 12px;
   justify-content: center;
   align-items: center;
   gap: 10px;
   border-radius: 24px;
-  background: var(--td-primary);
+  background-color: var(--td-primary);
   color: #fff;
   font-size: 12px;
   font-weight: 700;
-  line-height: normal;
+  line-height: 1.2;
+  border: none;
 
   &.delivered {
-    color: #fff;
-    background: #2674fb;
+    color: #fff !important;
+    background-color: #2674fb !important;
   }
 
-  &.primary {
-    color: #fff;
-    background: #2674fb;
+  &.primary,
+  &.bg-primary {
+    color: #fff !important;
+    background-color: #2674fb !important;
   }
 
-  &.success {
-    color: #fff;
-    background: #31b269;
+  &.success,
+  &.bg-success {
+    color: #fff !important;
+    background-color: #31b269 !important;
   }
 
-  &.pending {
-    color: #fff;
-    background: #ff8d29;
+  &.pending,
+  &.bg-pending {
+    color: #fff !important;
+    background-color: #ff8d29 !important;
   }
 
-  &.error {
-    color: #fff;
-    background: #ff5353;
+  &.warning,
+  &.bg-warning {
+    color: #fff !important;
+    background-color: #ff9f43 !important;
+  }
+
+  &.info,
+  &.bg-info {
+    color: #fff !important;
+    background-color: #00cfe8 !important;
+  }
+
+  &.error,
+  &.danger,
+  &.bg-danger {
+    color: #fff !important;
+    background-color: #ff5353 !important;
   }
 
   &-2 {
     width: fit-content;
+    min-width: unset;
   }
 }
 

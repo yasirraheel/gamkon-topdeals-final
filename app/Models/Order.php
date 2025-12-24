@@ -80,7 +80,7 @@ class Order extends Model
         return match ($this->status) {
             OrderStatus::Pending->value => '<span class="badge rounded-pill pending">Pending</span>',
             OrderStatus::Success->value => '<span class="badge rounded-pill success">Success</span>',
-            OrderStatus::WaitingForDelivery->value => '<span class="badge badge-2 rounded-pill bgprimary">Waiting For Delivery</span>',
+            OrderStatus::WaitingForDelivery->value => '<span class="badge badge-2 rounded-pill primary">Waiting For Delivery</span>',
             OrderStatus::Completed->value => '<span class="badge rounded-pill success">Delivered</span>',
             OrderStatus::Cancelled->value => '<span class="badge rounded-pill error">Cancelled</span>',
             OrderStatus::Failed->value => '<span class="badge rounded-pill error">Failed</span>',
