@@ -242,6 +242,13 @@
                 </div>
             </div>
 
+            {{-- Hidden Buy Now Form --}}
+            <form action="{{ route('buy-now') }}" method="post" id="buyNowForm" style="display: none;">
+                @csrf
+                <input type="hidden" name="product_id" value="{{ $listing->id }}">
+                <input type="hidden" name="quantity" value="1">
+            </form>
+
             {{-- Reviews Section --}}
             <div class="row mt-5" id="reviews">
                 <div class="col-12">
@@ -388,141 +395,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="right has-sticky-component">
-                        <div class="game-details-right">
-                            <div class="your-order-card">
-                                @if (setting('flash_sale_status', 'flash_sale') == '1' &&
-                                        $listing->is_flash &&
-                                        now()->parse(setting('flash_sale_start_date', 'flash_sale'))->lte(now()) &&
-                                        now()->parse(setting('flash_sale_end_date', 'flash_sale'))->gte(now()))
-                                    <div class="timer">
-                                        <div class="icon">
-                                            <iconify-icon icon="hugeicons:clock-01" class="clock-icon"></iconify-icon>
-                                        </div>
-
-                                        @php
-                                            $diffInSeconds = now()
-                                                ->parse(setting('flash_sale_end_date', 'flash_sale'))
-                                                ->diffInSeconds();
-                                            $days = floor($diffInSeconds / (3600 * 24));
-                                            $hours = floor(($diffInSeconds % (3600 * 24)) / 3600);
-                                            $minutes = floor(($diffInSeconds % 3600) / 60);
-                                            $seconds = $diffInSeconds % 60;
-                                            $timerText = sprintf(
-                                                '%02d d %02d : %02d : %02d',
-                                                $days,
-                                                $hours,
-                                                $minutes,
-                                                $seconds,
-                                            );
-                                        @endphp
-
-                                        <p class="timer-text">{{ $timerText }}</p>
-                                    </div>
-                                @endif
-                                <div class="price-increase-decrease">
-                                    <p class="available text-center mb-3">{{ $listing->quantity }} {{ __('Available') }}
-                                    </p>
-                                    <form action="{{ route('buy-now') }}" method="post" id="buyNowForm">
-                                        @csrf
-                                        <div class="calculator-box">
-                                            <div class="calculator">
-                                                <input type="hidden" name="product_id" value="{{ $listing->id }}">
-                                                <input type="text" id="quantity-input" name="quantity" value="1"
-                                                    max="{{ $listing->quantity }}" class="form-control text-center">
-                                                <button type="button" class="increase-btn calculator-btn"
-                                                    id="increase-btn">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                </button>
-                                                <button type="button" class="decrease-btn calculator-btn"
-                                                    id="decrease-btn">
-                                                    <i class="fa-solid fa-minus"></i>
-                                                </button>
-                                            </div>
-                                            <div class="mt-2">
-                                                <span class="error-msg text-danger d-none"
-                                                    id="invalid-error">{{ __('Please enter a valid positive number.') }}</span>
-                                            </div>
-                                            <p class="unit-price text-center mt-2">{{ __('Unit price') }} <span
-                                                    id="unit-price">{{ amountWithCurrency($listing->final_price) }}</span>
-                                            </p>
-                                        </div>
-                                        @if ($listing->seller?->coupons()?->exists())
-                                            <div class="voucher">
-                                                <p>{{ __('Do you have a coupon code?') }} <a href="javascript:void(0)"
-                                                        class="apply-coupon">{{ __('Apply It') }}</a></p>
-                                                <div class="coupon-input">
-                                                    <input type="text" name="coupon" value="{{ old('coupon') }}"
-                                                        placeholder="{{ __('Insert Voucher Code') }}">
-                                                </div>
-                                            </div>
-                                        @endif
-                                        <div class="total-price">
-                                            <div class="left">
-                                                <h6>{{ __('Total Price') }}:</h6>
-                                            </div>
-                                            <div class="right">
-                                                <h6><span>{{ $currencySymbol }}</span><span
-                                                        id="total-price">{{ $listing->final_price }}</span>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                        <div class="buy-now">
-                                            <button type="submit"
-                                                class="primary-button xl-btn text-center w-100 {{ $listing->quantity == 0 ? 'primary-button-red' : '' }}"
-                                                @disabled($listing->quantity == 0)>
-                                                {{ $listing->quantity == 0 ? __('Out of Stock') : __('Buy Now') }}
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="seller-details-card">
-                                <div class="seller-card-box">
-                                    <div class="left">
-                                        <div class="img-box">
-                                            <img src="{{ $listing->seller->avatar_path }}"
-                                                alt="{{ $listing->seller->full_name }}">
-                                        </div>
-                                        <div class="text">
-                                            <h3>
-                                                <a
-                                                    href="{{ route('seller.details', $listing->seller->username) }}">{{ $listing->seller->username }}</a>
-                                                @if ($listing->seller?->portfolio)
-                                                    <span>{{ $listing->seller?->portfolio?->portfolio_name }}</span>
-                                                @endif
-                                            </h3>
-                                            <p>{{ __('Items Sold') }}: {{ $listing->seller->total_sold }}</p>
-                                        </div>
-                                    </div>
-                                    <div class="right">
-                                        @auth
-                                            <a href="{{ route('follow.seller', $listing->seller->username) }}"
-                                                class="border-button follow-btn">
-                                                {{ $listing->seller->followers->contains(auth()->user()->id) ? __('Unfollow') : __('Follow') }}
-                                            </a>
-                                        @endauth
-                                    </div>
-                                </div>
-                                @auth
-                                    @if ($listing?->seller?->accept_profile_chat)
-                                        <div class="chat-seller">
-                                            <a href="{{ buyerSellerRoute('chat.index', $listing->seller->username) }}"
-                                                class="border-button xl-btn">
-                                                <span>
-                                                    <iconify-icon icon="hugeicons:chatting-01"
-                                                        class="chat-icon"></iconify-icon>
-                                                </span>
-                                                {{ __('Chat Seller') }}
-                                            </a>
-                                        </div>
-                                    @endif
-                                @endauth
                             </div>
                         </div>
                     </div>
