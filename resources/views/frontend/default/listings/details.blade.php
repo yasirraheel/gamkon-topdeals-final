@@ -193,7 +193,7 @@
 
                     {{-- Explore More Section --}}
                     @if ($suggested->count())
-                        <div class="pd-card" style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
+                        <div class="pd-card d-none d-lg-block" style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
                             <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 20px;">{{ __('Explore More') }}</h4>
                             <div class="row g-3">
                                 @foreach ($suggested->take(4) as $item)
@@ -392,6 +392,40 @@
                         </div>
                     </div>
                 </div>
+                @if ($suggested->count())
+                    <div class="col-12 d-block d-lg-none">
+                        <div class="pd-card" style="background: #fff; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-top: 20px;">
+                            <h4 style="font-size: 18px; font-weight: 700; margin-bottom: 20px;">{{ __('Explore More') }}</h4>
+                            <div class="row g-3">
+                                @foreach ($suggested->take(4) as $item)
+                                    <div class="col-md-6">
+                                        <a href="{{ route('listing.details', $item->slug) }}" style="text-decoration: none;">
+                                            <div style="display: flex; gap: 12px; padding: 12px; border: 1px solid #e5e7eb; border-radius: 8px; transition: all 0.3s; background: #fff;">
+                                                <div style="flex-shrink: 0;">
+                                                    <img src="{{ asset($item->thumbnail) }}" alt="{{ $item->product_name }}" style="width: 80px; height: 80px; border-radius: 8px; object-fit: cover;">
+                                                </div>
+                                                <div style="flex: 1; min-width: 0;">
+                                                    <h6 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0 0 6px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ $item->product_name }}</h6>
+                                                    <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 6px;">
+                                                        <iconify-icon icon="lucide:star" style="font-size: 12px; color: #fbbf24;"></iconify-icon>
+                                                        <span style="font-size: 12px; color: #6b7280; font-weight: 600;">{{ number_format($item->average_rating, 1) }}</span>
+                                                        <span style="font-size: 12px; color: #9ca3af;">({{ $item->total_reviews }})</span>
+                                                    </div>
+                                                    <div style="display: flex; align-items: baseline; gap: 6px;">
+                                                        <span style="font-size: 16px; color: #ef4444; font-weight: 700;">{{ setting('currency_symbol', 'global') }}{{ number_format($item->final_price, 2) }}</span>
+                                                        @if ($item->discount_value > 0)
+                                                            <span style="font-size: 12px; color: #9ca3af; text-decoration: line-through;">{{ setting('currency_symbol', 'global') }}{{ number_format($item->price, 2) }}</span>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
 
             {{-- Hidden Buy Now Form --}}
