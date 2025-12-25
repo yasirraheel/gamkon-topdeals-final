@@ -60,40 +60,34 @@
                 @endphp
                 
                 @if ($hasAttributes)
-                    <div style="background: #f9fafb; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; border: 1px solid #e5e7eb;">
-                        <ul style="list-style: none; margin: 0; padding: 0; font-size: 12px; line-height: 1.8;">
-                            @if ($listing->selected_duration)
-                                <li style="display: flex; align-items: center; color: #4b5563; margin-bottom: 4px;">
-                                    <span style="color: #f59e0b; margin-right: 8px; font-size: 14px;">⏱</span>
-                                    <span style="color: #6b7280; font-weight: 500; min-width: 70px;">{{ __('Duration') }}:</span>
-                                    <span style="color: #111827; font-weight: 600; margin-left: 6px;">{{ $listing->selected_duration }}</span>
-                                </li>
-                            @endif
-                            
-                            @if ($listing->delivery_method && $listing->delivery_method != 'auto')
-                                <li style="display: flex; align-items: center; color: #4b5563; margin-bottom: 4px;">
-                                    <span style="color: #06b6d4; margin-right: 8px; font-size: 14px;">📦</span>
-                                    <span style="color: #6b7280; font-weight: 500; min-width: 70px;">{{ __('Delivery') }}:</span>
-                                    <span style="color: #111827; font-weight: 600; margin-left: 6px;">{{ ucfirst($listing->delivery_method) }}</span>
-                                </li>
-                            @endif
-                            
-                            @if ($listing->delivery_method == 'manual' && $listing->delivery_speed)
-                                <li style="display: flex; align-items: center; color: #4b5563; margin-bottom: 4px;">
-                                    <span style="color: #8b5cf6; margin-right: 8px; font-size: 14px;">⚡</span>
-                                    <span style="color: #6b7280; font-weight: 500; min-width: 70px;">{{ __('Speed') }}:</span>
-                                    <span style="color: #111827; font-weight: 600; margin-left: 6px;">{{ $listing->delivery_speed }} {{ $listing->delivery_speed_unit }}</span>
-                                </li>
-                            @endif
-                            
-                            @if ($listing->quantity > 0)
-                                <li style="display: flex; align-items: center; color: #4b5563;">
-                                    <span style="color: #ec4899; margin-right: 8px; font-size: 14px;">📋</span>
-                                    <span style="color: #6b7280; font-weight: 500; min-width: 70px;">{{ __('Available') }}:</span>
-                                    <span style="color: #111827; font-weight: 600; margin-left: 6px;">{{ $listing->quantity }} {{ __('Offers') }}</span>
-                                </li>
-                            @endif
-                        </ul>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; font-size: 11px;">
+                        @if ($listing->selected_duration)
+                            <div style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; display: flex; align-items: center; border: 1px solid #e5e7eb;" title="{{ __('Duration') }}" data-bs-toggle="tooltip">
+                                <span style="margin-right: 4px;">⏱</span>
+                                <span style="color: #374151; font-weight: 700;">{{ $listing->selected_duration }}</span>
+                            </div>
+                        @endif
+                        
+                        @if ($listing->delivery_method && $listing->delivery_method != 'auto')
+                            <div style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; display: flex; align-items: center; border: 1px solid #e5e7eb;" title="{{ __('Delivery') }}" data-bs-toggle="tooltip">
+                                <span style="margin-right: 4px;">📦</span>
+                                <span style="color: #374151; font-weight: 700;">{{ ucfirst($listing->delivery_method) }}</span>
+                            </div>
+                        @endif
+                        
+                        @if ($listing->delivery_method == 'manual' && $listing->delivery_speed)
+                            <div style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; display: flex; align-items: center; border: 1px solid #e5e7eb;" title="{{ __('Speed') }}" data-bs-toggle="tooltip">
+                                <span style="margin-right: 4px;">⚡</span>
+                                <span style="color: #374151; font-weight: 700;">{{ $listing->delivery_speed }} {{ $listing->delivery_speed_unit }}</span>
+                            </div>
+                        @endif
+                        
+                        @if ($listing->quantity > 0)
+                            <div style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; display: flex; align-items: center; border: 1px solid #e5e7eb;" title="{{ __('Available') }}" data-bs-toggle="tooltip">
+                                <span style="margin-right: 4px;">📋</span>
+                                <span style="color: #374151; font-weight: 700;">{{ $listing->quantity }} {{ __('Offers') }}</span>
+                            </div>
+                        @endif
                     </div>
                 @endif
                 
