@@ -13,10 +13,12 @@
         "ext-zip": "*",
         "antimech/coinbase": "^0.13",
         "bacon/bacon-qr-code": "^2.0",
+        "barryvdh/laravel-debugbar": "^3.7",
         "charlesassets/laravel-perfectmoney": "^1.0",
         "coderflex/laravel-ticket": "^1.0",
         "coingate/coingate-php": "^4.1",
         "cryptomus/api-php-sdk": "^1.0",
+        "fakerphp/faker": "^1.24",
         "guzzlehttp/guzzle": "^7.8",
         "jackiedo/dotenv-editor": "^2.1",
         "jenssegers/agent": "^2.6",
@@ -37,11 +39,9 @@
         "spiral/roadrunner-cli": "^2.7",
         "stripe/stripe-php": "^9.8",
         "twilio/sdk": "^7.3",
-        "unicodeveloper/laravel-paystack": "1.1.0",
-        "barryvdh/laravel-debugbar": "^3.7"
+        "unicodeveloper/laravel-paystack": "1.1.0"
     },
     "require-dev": {
-        "fakerphp/faker": "^1.9.1",
         "larastan/larastan": "^2.0",
         "laravel/breeze": "^1.11",
         "laravel/pint": "^1.0",
