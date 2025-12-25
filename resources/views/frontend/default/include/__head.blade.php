@@ -1,9 +1,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{{ setting('site_title', 'global') }} - @yield('title') -
-        {{ __('Subscription-Based On Demand Online Account Selling Marketplace') }}</title>
-    <meta name="description" content="@yield('meta_description')">
+    <title>@hasSection('seo_title') @yield('seo_title') @else {{ setting('site_title', 'global') }} - @yield('title') - {{ __('Subscription-Based On Demand Online Account Selling Marketplace') }} @endif</title>
+    <meta name="description" content="@yield('meta_description', setting('meta_description', 'meta'))">
+    <meta name="keywords" content="@yield('meta_keywords', setting('meta_keywords', 'meta'))">
+    @yield('meta')
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="{{ asset(setting('site_favicon', 'global')) }}" type="image/*" />
 
