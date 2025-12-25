@@ -1,6 +1,6 @@
 <!-- popular seller start -->
 @php
-    $popularSeller = \App\Models\User::popular()->withCount('listings')->get();
+    $popularSeller = \App\Models\User::popular()->withCount('listings')->distinct()->get();
 @endphp
 @push('style')
     <style>
