@@ -101,11 +101,6 @@ class CheckoutController extends Controller
                 return back();
             }
 
-            if (auth()->user()->hasValidSubscription && auth()->user()->hasValidSubscription->plan_id == $plan->id) {
-                notify()->error(__('You are already subscribed to this plan.'));
-                return back();
-            }
-
             session([
                 'checkout' => $checkout,
             ]);
@@ -152,7 +147,7 @@ class CheckoutController extends Controller
         if ($request->paymentMethod == 'topup' && auth()->user()->topup_balance < session('checkout')['finalPrice']) {
             notify()->error(__('Insufficient topup balance!'));
 
-            return to_route('checkout');
+            return back();
         }
 
         $error = match (true) {
@@ -164,7 +159,7 @@ class CheckoutController extends Controller
         if ($error !== null) {
             notify()->error($error);
 
-            return to_route('checkout');
+            return back();
         }
 
         // check if plan
@@ -185,57 +180,10 @@ class CheckoutController extends Controller
         if (!in_array($request->paymentMethod, ['topup', 'balance']) && !$gateway) {
             notify()->error(__('Invalid payment method!'));
 
-            return to_route('checkout');
-        }
-        
-        // Check if gateway is active
-        if ($gateway) {
-            // Check DepositMethod status
-            if (!$gateway->status) {
-                notify()->error(__('Selected payment gateway is currently disabled. Please choose another method.'));
-                return to_route('checkout');
-            }
-
-            // Check related Gateway status if it exists
-            $relatedGateway = $gateway->gateway;
-            if ($relatedGateway && !$relatedGateway->status) {
-                // If the manual gateway itself is disabled, we should still allow it if the DepositMethod is enabled
-                // For manual gateways, sometimes the 'parent' gateway entry might be disabled but the method itself is active
-                if ($relatedGateway->type !== \App\Enums\GatewayType::Manual) {
-                     notify()->error(__('Selected payment gateway is currently disabled. Please choose another method.'));
-                     return to_route('checkout');
-                }
-            }
+            return back();
         }
 
-        // Validate gateway configuration for automatic gateways BEFORE creating order
-        if ($gateway && $gateway->gateway_code == 'paypal') {
-            $paypalConfig = config('paypal');
-            $mode = $paypalConfig['mode'] ?? 'live';
-            $credentials = $paypalConfig[$mode] ?? [];
-            
-            \Log::info('PayPal gateway validation', [
-                'mode' => $mode,
-                'has_client_id' => !empty($credentials['client_id']),
-                'has_client_secret' => !empty($credentials['client_secret']),
-                'client_id_length' => strlen($credentials['client_id'] ?? ''),
-            ]);
-            
-            if (empty($credentials['client_id']) || empty($credentials['client_secret'])) {
-                \Log::error('PayPal gateway not configured properly');
-                notify()->error(__('PayPal payment method is not properly configured. Please choose another payment method or contact support.'));
-                return to_route('checkout');
-            }
-            
-            // Validate that credentials are not just whitespace
-            if (trim($credentials['client_id']) === '' || trim($credentials['client_secret']) === '') {
-                \Log::error('PayPal credentials are empty strings');
-                notify()->error(__('PayPal credentials are invalid. Please choose another payment method or contact support.'));
-                return to_route('checkout');
-            }
-        }
-
-        $gateway_code = $gateway?->gateway_code ?? null;
+        $gateway_code = ucwords($gateway?->gateway_code) ?? null;
 
         $service = orderService();
 
@@ -268,12 +216,13 @@ class CheckoutController extends Controller
         $order->transaction->order = $order;
         $order->transaction->listing = $order->listing;
 
-        // Check if this is a manual gateway
+        return $this->depositAutoGateway($gateway->gateway_code, $order->transaction);
+    }
+}
+// Check if this is a manual gateway
         if ($gateway->gateway && $gateway->gateway->type === \App\Enums\GatewayType::Manual) {
             // For manual gateways, redirect to payment notify route with pending status
             return $this->paymentNotify($order->transaction->tnx, 'pending');
         }
 
-        return $this->depositAutoGateway($gateway->gateway_code, $order->transaction);
-    }
-}
+        
