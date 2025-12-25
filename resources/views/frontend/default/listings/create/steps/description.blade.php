@@ -401,7 +401,17 @@
             });
 
             // Dynamic Product Name Generation
+            var isUserInteraction = false;
+
             function updateProductName() {
+                // Only proceed if it's a user interaction or we are creating a new listing (no existing name)
+                var existingName = '{{ $listing?->product_name }}';
+                var isNewListing = !existingName;
+                
+                if (!isUserInteraction && !isNewListing) {
+                    return;
+                }
+
                 // Get values
                 var catalogName = $('#selectProductCatalog option:selected').text().trim();
                 var plan = $('#selectProductPlan').val();
@@ -469,7 +479,11 @@
             }
 
             // Listen for changes on all relevant fields
-            $('#selectProductCatalog, #selectProductPlan, #selectDuration, #selectPlan, #guarantee_period, input[name="price"], input[name="discount_value"], select[name="discount_type"]').on('change input', function() {
+            $('#selectProductCatalog, #selectProductPlan, #selectDuration, #selectPlan, #guarantee_period, input[name="price"], input[name="discount_value"], select[name="discount_type"]').on('change input', function(e) {
+                // Mark as user interaction so updateProductName knows it's allowed to update
+                if (e.originalEvent) {
+                    isUserInteraction = true;
+                }
                 updateProductName();
             });
 
