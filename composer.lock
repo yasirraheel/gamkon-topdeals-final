@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b9d4a88add05d04763a075361591897",
+    "content-hash": "9ba52a63ab967c980e8ba8eb4387df9d",
     "packages": [
         {
             "name": "antimech/coinbase",
@@ -5565,7 +5565,7 @@
             "dist": {
                 "type": "path",
                 "url": "./modules/installer",
-                "reference": "d2d7eac3f7ab771e481dd6b344b3c3c991f54c29"
+                "reference": "d437d299b80cb0798971a0f147047962900fec63"
             },
             "type": "library",
             "extra": {
@@ -5587,7 +5587,7 @@
             ],
             "description": "Official Script Installer Of tDevs",
             "transport-options": {
-                "symlink": true,
+                "symlink": false,
                 "relative": true
             }
         },
