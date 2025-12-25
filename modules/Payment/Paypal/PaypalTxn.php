@@ -110,6 +110,7 @@ class PaypalTxn extends BaseTxn
             \Log::info('PayPal creating order', [
                 'currency' => $this->currency,
                 'amount' => $this->amount,
+                'amount_rounded' => number_format((float)$this->amount, 2, '.', ''),
                 'txn' => $this->txn,
             ]);
 
@@ -123,7 +124,7 @@ class PaypalTxn extends BaseTxn
                     0 => [
                         'amount' => [
                             'currency_code' => $this->currency,
-                            'value' => $this->amount,
+                            'value' => number_format((float)$this->amount, 2, '.', ''), // PayPal requires max 2 decimal places
                         ],
                         'reference_id' => $this->txn,
                     ],
