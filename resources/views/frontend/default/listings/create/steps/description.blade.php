@@ -402,30 +402,74 @@
 
             // Dynamic Product Name Generation
             function updateProductName() {
+                // Get values
                 var catalogName = $('#selectProductCatalog option:selected').text().trim();
                 var plan = $('#selectProductPlan').val();
+                var sharingMethod = $('#selectPlan').val(); // This ID is sharing method
                 var duration = $('#selectDuration').val();
+                var guarantee = $('#guarantee_period').val();
                 
+                // Price calculation
+                var price = parseFloat($('input[name="price"]').val()) || 0;
+                var discountValue = parseFloat($('input[name="discount_value"]').val()) || 0;
+                var discountType = $('select[name="discount_type"]').val();
+                var finalPrice = price;
+
+                if (discountType === 'percentage') {
+                    finalPrice = price - (price * (discountValue / 100));
+                } else {
+                    finalPrice = price - discountValue;
+                }
+                finalPrice = Math.max(0, finalPrice).toFixed(2);
+                
+                var currencySymbol = '{{ setting('currency_symbol', 'global') }}';
+
                 // Only auto-update if catalog is selected
                 if (catalogName && catalogName !== 'Select Product Catalog') {
-                    var nameParts = [catalogName];
-                    
+                    var nameParts = [];
+
+                    // Part 1: Catalog Name
+                    nameParts.push(catalogName);
+
+                    // Part 2: Plan
                     if (plan && plan !== 'Select Plan') {
                         nameParts.push(plan);
                     }
+
+                    // Part 3: Sharing Method
+                    if (sharingMethod && sharingMethod !== 'Select Sharing Method') {
+                        nameParts.push(sharingMethod);
+                    }
+
+                    var nameString = nameParts.join(' ');
+
+                    // Part 4: Duration (with separator)
                     if (duration && duration !== 'Select Duration') {
-                        nameParts.push(duration);
+                        nameString += ' for ' + duration;
+                    }
+
+                    // Part 5: Guarantee (with separator)
+                    if (guarantee) {
+                        nameString += ' | ' + guarantee + ' Warranty';
+                    }
+
+                    // Part 6: Price (with separator)
+                    // Only show if price is entered
+                    if (price > 0) {
+                        nameString += ' - Only ' + currencySymbol + finalPrice;
+                        
+                        // Optional: Show original price if discounted
+                        if (discountValue > 0) {
+                            nameString += ' (Reg. ' + currencySymbol + price.toFixed(2) + ')';
+                        }
                     }
                     
-                    // Join with spaces or specific format
-                    $('#product_name').val(nameParts.join(' '));
+                    $('#product_name').val(nameString);
                 }
             }
 
-            // Listen for changes
-            $('#selectProductCatalog, #selectProductPlan, #selectDuration').on('change', function() {
-                // Only update if the user hasn't manually edited (optional check, or just overwrite)
-                // For now, we overwrite as requested "dynamicly set"
+            // Listen for changes on all relevant fields
+            $('#selectProductCatalog, #selectProductPlan, #selectDuration, #selectPlan, #guarantee_period, input[name="price"], input[name="discount_value"], select[name="discount_type"]').on('change input', function() {
                 updateProductName();
             });
 
@@ -503,10 +547,9 @@
                     if (response.success) {
                         var data = response.data;
                         
-                        // Set product name (only if empty or creating new listing)
-                        if (!$('#product_name').val() || $('#product_name').val() === '') {
-                            $('#product_name').val(data.name);
-                        }
+                        // NOTE: Product name update logic is handled by updateProductName() 
+                        // when fields change, or by initial blade value for edit.
+                        // We do NOT overwrite it here to prevent resetting saved names.
                         
                         // Get saved values for editing
                         var savedDuration = '{{ old('selected_duration', $listing?->selected_duration ?? '') }}';
