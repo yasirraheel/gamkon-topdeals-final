@@ -189,9 +189,19 @@ class CheckoutController extends Controller
         }
         
         // Check if gateway is active
-        if ($gateway && (!$gateway->status || ($gateway->gateway && !$gateway->gateway->status))) {
-            notify()->error(__('Selected payment gateway is currently disabled. Please choose another method.'));
-            return to_route('checkout');
+        if ($gateway) {
+            // Check DepositMethod status
+            if (!$gateway->status) {
+                notify()->error(__('Selected payment gateway is currently disabled. Please choose another method.'));
+                return to_route('checkout');
+            }
+
+            // Check related Gateway status if it exists
+            $relatedGateway = $gateway->gateway;
+            if ($relatedGateway && !$relatedGateway->status) {
+                notify()->error(__('Selected payment gateway is currently disabled. Please choose another method.'));
+                return to_route('checkout');
+            }
         }
 
         // Validate gateway configuration for automatic gateways BEFORE creating order
