@@ -1,8 +1,8 @@
 <div class="col-sm-6 col-md-4 col-lg-3">
     <div class="games-card {{ isset($hasAnimation) ? 'wow img-custom-anim-top' : '' }}" data-wow-duration="1s"
-        data-wow-delay="0.{{ isset($hasAnimation) ? $loop->index : 0 }}s" style="position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+        data-wow-delay="0.{{ isset($hasAnimation) ? $loop->index : 0 }}s" style="position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); cursor: pointer;" onclick="window.location.href='{{ $listing->url }}'">
         
-        <button class="fav-button {{ isWishlisted($listing->id) ? 'active' : '' }}" data-id="{{ $listing->id }}">
+        <button class="fav-button {{ isWishlisted($listing->id) ? 'active' : '' }}" data-id="{{ $listing->id }}" onclick="event.stopPropagation()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-heart-icon lucide-heart">
@@ -92,9 +92,9 @@
                 @endif
                 
                 <div style="font-size: 12px; margin-bottom: 8px; color: #6b7280; font-weight: 500; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                    <span>📁 <a href="{{ route('category.listing', $listing->category->slug) }}" style="color: #6b7280; font-weight: 600;">{{ $listing->category->name }}</a></span>
+                    <span>📁 <a href="{{ route('category.listing', $listing->category->slug) }}" style="color: #6b7280; font-weight: 600; position: relative; z-index: 2;" onclick="event.stopPropagation()">{{ $listing->category->name }}</a></span>
                     <span style="color: #d1d5db;">•</span>
-                    <span>👤 {{ __('By') }} <a href="{{ route('seller.details', $listing->seller?->username ?? 404) }}" style="color: #3b82f6; font-weight: 600;">{{ $listing->seller?->username }}</a></span>
+                    <span>👤 {{ __('By') }} <a href="{{ route('seller.details', $listing->seller?->username ?? 404) }}" style="color: #3b82f6; font-weight: 600; position: relative; z-index: 2;" onclick="event.stopPropagation()">{{ $listing->seller?->username }}</a></span>
                 </div>
                 
                 @if (!isset($isLatest))
