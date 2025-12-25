@@ -123,7 +123,7 @@
                             <div class="auth-nice-select auth-nice-select-2">
                                 <select id="selectCategory" class="nice-select-active" name="category_id">
                                     @foreach ($data['categories'] as $category)
-                                        <option data-image="{{ asset($category->image) }}" value="{{ $category->id }}"
+                                        <option data-image="{{ $category->image ? asset($category->image) : '' }}" value="{{ $category->id }}"
                                             @selected($category->id == request('category_id', $listing?->category_id))>{{ $category->name }}</option>
                                     @endforeach
                                 </select>
@@ -142,7 +142,7 @@
                             <select id="selectProductCatalog" class="nice-select-active" name="product_catalog_id" required>
                                 <option value="">{{ __('Select Product Catalog') }}</option>
                                 @foreach ($data['productCatalogs'] as $catalog)
-                                    <option data-image="{{ asset($catalog->icon) }}" value="{{ $catalog->id }}"
+                                    <option data-image="{{ $catalog->icon ? asset($catalog->icon) : '' }}" value="{{ $catalog->id }}"
                                         @selected($catalog->id == old('product_catalog_id', $listing?->product_catalog_id))>{{ $catalog->name }}</option>
                                 @endforeach
                             </select>
