@@ -191,7 +191,7 @@ class CheckoutController extends Controller
             
             if (empty($credentials['client_id']) || empty($credentials['client_secret'])) {
                 notify()->error(__('PayPal payment method is not properly configured. Please choose another payment method or contact support.'));
-                return back();
+                return to_route('checkout');
             }
         }
 
