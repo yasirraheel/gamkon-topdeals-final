@@ -189,21 +189,49 @@
 
         @media (max-width: 991px) {
             .pd-info-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr 1fr; /* Keep 2 columns on tablet/mobile */
+                gap: 16px;
             }
             .sidebar-sticky {
                 position: static;
             }
+            /* Improved Mobile Layout */
             .product-details-area .pd-thumb {
-                margin: 0 auto 20px;
+                width: 100px; /* Smaller thumbnail on mobile */
+                height: 100px;
+                margin-right: 16px;
+                margin-bottom: 0; /* Remove bottom margin */
+            }
+            .pd-card .d-flex.flex-column.flex-md-row {
+                flex-direction: row !important; /* Force side-by-side on mobile */
+                align-items: flex-start !important;
+            }
+            .pd-title {
+                font-size: 20px !important; /* Smaller title */
+                margin-bottom: 12px !important;
             }
             .pd-summary {
-                flex-direction: column;
-                text-align: center;
+                text-align: left; /* Keep text left aligned */
             }
             .pd-info-item {
-                justify-content: center;
+                justify-content: flex-start; /* Align start */
                 text-align: left;
+            }
+            .pd-info-label {
+                font-size: 12px;
+            }
+            .pd-info-value {
+                font-size: 14px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .pd-info-grid {
+                grid-template-columns: 1fr; /* 1 column only on very small screens */
+            }
+            .product-details-area .pd-thumb {
+                width: 80px;
+                height: 80px;
             }
         }
     </style>
