@@ -108,10 +108,8 @@ class OrderService
             DB::commit();
 
             if (!$isTopup) {
-                $gateway = Gateway::where('gateway_code', $gateway_code)->first();
-                if ($gateway && $gateway->type == GatewayType::Manual) {
-                    $this->orderCreatedNotify($order);
-                }
+                // Send order created notification for all gateways
+                $this->orderCreatedNotify($order);
             }
 
             return $order;
