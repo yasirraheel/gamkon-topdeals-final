@@ -68,17 +68,17 @@
                                         </div>
                                     </th>
                                     <td class="text-nowrap">
-                                        <div class="d-flex flex-column align-items-start gap-1">
-                                            <span class="fw-bold mb-1">{{ str($listing->product_name)->limit(40) }}</span>
+                                        <div class="d-flex flex-column align-items-start gap-2">
+                                            <span class="fw-bold text-wrap" style="max-width: 200px;">{{ $listing->product_name }}</span>
                                             <div class="d-flex flex-wrap gap-1">
                                                 @if ($listing->productCatalog)
-                                                    <span class="badge badge-2 info">{{ $listing->productCatalog->name }}</span>
+                                                    <span class="badge bg-info text-white border-0">{{ $listing->productCatalog->name }}</span>
                                                 @endif
                                                 @if ($listing->selected_duration)
-                                                    <span class="badge badge-2 warning">{{ $listing->selected_duration }}</span>
+                                                    <span class="badge bg-warning text-dark border-0">{{ $listing->selected_duration }}</span>
                                                 @endif
                                                 @if ($listing->selected_plan)
-                                                    <span class="badge badge-2 success">{{ $listing->selected_plan }}</span>
+                                                    <span class="badge bg-success text-white border-0">{{ $listing->selected_plan }}</span>
                                                 @endif
                                             </div>
                                         </div>
@@ -110,38 +110,37 @@
                                     </td>
                                     <td class="text-nowrap">
                                         {!! $listing->is_approved
-                                            ? '<span class="badge badge-2 success">Approved</span>'
-                                            : '<span class="badge badge-2 error">Not Approved</span>' !!}
+                                            ? '<span class="badge bg-success text-white">Approved</span>'
+                                            : '<span class="badge bg-danger text-white">Not Approved</span>' !!}
                                     </td>
                                     <td class="text-center">
-                                        <div class="d-flex justify-content-center">
-                                            <div class="tooltip-action-btns">
-                                                <a target="_blank" href="{{ route('listing.details', $listing->slug) }}"
-                                                    class="delete tooltip-btn view-btn" data-id="{{ $listing->enc_id }}"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"
-                                                    title="View Details Page">
-                                                    <iconify-icon icon="lucide:eye" class="tooltip-icon"></iconify-icon>
-                                                </a>
-                                                <a href="{{ buyerSellerRoute('listing.edit', ['description', $listing->enc_id]) }}"
-                                                    class="edit tooltip-btn edit-btn" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Edit">
-                                                    <iconify-icon icon="lucide:edit" class="tooltip-icon"></iconify-icon>
-                                                </a>
-                                                <a href="{{ buyerSellerRoute('listing.delivery-items', $listing->enc_id) }}"
-                                                    class="delete tooltip-btn tooltip-btn-2 delivery-btn"
-                                                    data-id="{{ $listing->enc_id }}" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Set Delivery Items">
-                                                    <iconify-icon icon="lucide:truck" class="tooltip-icon"></iconify-icon>
-                                                    {{ __('Set Delivery') }}
-                                                </a>
-                                                <button href=""
-                                                    data-href="{{ buyerSellerRoute('listing.delete', $listing->enc_id) }}"
-                                                    class="delete tooltip-btn common-modal-button delete-btn"
-                                                    data-id="{{ $listing->enc_id }}" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top" title="Delete">
-                                                    <iconify-icon icon="lucide:trash-2" class="tooltip-icon"></iconify-icon>
-                                                </button>
-                                            </div>
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-light border dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                {{ __('Action') }}
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end shadow">
+                                                <li>
+                                                    <a target="_blank" href="{{ route('listing.details', $listing->slug) }}" class="dropdown-item d-flex align-items-center gap-2">
+                                                        <iconify-icon icon="lucide:eye"></iconify-icon> {{ __('View') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ buyerSellerRoute('listing.edit', ['description', $listing->enc_id]) }}" class="dropdown-item d-flex align-items-center gap-2">
+                                                        <iconify-icon icon="lucide:edit"></iconify-icon> {{ __('Edit') }}
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ buyerSellerRoute('listing.delivery-items', $listing->enc_id) }}" class="dropdown-item d-flex align-items-center gap-2">
+                                                        <iconify-icon icon="lucide:package"></iconify-icon> {{ __('Delivery Items') }}
+                                                    </a>
+                                                </li>
+                                                <li><hr class="dropdown-divider"></li>
+                                                <li>
+                                                    <a href="javascript:void(0)" data-href="{{ buyerSellerRoute('listing.delete', $listing->enc_id) }}" class="dropdown-item d-flex align-items-center gap-2 text-danger delete-btn" data-bs-toggle="modal" data-bs-target=".common-modal-box-2">
+                                                        <iconify-icon icon="lucide:trash-2"></iconify-icon> {{ __('Delete') }}
+                                                    </a>
+                                                </li>
+                                            </ul>
                                         </div>
                                     </td>
                                 </tr>
