@@ -269,7 +269,7 @@ class CheckoutController extends Controller
         $order->transaction->listing = $order->listing;
 
         // Check if this is a manual gateway
-        if ($gateway->gateway && $gateway->gateway->type === \App\Enums\GatewayType::Manual) {
+        if ($gateway->type === \App\Enums\GatewayType::Manual) {
             // For manual gateways, redirect to payment notify route with pending status
             return $this->paymentNotify($order->transaction->tnx, 'pending');
         }
