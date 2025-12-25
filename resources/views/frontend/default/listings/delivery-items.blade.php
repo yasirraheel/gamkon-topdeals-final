@@ -32,7 +32,7 @@
                             </div>
                         </div>
                     @endforeach
-                    @if ($listing->quantity <= $listing->deliveryItemsNoData()->count())
+                    @if (request('order_id') || $listing->quantity <= $listing->deliveryItemsNoData()->count())
                         <div class="col-12">
                             <div class="set-method-btn">
                                 <button class="primary-button primary-button-full xl-btn primary-button-blue w-100">
