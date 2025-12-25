@@ -107,6 +107,12 @@ class PaypalTxn extends BaseTxn
             $provider->setApiCredentials(config('paypal'));
             $provider->getAccessToken();
 
+            \Log::info('PayPal creating order', [
+                'currency' => $this->currency,
+                'amount' => $this->amount,
+                'txn' => $this->txn,
+            ]);
+
             $response = $provider->createOrder([
                 'intent' => 'CAPTURE',
                 'application_context' => [
@@ -124,9 +130,18 @@ class PaypalTxn extends BaseTxn
                 ],
             ]);
 
+            \Log::info('PayPal createOrder response', [
+                'has_id' => isset($response['id']),
+                'has_links' => isset($response['links']),
+                'status' => $response['status'] ?? 'no_status',
+                'response_keys' => array_keys($response ?? []),
+            ]);
+
             if (isset($response['id']) && $response['id'] != null && isset($response['links']) && is_array($response['links'])) {
                 foreach ($response['links'] as $links) {
                     if (($links['rel'] ?? null) === 'approve' && ! empty($links['href'])) {
+                        \Log::info('PayPal redirect URL found', ['url' => $links['href']]);
+                        
                         if ($this->order) {
                             app(OrderService::class)->setTrnxId($this->order, $response['id']);
                         } elseif (session('order_id')) {
@@ -137,6 +152,10 @@ class PaypalTxn extends BaseTxn
                     }
                 }
             }
+
+            \Log::error('PayPal payment could not be initiated - no approval link', [
+                'response' => $response,
+            ]);
 
             if ($this->order) {
                 app(OrderService::class)->setOrderFailed($this->order);
