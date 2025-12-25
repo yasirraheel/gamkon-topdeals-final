@@ -74,8 +74,22 @@ class PaypalTxn extends BaseTxn
             $mode = $paypalConfig['mode'] ?? 'live';
             $credentials = $paypalConfig[$mode] ?? [];
             
-            // Check for required credentials
+            // Log configuration for debugging (without exposing secrets)
+            \Log::info('PayPal Payment Attempt', [
+                'mode' => $mode,
+                'has_client_id' => !empty($credentials['client_id']),
+                'has_client_secret' => !empty($credentials['client_secret']),
+                'txn' => $this->txn,
+            ]);
+            
+            // Check for required credentials (App ID is NOT required - it's auto-set)
             if (empty($credentials['client_id']) || empty($credentials['client_secret'])) {
+                \Log::error('PayPal credentials missing', [
+                    'mode' => $mode,
+                    'client_id_empty' => empty($credentials['client_id']),
+                    'client_secret_empty' => empty($credentials['client_secret']),
+                ]);
+                
                 if ($this->order) {
                     app(OrderService::class)->setOrderFailed($this->order);
                 } elseif (session('order_id')) {
@@ -85,7 +99,7 @@ class PaypalTxn extends BaseTxn
                     }
                 }
                 
-                notify()->error(__('PayPal is not properly configured. Please contact the administrator.'));
+                notify()->error(__('PayPal is not properly configured. Missing Client ID or Client Secret. Please contact support.'));
                 return redirect()->route('checkout');
             }
             
@@ -132,6 +146,13 @@ class PaypalTxn extends BaseTxn
 
             return redirect()->route('checkout');
         } catch (\Throwable $e) {
+            \Log::error('PayPal payment exception', [
+                'error' => $e->getMessage(),
+                'txn' => $this->txn,
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
+            
             if ($this->order) {
                 app(OrderService::class)->setOrderFailed($this->order);
             } elseif (session('order_id')) {
@@ -141,7 +162,7 @@ class PaypalTxn extends BaseTxn
                 }
             }
 
-            notify()->error(__('PayPal payment failed. Please check your PayPal configuration or contact administrator.'));
+            notify()->error(__('PayPal payment failed: ' . $e->getMessage()));
 
             return redirect()->route('checkout');
         }

@@ -182,6 +182,12 @@ class CheckoutController extends Controller
 
             return to_route('checkout');
         }
+        
+        // Check if gateway is active
+        if ($gateway && (!$gateway->status || !$gateway->gateway->status)) {
+            notify()->error(__('Selected payment gateway is currently disabled. Please choose another method.'));
+            return to_route('checkout');
+        }
 
         // Validate gateway configuration for automatic gateways BEFORE creating order
         if ($gateway && $gateway->gateway_code == 'paypal') {
@@ -189,8 +195,23 @@ class CheckoutController extends Controller
             $mode = $paypalConfig['mode'] ?? 'live';
             $credentials = $paypalConfig[$mode] ?? [];
             
+            \Log::info('PayPal gateway validation', [
+                'mode' => $mode,
+                'has_client_id' => !empty($credentials['client_id']),
+                'has_client_secret' => !empty($credentials['client_secret']),
+                'client_id_length' => strlen($credentials['client_id'] ?? ''),
+            ]);
+            
             if (empty($credentials['client_id']) || empty($credentials['client_secret'])) {
+                \Log::error('PayPal gateway not configured properly');
                 notify()->error(__('PayPal payment method is not properly configured. Please choose another payment method or contact support.'));
+                return to_route('checkout');
+            }
+            
+            // Validate that credentials are not just whitespace
+            if (trim($credentials['client_id']) === '' || trim($credentials['client_secret']) === '') {
+                \Log::error('PayPal credentials are empty strings');
+                notify()->error(__('PayPal credentials are invalid. Please choose another payment method or contact support.'));
                 return to_route('checkout');
             }
         }

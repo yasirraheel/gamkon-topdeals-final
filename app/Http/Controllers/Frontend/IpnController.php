@@ -70,18 +70,34 @@ class IpnController extends Controller
     public function paypalIpn(Request $request)
     {
         try {
+            \Log::info('PayPal IPN callback received', [
+                'token' => $request->get('token'),
+                'session_order_id' => session('order_id'),
+            ]);
+            
             $provider = new PayPalClient;
             $provider->setApiCredentials(config('paypal'));
             $provider->getAccessToken();
 
             $response = $provider->capturePaymentOrder($request->get('token'));
+            
+            \Log::info('PayPal capture response', [
+                'status' => $response['status'] ?? 'no_status',
+                'response_keys' => array_keys($response ?? []),
+            ]);
 
             if (isset($response['status']) && $response['status'] == 'COMPLETED') {
                 $txn = $response['purchase_units'][0]['reference_id'] ?? null;
                 if ($txn) {
+                    \Log::info('PayPal payment successful', ['txn' => $txn]);
                     return self::paymentSuccess($txn);
                 }
             }
+
+            \Log::warning('PayPal payment not completed', [
+                'status' => $response['status'] ?? 'unknown',
+                'message' => $response['message'] ?? 'no message',
+            ]);
 
             if (session('order_id')) {
                 $order = Order::find(session('order_id'));
@@ -99,6 +115,13 @@ class IpnController extends Controller
 
             return redirect()->route('checkout');
         } catch (\Throwable $e) {
+            \Log::error('PayPal IPN exception', [
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            
             if (session('order_id')) {
                 $order = Order::find(session('order_id'));
                 if ($order) {
@@ -108,7 +131,7 @@ class IpnController extends Controller
                 }
             }
 
-            notify()->error(__('PayPal payment failed.'));
+            notify()->error(__('PayPal payment verification failed: ' . $e->getMessage()));
 
             return redirect()->route('checkout');
         }

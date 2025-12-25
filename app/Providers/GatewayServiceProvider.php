@@ -40,16 +40,18 @@ class GatewayServiceProvider extends ServiceProvider
             ];
 
             if ($paypalCredential->mode != 'sandbox') {
+                // Live mode: App ID is optional - PayPal sets it automatically from access token
                 $paypalInfo = array_merge($paypalInfo, [
                     'paypal.live.app_id' => $paypalCredential->app_id ?? '',
-                    'paypal.live.client_id' => $paypalCredential->client_id ?? '',
-                    'paypal.live.client_secret' => $paypalCredential->client_secret ?? '',
+                    'paypal.live.client_id' => trim($paypalCredential->client_id ?? ''),
+                    'paypal.live.client_secret' => trim($paypalCredential->client_secret ?? ''),
                 ]);
             } else {
+                // Sandbox mode: Use default sandbox App ID if not provided
                 $paypalInfo = array_merge($paypalInfo, [
                     'paypal.sandbox.app_id' => $paypalCredential->app_id ?? 'APP-80W284485P519543T',
-                    'paypal.sandbox.client_id' => $paypalCredential->client_id ?? '',
-                    'paypal.sandbox.client_secret' => $paypalCredential->client_secret ?? '',
+                    'paypal.sandbox.client_id' => trim($paypalCredential->client_id ?? ''),
+                    'paypal.sandbox.client_secret' => trim($paypalCredential->client_secret ?? ''),
                 ]);
             }
 
