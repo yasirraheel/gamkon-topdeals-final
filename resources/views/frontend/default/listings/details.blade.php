@@ -420,7 +420,16 @@
                             </div>
                             <div class="delivery-stat">
                                 <span class="label"><iconify-icon icon="solar:bolt-circle-bold" width="20"></iconify-icon> {{ __('Average delivery time') }}</span>
-                                <span class="value">{{ $listing->delivery_method == 'auto' ? 'Instant' : '~1 hour' }}</span>
+                                @php
+                                    $deliveryService = new \App\Services\AverageDeliveryTimeService();
+                                    $deliveryData = $deliveryService->getDeliveryTimeDisplay($listing->seller, $listing->delivery_method == 'auto' ? 'Instant' : '~1 hour');
+                                @endphp
+                                <span class="value" @if($deliveryData['is_estimated']) data-bs-toggle="tooltip" title="{{ __('Estimated based on guaranteed time') }}" @endif>
+                                    {{ $deliveryData['text'] }}
+                                    @if(!$deliveryData['is_estimated'])
+                                        <iconify-icon icon="solar:history-bold" class="text-success ms-1" width="14" data-bs-toggle="tooltip" title="{{ __('Calculated from actual order history') }}"></iconify-icon>
+                                    @endif
+                                </span>
                             </div>
                             @if ($listing->guarantee_period)
                                 <div class="delivery-stat">
@@ -462,7 +471,12 @@
                             <div class="seller-card">
                                 <img src="{{ $listing->seller->avatar_path ?? themeAsset('images/user/user-default.png') }}" alt="{{ $listing->seller->username }}" class="seller-avatar">
                                 <div>
-                                    <a href="{{ route('seller.details', $listing->seller->username) }}" class="text-dark fw-bold text-decoration-none d-block mb-1">{{ $listing->seller->username }}</a>
+                                    <a href="{{ route('seller.details', $listing->seller->username) }}" class="text-dark fw-bold text-decoration-none d-block mb-1">
+                                        {{ $listing->seller->username }}
+                                        @if($listing->seller->kyc == \App\Enums\KYCStatus::Verified->value)
+                                            <iconify-icon icon="solar:verified-check-bold" class="text-primary ms-1" width="16" style="vertical-align: middle;" data-bs-toggle="tooltip" title="{{ __('KYC Verified') }}"></iconify-icon>
+                                        @endif
+                                    </a>
                                     <div class="d-flex align-items-center gap-1">
                                         <iconify-icon icon="solar:like-bold" class="text-primary" width="14"></iconify-icon>
                                         <span class="text-primary small fw-bold">{{ number_format($listing->seller->order_success_rate ?? 98.5, 2) }}%</span>
