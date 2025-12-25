@@ -17,6 +17,8 @@
                     <div class="col">
                         <div class="title-content">
                             <h2 class="title">{{ __('Review Management') }}</h2>
+                            <a href="{{ route('admin.reviews.create') }}" class="title-btn"><i
+                                    data-lucide="plus"></i>{{ __('Add New') }}</a>
                         </div>
                     </div>
                 </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Listing;
 use App\Models\ListingReview;
+use App\Models\User;
 use App\Traits\NotifyTrait;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,41 @@ class ReviewController extends Controller
     public function __construct()
     {
         $this->middleware('can:listing-edit');
+    }
+
+    public function create()
+    {
+        $listings = Listing::where('status', 'active')->get(['id', 'product_name', 'seller_id']);
+        $buyers = User::where('status', 1)->get(['id', 'username', 'first_name', 'last_name']);
+        return view('backend.reviews.create', compact('listings', 'buyers'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'listing_id' => 'required|exists:listings,id',
+            'buyer_id' => 'required|exists:users,id',
+            'rating' => 'required|integer|min:1|max:5',
+            'review' => 'required|string|max:1000',
+        ]);
+
+        $listing = Listing::findOrFail($request->listing_id);
+
+        $review = ListingReview::create([
+            'listing_id' => $listing->id,
+            'seller_id' => $listing->seller_id,
+            'buyer_id' => $request->buyer_id,
+            'rating' => $request->rating,
+            'review' => $request->review,
+            'status' => 'approved',
+            'reviewed_at' => now(),
+        ]);
+
+        $this->listingReviewUpdate($listing, $review, false);
+
+        notify()->success(__('Review added successfully.'));
+
+        return redirect()->route('admin.reviews.index');
     }
 
     public function index(Request $request)

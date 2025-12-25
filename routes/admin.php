@@ -150,6 +150,8 @@ Route::prefix('listing')->name('listing.')->group(function () {
 
 // Review Management Routes
 Route::prefix('reviews')->name('reviews.')->group(function () {
+    Route::get('/create', [ReviewController::class, 'create'])->name('create');
+    Route::post('/store', [ReviewController::class, 'store'])->name('store');
     Route::get('', [ReviewController::class, 'index'])->name('index');
     Route::get('/{review}', [ReviewController::class, 'show'])->name('show');
     Route::get('/{review}/approve', [ReviewController::class, 'approve'])->name('approve');
