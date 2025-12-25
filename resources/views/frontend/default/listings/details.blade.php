@@ -289,10 +289,10 @@
                                                 <p class="pd-info-value">{{ __('Global (Except Excluded)') }}</p>
                                             @endif
 
-                                            <div class="d-flex align-items-center gap-2 mt-1">
+                                            <div class="d-flex align-items-center gap-2 mt-1 flex-wrap">
                                                 @if($isAvailable)
-                                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-10 rounded-pill px-2 py-1" style="font-size: 11px;">
-                                                        <iconify-icon icon="solar:check-circle-bold" class="me-1"></iconify-icon>
+                                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-10 rounded-pill px-2 py-1 text-wrap text-start h-auto" style="font-size: 11px; line-height: 1.4;">
+                                                        <iconify-icon icon="solar:check-circle-bold" class="me-1" style="vertical-align: text-bottom;"></iconify-icon>
                                                         {{ __('Active in :country', ['country' => $userCountry]) }}
                                                     </span>
                                                 @else
