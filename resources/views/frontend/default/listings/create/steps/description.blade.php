@@ -408,6 +408,7 @@
                 var existingName = '{{ $listing?->product_name }}';
                 var isNewListing = !existingName;
                 
+                // Ensure we respect the existing name on load
                 if (!isUserInteraction && !isNewListing) {
                     return;
                 }
