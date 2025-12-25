@@ -275,31 +275,36 @@
                                 <div class="pd-info-grid">
                                     {{-- Region --}}
                                     <div class="pd-info-item">
-                                        <div class="pd-info-icon {{ $isAvailable ? 'text-success' : 'text-danger' }}">
+                                        <div class="pd-info-icon text-muted">
                                             <iconify-icon icon="solar:global-circle-bold" width="24"></iconify-icon>
                                         </div>
                                         <div>
                                             <span class="pd-info-label">{{ __('Region Availability') }}</span>
                                             
-                                            @if($regionType === 'global')
-                                                <p class="pd-info-value">{{ __('Global (All Countries)') }}</p>
-                                            @elseif($regionType === 'include')
-                                                <p class="pd-info-value">{{ __('Selected Countries Only') }}</p>
-                                            @else
-                                                <p class="pd-info-value">{{ __('Global (Except Excluded)') }}</p>
-                                            @endif
-
-                                            <div class="d-flex align-items-center mt-2">
-                                                @if($isAvailable)
-                                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-10 rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2">
-                                                        <iconify-icon icon="solar:check-circle-bold" width="20" height="20" class="flex-shrink-0"></iconify-icon>
-                                                        <span class="text-nowrap" style="font-size: 14px;">{{ __('Active in :country', ['country' => $userCountry]) }}</span>
-                                                    </span>
+                                            <div class="d-flex align-items-center gap-1">
+                                                @if($regionType === 'global')
+                                                    <p class="pd-info-value mb-0">{{ __('Global (All Countries)') }}</p>
+                                                    <iconify-icon icon="solar:verified-check-bold" class="text-primary" width="16"></iconify-icon>
+                                                @elseif($regionType === 'include')
+                                                    <p class="pd-info-value mb-0">{{ __('Selected Countries Only') }}</p>
+                                                    <iconify-icon icon="solar:verified-check-bold" class="text-primary" width="16"></iconify-icon>
                                                 @else
-                                                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-10 rounded-pill px-2 py-1" style="font-size: 11px;">
-                                                        <iconify-icon icon="solar:forbidden-circle-bold" class="me-1"></iconify-icon>
-                                                        {{ __('Not Available in :country', ['country' => $userCountry]) }}
-                                                    </span>
+                                                    <p class="pd-info-value mb-0">{{ __('Global (Except Excluded)') }}</p>
+                                                    <iconify-icon icon="solar:verified-check-bold" class="text-primary" width="16"></iconify-icon>
+                                                @endif
+                                            </div>
+
+                                            <div class="d-flex align-items-center mt-1">
+                                                @if($isAvailable)
+                                                    <div class="d-inline-flex align-items-center gap-2 text-success" style="font-size: 14px; font-weight: 500;">
+                                                        <iconify-icon icon="solar:check-circle-bold" width="18" height="18" class="flex-shrink-0"></iconify-icon>
+                                                        <span>{{ __('Active in :country', ['country' => $userCountry]) }}</span>
+                                                    </div>
+                                                @else
+                                                    <div class="d-inline-flex align-items-center gap-2 text-danger" style="font-size: 14px; font-weight: 500;">
+                                                        <iconify-icon icon="solar:close-circle-bold" width="18" height="18" class="flex-shrink-0"></iconify-icon>
+                                                        <span>{{ __('Not Available in :country', ['country' => $userCountry]) }}</span>
+                                                    </div>
                                                 @endif
                                             </div>
                                             
