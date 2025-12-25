@@ -69,27 +69,49 @@ class IpnController extends Controller
 
     public function paypalIpn(Request $request)
     {
-        $provider = new PayPalClient;
-        $provider->setApiCredentials(config('paypal'));
-        $provider->getAccessToken();
-        $response = $provider->capturePaymentOrder($request['token']);
-        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
-            $txn = $response['purchase_units'][0]['reference_id'];
+        try {
+            $provider = new PayPalClient;
+            $provider->setApiCredentials(config('paypal'));
+            $provider->getAccessToken();
 
-            return self::paymentSuccess($txn);
+            $response = $provider->capturePaymentOrder($request->get('token'));
+
+            if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+                $txn = $response['purchase_units'][0]['reference_id'] ?? null;
+                if ($txn) {
+                    return self::paymentSuccess($txn);
+                }
+            }
+
+            if (session('order_id')) {
+                $order = Order::find(session('order_id'));
+                if ($order) {
+                    orderService()->setOrderCancelled($order);
+                } else {
+                    app(OrderService::class)->dismissSession();
+                }
+                notify()->warning(__('Payment canceled.'));
+
+                return redirect(buyerSellerRoute('dashboard'))->setStatusCode(200);
+            }
+
+            notify()->error(__($response['message'] ?? 'PayPal payment failed.'));
+
+            return redirect()->route('checkout');
+        } catch (\Throwable $e) {
+            if (session('order_id')) {
+                $order = Order::find(session('order_id'));
+                if ($order) {
+                    orderService()->setOrderFailed($order);
+                } else {
+                    app(OrderService::class)->dismissSession();
+                }
+            }
+
+            notify()->error(__('PayPal payment failed.'));
+
+            return redirect()->route('checkout');
         }
-
-        if (session('order_id')) {
-            Order::find(session('order_id'))->update(['payment_type' => TxnStatus::Cancelled->value, 'status' => OrderStatus::Cancelled->value]);
-            notify()->warning(__('Payment Canceled'));
-            app(OrderService::class)->dismissSession();
-
-            return redirect(buyerSellerRoute('dashboard'))->setStatusCode(200);
-        }
-
-        return redirect()
-            ->buyerSellerRoute('deposit.now')
-            ->with('error', $response['message'] ?? 'Something went wrong.');
 
     }
 

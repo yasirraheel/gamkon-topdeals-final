@@ -183,7 +183,7 @@ class CheckoutController extends Controller
             return back();
         }
 
-        $gateway_code = ucwords($gateway?->gateway_code) ?? null;
+        $gateway_code = $gateway?->gateway_code ?? null;
 
         $service = orderService();
 
