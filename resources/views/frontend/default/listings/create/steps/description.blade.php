@@ -11,22 +11,22 @@
             border-radius: 0 0 3px 3px;
         }
 
-        /* Fix Select2 Dark Mode Visibility */
+        // Fix Select2 Styling to match theme
         .select2-container--default .select2-selection--multiple {
-            background-color: #111827 !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            background-color: var(--td-bg) !important;
+            border: 1px solid var(--td-border) !important;
             border-radius: 8px;
             min-height: 48px;
             padding: 4px;
         }
 
         .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-            color: #fff !important;
+            color: var(--td-text-primary) !important;
             padding-left: 8px;
         }
 
         .select2-container--default .select2-search--inline .select2-search__field {
-            color: #fff !important;
+            color: var(--td-text-primary) !important;
             font-family: inherit;
             margin-top: 7px;
         }
@@ -59,8 +59,8 @@
         }
 
         .select2-dropdown {
-            background-color: #111827 !important;
-            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            background-color: var(--td-bg) !important;
+            border: 1px solid var(--td-border) !important;
             z-index: 9999;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
@@ -71,19 +71,19 @@
         }
 
         .select2-results__option {
-            color: #d1d5db !important; /* Lighter gray for better visibility */
+            color: var(--td-text-secondary) !important;
             padding: 10px 12px;
-            background-color: #111827 !important;
+            background-color: var(--td-bg) !important;
         }
 
         .select2-container--default .select2-results__option[aria-selected=true] {
-            background-color: rgba(255, 255, 255, 0.1) !important;
-            color: #fff !important;
+            background-color: rgba(0, 0, 0, 0.05) !important;
+            color: var(--td-text-primary) !important;
         }
 
         .select2-results__option:hover {
-            background-color: #1f2937 !important; /* Slightly lighter dark background on hover */
-            color: #fff !important;
+            background-color: var(--td-bg-hover) !important;
+            color: var(--td-text-primary) !important;
         }
 
         /* Ensure dropdown is visible against any background */
@@ -631,7 +631,7 @@
                 $('#selectDuration').html('<option value="">{{ __('Select Duration') }}</option>');
                 $('#selectPlan').html('<option value="">{{ __('Select Sharing Method') }}</option>');
                 $('#selectProductPlan').html('<option value="">{{ __('Select Plan') }}</option>');
-                $('#selectRegion').html('<option value="">{{ __('Select Region') }}</option>');
+                // $('#selectRegion').html('<option value="">{{ __('Select Region') }}</option>'); // Decoupled
                 $('#selectDevices').html('<option value="">{{ __('Select Devices') }}</option>');
                 $('.nice-select-active').niceSelect('update');
                 return;
@@ -692,18 +692,12 @@
                         }
                         $('#selectProductPlan').html(productPlanOptions);
 
-                        // Populate region dropdown
-                        var regionOptions = '';
-                        if (data.regions && data.regions.length > 0) {
-                            data.regions.forEach(function(region) {
-                                if (region && region.trim() !== '') {
-                                    var isSelected = savedRegion.includes(region); // Check if in saved array/string
-                                    var selected = isSelected ? ' selected' : '';
-                                    regionOptions += '<option value="' + region + '"' + selected + '>' + region + '</option>';
-                                }
-                            });
-                        }
-                        $('#selectRegion').html(regionOptions);
+                        // Populate region dropdown (REMOVED - now decoupled from catalog)
+                        // var regionOptions = '';
+                        // if (data.regions && data.regions.length > 0) {
+                        //    ...
+                        // }
+                        // $('#selectRegion').html(regionOptions);
 
                         // Populate devices dropdown
                         var devicesOptions = '';

@@ -191,39 +191,6 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <div class="site-input-groups">
-                                            <label for="" class="box-input-label">{{ __('Regions') }}</label>
-                                            <div id="regions-container">
-                                                @if(old('regions', $catalog->regions))
-                                                    @foreach(old('regions', $catalog->regions ?? []) as $index => $region)
-                                                        <div class="region-item mb-2 d-flex gap-2">
-                                                            <input type="text" name="regions[]" class="box-input mb-0"
-                                                                placeholder="e.g., Global, US, EU" value="{{ $region }}" />
-                                                            <button type="button" class="btn btn-sm btn-danger remove-region" style="{{ count(old('regions', $catalog->regions ?? [])) > 1 ? '' : 'display: none;' }}">
-                                                                <i data-lucide="x"></i>
-                                                            </button>
-                                                        </div>
-                                                    @endforeach
-                                                @else
-                                                    <div class="region-item mb-2 d-flex gap-2">
-                                                        <input type="text" name="regions[]" class="box-input mb-0"
-                                                            placeholder="e.g., Global, US, EU" />
-                                                        <button type="button" class="btn btn-sm btn-danger remove-region" style="display: none;">
-                                                            <i data-lucide="x"></i>
-                                                        </button>
-                                                    </div>
-                                                @endif
-                                            </div>
-                                            <button type="button" class="btn btn-sm btn-primary mt-2" onclick="addRegion()">
-                                                <i data-lucide="plus"></i> {{ __('Add Region') }}
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
                                     <div class="col-lg-12">
                                         <div class="site-input-groups">
                                             <label for="" class="box-input-label">{{ __('Platforms') }}</label>
@@ -337,23 +304,6 @@ function addPlan() {
     updateRemoveButtons('plan');
 }
 
-function addRegion() {
-    const container = document.getElementById('regions-container');
-    const newItem = document.createElement('div');
-    newItem.className = 'region-item mb-2 d-flex gap-2';
-    newItem.innerHTML = `
-        <input type="text" name="regions[]" class="box-input mb-0" placeholder="e.g., Global, US, EU" />
-        <button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.remove(); updateRemoveButtons('region');">
-            <i data-lucide="x"></i>
-        </button>
-    `;
-    container.appendChild(newItem);
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
-    updateRemoveButtons('region');
-}
-
 function addPlatform() {
     const container = document.getElementById('platforms-container');
     const newItem = document.createElement('div');
@@ -400,7 +350,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateRemoveButtons('duration');
     updateRemoveButtons('sharing-method');
     updateRemoveButtons('plan');
-    updateRemoveButtons('region');
     updateRemoveButtons('platform');
 });
 </script>
