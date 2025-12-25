@@ -33,7 +33,15 @@
                         </div>
                         <div class="col-lg-7">
                             <div class="seller-content">
-                                <h5>{{ $seller->username }}</h5>
+                                <h5>
+                                    {{ $seller->username }}
+                                    @if($seller->kyc == 1)
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#3b82f6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-left: 4px;" title="{{ __('Verified Seller') }}" data-bs-toggle="tooltip">
+                                            <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74z"></path>
+                                            <polyline points="9 11 12 14 22 4"></polyline>
+                                        </svg>
+                                    @endif
+                                </h5>
                                 <p class="seller-description">{{ $seller->about }}</p>
                                 <div class="seller-buttons-box">
                                     @if (auth()->check() && auth()?->id() != $seller->id)
