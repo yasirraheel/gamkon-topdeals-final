@@ -103,34 +103,36 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <div class="action-btn-group">
-                                                        @can('product-catalog-edit')
-                                                            <a href="{{ route('admin.product-catalog.edit', $catalog->id) }}"
-                                                                class="round-icon-btn primary-btn" id="edit"
-                                                                data-bs-toggle="tooltip" title="" data-bs-placement="top"
-                                                                data-bs-original-title="{{ __('Edit Product Catalog') }}">
-                                                                <i data-lucide="edit-3"></i>
-                                                            </a>
-                                                            <a href="{{ route('admin.product-catalog.status.toggle', $catalog->id) }}"
-                                                                class="round-icon-btn {{ $catalog->status ? 'danger-btn' : 'success-btn' }}"
-                                                                id="status-toggle"
-                                                                data-bs-toggle="tooltip" title="" data-bs-placement="top"
-                                                                data-bs-original-title="{{ $catalog->status ? __('Deactivate') : __('Activate') }}">
-                                                                <i data-lucide="{{ $catalog->status ? 'x-circle' : 'check-circle' }}"></i>
-                                                            </a>
-                                                        @endcan
-                                                        @can('product-catalog-delete')
-                                                            <button type="button" data-bs-toggle="modal"
-                                                                data-bs-target="#deleteCatalog-{{ $catalog->id }}"
-                                                                class="round-icon-btn danger-btn"
-                                                                data-bs-original-title="{{ __('Delete Product Catalog') }}">
-                                                                <i data-lucide="trash-2"></i>
-                                                            </button>
-                                                            @include('backend.product-catalog.include.__delete', [
-                                                                'catalog' => $catalog,
-                                                            ])
-                                                        @endcan
-                                                    </div>
+                                                    @can('product-catalog-edit')
+                                                        <a href="{{ route('admin.product-catalog.edit', $catalog->id) }}"
+                                                            class="round-icon-btn primary-btn" id="edit"
+                                                            data-bs-toggle="tooltip" title="" data-bs-placement="top"
+                                                            data-bs-original-title="{{ __('Edit Product Catalog') }}">
+                                                            <i data-lucide="edit-3"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('product-catalog-edit')
+                                                        <a href="{{ route('admin.product-catalog.status.toggle', $catalog->id) }}"
+                                                            class="round-icon-btn {{ $catalog->status ? 'danger-btn' : 'success-btn' }}"
+                                                            id="status-toggle"
+                                                            data-bs-toggle="tooltip" title="" data-bs-placement="top"
+                                                            data-bs-original-title="{{ $catalog->status ? __('Deactivate') : __('Activate') }}">
+                                                            <i data-lucide="{{ $catalog->status ? 'x-circle' : 'check-circle' }}"></i>
+                                                        </a>
+                                                    @endcan
+                                                    @can('product-catalog-delete')
+                                                        <button type="button" data-bs-toggle="modal"
+                                                            data-bs-target="#deleteCatalog-{{ $catalog->id }}"
+                                                            class="round-icon-btn danger-btn"
+                                                            data-bs-original-title="{{ __('Delete Product Catalog') }}">
+                                                            <i data-lucide="trash-2"></i>
+                                                        </button>
+                                                    @endcan
+                                                    @can('product-catalog-delete')
+                                                        @include('backend.product-catalog.include.__delete', [
+                                                            'catalog' => $catalog,
+                                                        ])
+                                                    @endcan
                                                 </td>
                                             </tr>
                                         @empty
