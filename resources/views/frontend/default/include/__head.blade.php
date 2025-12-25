@@ -2,7 +2,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>@hasSection('seo_title') @yield('seo_title') @else {{ setting('site_title', 'global') }} - @yield('title') - {{ __('Subscription-Based On Demand Online Account Selling Marketplace') }} @endif</title>
-    <meta name="description" content="@yield('meta_description', setting('meta_description', 'meta'))">
+    <meta name="description" content="@yield('meta_description', setting('meta_description', 'meta', 'TopDealsPlus is your premier subscription-based marketplace for buying and selling secure online accounts on demand. Discover exclusive deals on gaming, streaming, and premium subscriptions with instant delivery.'))">
     <meta name="keywords" content="@yield('meta_keywords', setting('meta_keywords', 'meta'))">
     @yield('meta')
     <meta name="viewport" content="width=device-width, initial-scale=1">
