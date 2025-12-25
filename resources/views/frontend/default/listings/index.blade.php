@@ -87,13 +87,13 @@
                                             / {{ $listing->subcategory->name }}
                                         @endif
                                     </td>
-                                    <td class="text-nowrap">{{ ucwords($listing->delivery_method) }}
-                                        @if ($listing->delivery_method == 'manual')
-                                            <br>
-                                            <span class="badge info mt-1 badge-2">{{ __('after') }}
-                                                {{ $listing->delivery_speed }} {{ $listing->delivery_speed_unit }}</span>
-                                        @endif
-
+                                    <td class="text-nowrap">
+                                        <div class="d-flex flex-column align-items-start gap-1">
+                                            <span>{{ ucwords($listing->delivery_method) }}</span>
+                                            @if ($listing->delivery_method == 'manual')
+                                                <span class="badge bg-info text-white">{{ __('after') }} {{ $listing->delivery_speed }} {{ $listing->delivery_speed_unit }}</span>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td class="text-nowrap">
 
