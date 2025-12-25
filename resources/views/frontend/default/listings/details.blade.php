@@ -23,53 +23,14 @@
     // 'global' is always true
 @endphp
 @extends('frontend::layouts.app', ['bodyClass' => 'home-2'])
-@section('seo_title')
-    {{ Str::limit(__($listing->product_name), 50) . ' - ' . setting('site_title') }}
-@endsection
 @section('title')
-    {{ __($listing->product_name) }}
+    {{ __($listing->product_name) . ' - ' . setting('site_title') }}
 @endsection
 @section('meta_keywords')
-    {{ $listing->product_name }}, {{ $listing->category->name ?? '' }}, {{ $listing->subcategory->name ?? '' }}, {{ trim(setting('meta_keywords', 'meta')) }}
+    {{ trim(setting('meta_keywords', 'meta')) }}
 @endsection
 @section('meta_description')
-    {{ Str::limit(strip_tags($listing->description), 160) }}
-@endsection
-
-@section('meta')
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="product" />
-    <meta property="og:url" content="{{ route('listing.details', $listing->slug) }}" />
-    <meta property="og:title" content="{{ Str::limit($listing->product_name, 60) }}" />
-    <meta property="og:description" content="{{ Str::limit(strip_tags($listing->description), 160) }}" />
-    <meta property="og:image" content="{{ asset($listing->thumbnail) }}" />
-    <meta property="og:site_name" content="{{ setting('site_title') }}" />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="{{ route('listing.details', $listing->slug) }}" />
-    <meta property="twitter:title" content="{{ Str::limit($listing->product_name, 60) }}" />
-    <meta property="twitter:description" content="{{ Str::limit(strip_tags($listing->description), 160) }}" />
-    <meta property="twitter:image" content="{{ asset($listing->thumbnail) }}" />
-
-    <!-- Schema.org JSON-LD -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org/",
-        "@type": "Product",
-        "name": "{{ $listing->product_name }}",
-        "image": "{{ asset($listing->thumbnail) }}",
-        "description": "{{ Str::limit(strip_tags($listing->description), 160) }}",
-        "sku": "{{ $listing->id }}",
-        "offers": {
-            "@type": "Offer",
-            "url": "{{ route('listing.details', $listing->slug) }}",
-            "priceCurrency": "USD",
-            "price": "{{ $listing->price }}",
-            "availability": "https://schema.org/InStock"
-        }
-    }
-    </script>
+    {{ trim(setting('meta_description', 'meta')) }}
 @endsection
 @push('style')
     <link rel="stylesheet" href="{{ themeAsset('css/slick.css') }}">
