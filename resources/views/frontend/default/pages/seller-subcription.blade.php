@@ -15,6 +15,11 @@
                 background: var(--td-secondary);
                 color: var(--td-white);
             }
+            .action-btn .primary-button.disabled {
+                pointer-events: none;
+                cursor: not-allowed;
+                opacity: 0.8;
+            }
         </style>
     @endpush
     @php
@@ -104,21 +109,17 @@
                                     @endforeach
                                 </ul>
                                 <div class="action-btn w-100">
+                                    @php
+                                        $isSubscribed = $user?->is_seller && $user?->hasValidSubscription && $user->hasValidSubscription?->plan_id == $plan->id;
+                                    @endphp
                                     <a @class([
                                         'primary-button xl-btn w-100',
-                                        'border-btn-secondary' => !(
-                                            ($user?->is_seller &&
-                                                $user?->hasValidSubscription &&
-                                                $user->hasValidSubscription?->plan_id == $plan->id) ||
-                                            $plan->is_featured
-                                        ),
-                                        'active' =>
-                                            $user?->is_seller &&
-                                            $user?->hasValidSubscription &&
-                                            $user->hasValidSubscription?->plan_id == $plan->id,
+                                        'border-btn-secondary' => !($isSubscribed || $plan->is_featured),
+                                        'active' => $isSubscribed,
+                                        'disabled' => $isSubscribed
                                     ])
-                                        href="{{ route('checkout', ['type' => 'plan', 'data' => $plan->id]) }}">
-                                        {{ __($user?->is_seller && $user?->hasValidSubscription && $user->hasValidSubscription?->plan_id == $plan->id ? 'Subscribed' : 'Subscribe') }}
+                                        href="{{ $isSubscribed ? 'javascript:void(0)' : route('checkout', ['type' => 'plan', 'data' => $plan->id]) }}">
+                                        {{ __($isSubscribed ? 'Subscribed' : 'Subscribe') }}
                                     </a>
                                 </div>
                             </div>

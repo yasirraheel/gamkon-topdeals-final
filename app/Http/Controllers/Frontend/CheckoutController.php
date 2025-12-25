@@ -101,6 +101,11 @@ class CheckoutController extends Controller
                 return back();
             }
 
+            if (auth()->user()->hasValidSubscription && auth()->user()->hasValidSubscription->plan_id == $plan->id) {
+                notify()->error(__('You are already subscribed to this plan.'));
+                return back();
+            }
+
             session([
                 'checkout' => $checkout,
             ]);
