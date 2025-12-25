@@ -93,7 +93,7 @@
                                         <span class="pricing-text">{{ __('Commission Fee:') }} <span
                                                 class="pricing-bold">{{ ($plan->charge_type == 'amount' ? $currencySymbol : '') . $plan->charge_value . ($plan->charge_type == 'percentage' ? '%' : '') }}</span></span>
                                     </li>
-                                    @foreach (json_decode($plan->features) as $feature)
+                                    @foreach (json_decode($plan->features ?? '[]') ?? [] as $feature)
                                         <li>
                                             <span class="pricing-icon">
                                                 <iconify-icon icon="mingcute:check-2-fill"
