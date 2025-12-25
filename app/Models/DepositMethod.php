@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\GatewayType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,10 +10,6 @@ class DepositMethod extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-
-    protected $casts = [
-        'type' => GatewayType::class,
-    ];
 
     protected $appends = [
         'gateway_logo',
