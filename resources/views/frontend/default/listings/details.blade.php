@@ -278,7 +278,7 @@
                                     {{-- Region --}}
                                     <div class="pd-info-item">
                                         <div class="pd-info-icon text-muted">
-                                            <iconify-icon icon="solar:global-circle-bold" width="24"></iconify-icon>
+                                            <iconify-icon icon="solar:globe-bold" width="24"></iconify-icon>
                                         </div>
                                         <div>
                                             <span class="pd-info-label">{{ __('Region Availability') }}</span>
