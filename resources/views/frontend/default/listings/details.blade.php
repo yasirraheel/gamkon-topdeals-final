@@ -189,36 +189,45 @@
 
         @media (max-width: 991px) {
             .pd-info-grid {
-                grid-template-columns: 1fr 1fr; /* Keep 2 columns on tablet/mobile */
+                grid-template-columns: 1fr; /* Full width items on mobile */
                 gap: 16px;
+                width: 100%;
+                margin-top: 16px;
             }
             .sidebar-sticky {
                 position: static;
             }
             /* Improved Mobile Layout */
             .product-details-area .pd-thumb {
-                width: 100px; /* Smaller thumbnail on mobile */
-                height: 100px;
-                margin-right: 16px;
-                margin-bottom: 0; /* Remove bottom margin */
+                width: 80px; /* Compact thumbnail */
+                height: 80px;
+                flex-shrink: 0;
+                margin: 0 !important;
             }
-            .pd-card .d-flex.flex-column.flex-md-row {
-                flex-direction: row !important; /* Force side-by-side on mobile */
-                align-items: flex-start !important;
+            .mobile-header-row {
+                width: 100%;
+                border-bottom: 1px solid #f3f4f6;
+                padding-bottom: 16px;
+                margin-bottom: 16px !important;
             }
             .pd-title {
-                font-size: 20px !important; /* Smaller title */
-                margin-bottom: 12px !important;
-            }
-            .pd-summary {
-                text-align: left; /* Keep text left aligned */
+                font-size: 18px !important;
+                line-height: 1.4;
+                margin: 0 !important;
             }
             .pd-info-item {
-                justify-content: flex-start; /* Align start */
+                background: #f9fafb;
+                padding: 12px;
+                border-radius: 8px;
+                width: 100%;
+                justify-content: flex-start;
                 text-align: left;
             }
             .pd-info-label {
                 font-size: 12px;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
             }
             .pd-info-value {
                 font-size: 14px;
@@ -252,11 +261,16 @@
                     {{-- Product Header Card --}}
                     <div class="pd-card">
                         <div class="d-flex flex-column flex-md-row gap-4 align-items-start">
-                            <div class="pd-thumb">
+                            <div class="pd-thumb d-none d-md-block">
                                 <img src="{{ asset($listing->thumbnail) }}" alt="{{ $listing->product_name }}">
                             </div>
                             <div class="flex-grow-1 w-100">
-                                <h1 class="pd-title">{{ $listing->product_name }}</h1>
+                                <div class="d-flex flex-row align-items-start gap-3 mb-3 mobile-header-row">
+                                    <div class="pd-thumb d-md-none">
+                                        <img src="{{ asset($listing->thumbnail) }}" alt="{{ $listing->product_name }}">
+                                    </div>
+                                    <h1 class="pd-title mb-0">{{ $listing->product_name }}</h1>
+                                </div>
                                 
                                 <div class="pd-info-grid">
                                     {{-- Region --}}
