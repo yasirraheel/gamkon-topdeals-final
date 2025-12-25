@@ -184,8 +184,10 @@ class ListingController extends Controller
 
         if ($request->region_type === 'global') {
             $allData['region'] = null; // Clear region list if global
-        } elseif ($request->has('region')) {
+        } elseif ($request->has('region') && is_array($request->region)) {
             $allData['region'] = implode(',', $request->region);
+        } else {
+            $allData['region'] = null;
         }
         
         if ($request->has('devices')) {
