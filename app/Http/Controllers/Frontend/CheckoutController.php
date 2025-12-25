@@ -183,6 +183,18 @@ class CheckoutController extends Controller
             return back();
         }
 
+        // Validate gateway configuration for automatic gateways
+        if ($gateway && $gateway->gateway_code == 'paypal') {
+            $paypalConfig = config('paypal');
+            $mode = $paypalConfig['mode'] ?? 'live';
+            $credentials = $paypalConfig[$mode] ?? [];
+            
+            if (empty($credentials['client_id']) || empty($credentials['client_secret'])) {
+                notify()->error(__('PayPal payment method is not properly configured. Please choose another payment method or contact support.'));
+                return back();
+            }
+        }
+
         $gateway_code = $gateway?->gateway_code ?? null;
 
         $service = orderService();

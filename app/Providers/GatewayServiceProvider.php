@@ -41,15 +41,15 @@ class GatewayServiceProvider extends ServiceProvider
 
             if ($paypalCredential->mode != 'sandbox') {
                 $paypalInfo = array_merge($paypalInfo, [
-                    'paypal.live.app_id' => $paypalCredential->app_id,
-                    'paypal.live.client_id' => $paypalCredential->client_id,
-                    'paypal.live.client_secret' => $paypalCredential->client_secret,
+                    'paypal.live.app_id' => $paypalCredential->app_id ?? '',
+                    'paypal.live.client_id' => $paypalCredential->client_id ?? '',
+                    'paypal.live.client_secret' => $paypalCredential->client_secret ?? '',
                 ]);
             } else {
                 $paypalInfo = array_merge($paypalInfo, [
-                    'paypal.sandbox.app_id' => $paypalCredential->app_id,
-                    'paypal.sandbox.client_id' => $paypalCredential->client_id,
-                    'paypal.sandbox.client_secret' => $paypalCredential->client_secret,
+                    'paypal.sandbox.app_id' => $paypalCredential->app_id ?? 'APP-80W284485P519543T',
+                    'paypal.sandbox.client_id' => $paypalCredential->client_id ?? '',
+                    'paypal.sandbox.client_secret' => $paypalCredential->client_secret ?? '',
                 ]);
             }
 

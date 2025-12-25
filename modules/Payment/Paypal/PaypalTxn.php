@@ -69,6 +69,26 @@ class PaypalTxn extends BaseTxn
     public function deposit()
     {
         try {
+            // Validate PayPal credentials before proceeding
+            $paypalConfig = config('paypal');
+            $mode = $paypalConfig['mode'] ?? 'live';
+            $credentials = $paypalConfig[$mode] ?? [];
+            
+            // Check for required credentials
+            if (empty($credentials['client_id']) || empty($credentials['client_secret'])) {
+                if ($this->order) {
+                    app(OrderService::class)->setOrderFailed($this->order);
+                } elseif (session('order_id')) {
+                    $order = Order::find(session('order_id'));
+                    if ($order) {
+                        app(OrderService::class)->setOrderFailed($order);
+                    }
+                }
+                
+                notify()->error(__('PayPal is not properly configured. Please contact the administrator.'));
+                return redirect()->route('checkout');
+            }
+            
             $provider = new PayPalClient;
             $provider->setApiCredentials(config('paypal'));
             $provider->getAccessToken();
@@ -121,7 +141,7 @@ class PaypalTxn extends BaseTxn
                 }
             }
 
-            notify()->error(__('PayPal configuration is invalid or incomplete.'));
+            notify()->error(__('PayPal payment failed. Please check your PayPal configuration or contact administrator.'));
 
             return redirect()->route('checkout');
         }
