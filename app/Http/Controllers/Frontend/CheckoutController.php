@@ -147,7 +147,7 @@ class CheckoutController extends Controller
         if ($request->paymentMethod == 'topup' && auth()->user()->topup_balance < session('checkout')['finalPrice']) {
             notify()->error(__('Insufficient topup balance!'));
 
-            return back();
+            return to_route('checkout');
         }
 
         $error = match (true) {
@@ -159,7 +159,7 @@ class CheckoutController extends Controller
         if ($error !== null) {
             notify()->error($error);
 
-            return back();
+            return to_route('checkout');
         }
 
         // check if plan
@@ -180,10 +180,10 @@ class CheckoutController extends Controller
         if (!in_array($request->paymentMethod, ['topup', 'balance']) && !$gateway) {
             notify()->error(__('Invalid payment method!'));
 
-            return back();
+            return to_route('checkout');
         }
 
-        // Validate gateway configuration for automatic gateways
+        // Validate gateway configuration for automatic gateways BEFORE creating order
         if ($gateway && $gateway->gateway_code == 'paypal') {
             $paypalConfig = config('paypal');
             $mode = $paypalConfig['mode'] ?? 'live';
