@@ -72,7 +72,7 @@
                                 <tr>
                                     <th scope="col" class="text-nowrap">{{ __('Order Number') }}</th>
                                     <th scope="col" class="text-nowrap">{{ __('Order Date') }}</th>
-                                    <th scope="col" class="text-nowrap">{{ __('Product') }}</th>
+                                    <th scope="col" style="max-width: 200px;">{{ __('Product') }}</th>
                                     <th scope="col" class="text-nowrap">{{ __('Category') }}</th>
                                     <th scope="col" class="text-nowrap">{{ __('Order Status') }}</th>
                                     <th scope="col" class="text-nowrap">{{ __('Price') }}</th>
