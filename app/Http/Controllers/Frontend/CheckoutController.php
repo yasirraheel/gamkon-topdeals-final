@@ -199,8 +199,12 @@ class CheckoutController extends Controller
             // Check related Gateway status if it exists
             $relatedGateway = $gateway->gateway;
             if ($relatedGateway && !$relatedGateway->status) {
-                notify()->error(__('Selected payment gateway is currently disabled. Please choose another method.'));
-                return to_route('checkout');
+                // If the manual gateway itself is disabled, we should still allow it if the DepositMethod is enabled
+                // For manual gateways, sometimes the 'parent' gateway entry might be disabled but the method itself is active
+                if ($relatedGateway->type !== \App\Enums\GatewayType::Manual) {
+                     notify()->error(__('Selected payment gateway is currently disabled. Please choose another method.'));
+                     return to_route('checkout');
+                }
             }
         }
 
