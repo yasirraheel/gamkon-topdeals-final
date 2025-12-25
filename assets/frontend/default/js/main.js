@@ -463,7 +463,7 @@
       delay: 3000,
     },
     speed: 600,
-    loop: true,
+    loop: false,
     navigation: {
       nextEl: ".swiper-next",
       prevEl: ".swiper-prev",
