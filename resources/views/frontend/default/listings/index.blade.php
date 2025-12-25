@@ -40,8 +40,8 @@
         </x-luminous.dashboard-breadcrumb>
         <div class="">
             <div class="common-table">
-                <div class="common-table-full">
-                    <table class="table">
+                <div class="common-table-full table-responsive">
+                    <table class="table text-nowrap">
                         <thead class="table-light">
                             <tr>
                                 <th scope="col" class="text-nowrap">{{ __('Image') }}</th>
@@ -68,17 +68,19 @@
                                         </div>
                                     </th>
                                     <td class="text-nowrap">
-                                        <div class="d-flex flex-column align-items-start">
-                                            {{ str($listing->product_name)->limit(40) }}
-                                            @if ($listing->productCatalog)
-                                                <span class="badge badge-2 info">{{ $listing->productCatalog->name }}</span>
-                                            @endif
-                                            @if ($listing->selected_duration)
-                                                <span class="badge badge-2 warning">{{ $listing->selected_duration }}</span>
-                                            @endif
-                                            @if ($listing->selected_plan)
-                                                <span class="badge badge-2 success">{{ $listing->selected_plan }}</span>
-                                            @endif
+                                        <div class="d-flex flex-column align-items-start gap-1">
+                                            <span class="fw-bold mb-1">{{ str($listing->product_name)->limit(40) }}</span>
+                                            <div class="d-flex flex-wrap gap-1">
+                                                @if ($listing->productCatalog)
+                                                    <span class="badge badge-2 info">{{ $listing->productCatalog->name }}</span>
+                                                @endif
+                                                @if ($listing->selected_duration)
+                                                    <span class="badge badge-2 warning">{{ $listing->selected_duration }}</span>
+                                                @endif
+                                                @if ($listing->selected_plan)
+                                                    <span class="badge badge-2 success">{{ $listing->selected_plan }}</span>
+                                                @endif
+                                            </div>
                                         </div>
                                     </td>
                                     <td class="text-nowrap">{{ $listing->category?->name }} @if ($listing->subcategory)

@@ -66,6 +66,9 @@
   &-2 {
     width: fit-content;
     min-width: unset;
+    // Fallback for white text issues if color class is missing or overridden
+    background-color: var(--td-primary); 
+    color: #fff;
   }
 }
 
