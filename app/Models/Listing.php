@@ -16,6 +16,7 @@ class Listing extends Model
         'seller_id',
         'category_id',
         'product_catalog_id',
+        'region_type', // Added region_type
         'region',
         'devices',
         'selected_duration',

@@ -159,6 +159,7 @@ class ListingController extends Controller
             'product_catalog_id' => ($isUpdate ? 'nullable' : 'required') . '|exists:product_catalogs,id',
             'selected_duration' => ($isUpdate ? 'nullable' : 'required') . '|string',
             'selected_plan' => ($isUpdate ? 'nullable' : 'required') . '|string',
+            'region_type' => 'required|in:global,include,exclude',
             'region' => 'nullable|array',
             'devices' => 'nullable|array',
             'product_name' => 'required|string|max:255',
@@ -181,9 +182,12 @@ class ListingController extends Controller
             'devices',
         ]);
 
-        if ($request->has('region')) {
+        if ($request->region_type === 'global') {
+            $allData['region'] = null; // Clear region list if global
+        } elseif ($request->has('region')) {
             $allData['region'] = implode(',', $request->region);
         }
+        
         if ($request->has('devices')) {
             $allData['devices'] = implode(',', $request->devices);
         }

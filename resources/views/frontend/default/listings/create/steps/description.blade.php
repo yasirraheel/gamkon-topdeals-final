@@ -209,13 +209,53 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-12">
                     <div class="td-form-group">
-                        <label class="input-label" for="selectRegion">{{ __('Region') }}</label>
-                        <div class="auth-nice-select auth-nice-select-2">
-                            <select id="selectRegion" class="select2" name="region[]" multiple>
-                                
-                            </select>
+                        <label class="input-label">{{ __('Region Availability') }}</label>
+                        <div class="region-config p-3 border rounded mb-2">
+                            <div class="d-flex gap-4 mb-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="region_type" id="regionGlobal" value="global" 
+                                        {{ old('region_type', $listing?->region_type ?? 'global') == 'global' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="regionGlobal">
+                                        {{ __('Global (All Countries)') }}
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="region_type" id="regionInclude" value="include"
+                                        {{ old('region_type', $listing?->region_type ?? '') == 'include' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="regionInclude">
+                                        {{ __('Select Supported Regions') }}
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="region_type" id="regionExclude" value="exclude"
+                                        {{ old('region_type', $listing?->region_type ?? '') == 'exclude' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="regionExclude">
+                                        {{ __('Exclude Specific Regions') }}
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div id="regionSelectorContainer" class="mt-2 {{ old('region_type', $listing?->region_type ?? 'global') == 'global' ? 'd-none' : '' }}">
+                                <label class="input-label small mb-1" id="regionSelectorLabel">
+                                    {{ old('region_type', $listing?->region_type ?? 'global') == 'exclude' ? __('Select countries to EXCLUDE:') : __('Select countries to INCLUDE:') }}
+                                </label>
+                                <div class="auth-nice-select auth-nice-select-2">
+                                    <select id="selectRegion" class="select2" name="region[]" multiple>
+                                        @foreach (getCountries() as $country)
+                                            <option value="{{ $country['name'] }}" 
+                                                @if(is_array(old('region', explode(',', $listing?->region ?? ''))))
+                                                    @selected(in_array($country['name'], old('region', explode(',', $listing?->region ?? ''))))
+                                                @endif
+                                            >{{ $country['name'] }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <small class="text-muted" id="regionHelpText">
+                                    {{ old('region_type', $listing?->region_type ?? 'global') == 'exclude' ? __('Users from these countries will NOT be able to purchase.') : __('Only users from these countries will be able to purchase.') }}
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -558,7 +598,30 @@
             }
         });
 
-        // Handle product catalog selection
+        // Handle Region Type Change
+            $('input[name="region_type"]').on('change', function() {
+                var type = $(this).val();
+                var container = $('#regionSelectorContainer');
+                var label = $('#regionSelectorLabel');
+                var help = $('#regionHelpText');
+                
+                if (type === 'global') {
+                    container.addClass('d-none');
+                    // Clear selection if switching to global to avoid sending hidden data
+                    // $('#selectRegion').val(null).trigger('change'); 
+                } else {
+                    container.removeClass('d-none');
+                    if (type === 'include') {
+                        label.text('{{ __('Select countries to INCLUDE:') }}');
+                        help.text('{{ __('Only users from these countries will be able to purchase.') }}');
+                    } else {
+                        label.text('{{ __('Select countries to EXCLUDE:') }}');
+                        help.text('{{ __('Users from these countries will NOT be able to purchase.') }}');
+                    }
+                }
+            });
+
+            // Handle product catalog selection
         $('#selectProductCatalog').on('change', function() {
             var catalogId = $(this).val();
             

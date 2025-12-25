@@ -1,3 +1,27 @@
+@php
+    // Determine User's Country
+    $userCountry = null;
+    if (auth()->check() && auth()->user()->country) {
+        // Parse "CountryName:DialCode" format if needed, or just use raw if simple string
+        $parts = explode(':', auth()->user()->country);
+        $userCountry = $parts[0];
+    } else {
+        $location = getLocation(); // Uses IP-API
+        $userCountry = $location->name;
+    }
+
+    // Determine Availability
+    $isAvailable = true;
+    $regionType = $listing->region_type ?? 'global';
+    $regions = $listing->region ? explode(',', $listing->region) : [];
+
+    if ($regionType === 'include') {
+        $isAvailable = in_array($userCountry, $regions);
+    } elseif ($regionType === 'exclude') {
+        $isAvailable = !in_array($userCountry, $regions);
+    }
+    // 'global' is always true
+@endphp
 @extends('frontend::layouts.app', ['bodyClass' => 'home-2'])
 @section('title')
     {{ __($listing->product_name) . ' - ' . setting('site_title') }}
@@ -209,13 +233,37 @@
                                 <div class="pd-info-grid">
                                     {{-- Region --}}
                                     <div class="pd-info-item">
-                                        <div class="pd-info-icon text-success">
+                                        <div class="pd-info-icon {{ $isAvailable ? 'text-success' : 'text-danger' }}">
                                             <iconify-icon icon="solar:global-circle-bold" width="24"></iconify-icon>
                                         </div>
                                         <div>
-                                            <span class="pd-info-label">{{ __('Can be activated in') }}</span>
-                                            <p class="pd-info-value">{{ $listing->region ?? 'Global' }}</p>
-                                            <a href="#" class="text-primary text-decoration-none" style="font-size: 13px;">{{ __('Check region restrictions') }}</a>
+                                            <span class="pd-info-label">{{ __('Region Availability') }}</span>
+                                            
+                                            @if($regionType === 'global')
+                                                <p class="pd-info-value">{{ __('Global (All Countries)') }}</p>
+                                            @elseif($regionType === 'include')
+                                                <p class="pd-info-value">{{ __('Selected Countries Only') }}</p>
+                                            @else
+                                                <p class="pd-info-value">{{ __('Global (Except Excluded)') }}</p>
+                                            @endif
+
+                                            <div class="d-flex align-items-center gap-2 mt-1">
+                                                @if($isAvailable)
+                                                    <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-10 rounded-pill px-2 py-1" style="font-size: 11px;">
+                                                        <iconify-icon icon="solar:check-circle-bold" class="me-1"></iconify-icon>
+                                                        {{ __('Active in :country', ['country' => $userCountry]) }}
+                                                    </span>
+                                                @else
+                                                    <span class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-10 rounded-pill px-2 py-1" style="font-size: 11px;">
+                                                        <iconify-icon icon="solar:forbidden-circle-bold" class="me-1"></iconify-icon>
+                                                        {{ __('Not Available in :country', ['country' => $userCountry]) }}
+                                                    </span>
+                                                @endif
+                                            </div>
+                                            
+                                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#regionModal" class="text-primary text-decoration-none d-block mt-1" style="font-size: 13px;">
+                                                {{ __('Check region restrictions') }}
+                                            </a>
                                         </div>
                                     </div>
 
@@ -494,9 +542,80 @@
             </div>
         </div>
     </div>
+
+    {{-- Region Modal --}}
+    <div class="modal fade" id="regionModal" tabindex="-1" aria-labelledby="regionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+                <div class="modal-header border-bottom-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="regionModalLabel">{{ __('Region Availability') }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="alert {{ $isAvailable ? 'alert-success' : 'alert-danger' }} d-flex align-items-center mb-4" role="alert">
+                        <iconify-icon icon="{{ $isAvailable ? 'solar:check-circle-bold' : 'solar:forbidden-circle-bold' }}" class="fs-4 me-2"></iconify-icon>
+                        <div>
+                            <strong>{{ $isAvailable ? __('Great news!') : __('We are sorry.') }}</strong> 
+                            {{ $isAvailable 
+                                ? __('This product is available for activation in :country.', ['country' => $userCountry]) 
+                                : __('This product CANNOT be activated in :country.', ['country' => $userCountry]) 
+                            }}
+                        </div>
+                    </div>
+
+                    <h6 class="fw-bold mb-3">{{ __('Detailed Country List:') }}</h6>
+                    
+                    @if($regionType === 'global')
+                        <p class="text-success"><iconify-icon icon="solar:global-circle-bold" class="me-1"></iconify-icon> {{ __('This product is available globally in all countries.') }}</p>
+                    @else
+                        <div class="row g-2" style="max-height: 400px; overflow-y: auto;">
+                            @php
+                                $allCountries = getCountries();
+                                // If 'include', show all as disabled except allowed ones
+                                // If 'exclude', show all as enabled except excluded ones
+                            @endphp
+                            
+                            @foreach($allCountries as $country)
+                                @php
+                                    $countryName = $country['name'];
+                                    $isAllowed = false;
+                                    
+                                    if ($regionType === 'include') {
+                                        $isAllowed = in_array($countryName, $regions);
+                                    } elseif ($regionType === 'exclude') {
+                                        $isAllowed = !in_array($countryName, $regions);
+                                    }
+                                    
+                                    $isUserCountry = ($countryName === $userCountry);
+                                @endphp
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="d-flex align-items-center p-2 rounded {{ $isAllowed ? 'bg-light' : 'bg-danger bg-opacity-10' }} {{ $isUserCountry ? 'border border-primary' : '' }}">
+                                        <div class="flex-shrink-0 me-2" style="font-size: 18px;">
+                                            @if($isAllowed)
+                                                <iconify-icon icon="solar:check-circle-bold" class="text-success"></iconify-icon>
+                                            @else
+                                                <iconify-icon icon="solar:close-circle-bold" class="text-danger"></iconify-icon>
+                                            @endif
+                                        </div>
+                                        <div class="text-truncate {{ $isAllowed ? '' : 'text-danger' }}">
+                                            {{ $countryName }}
+                                            @if($isUserCountry)
+                                                <span class="badge bg-primary ms-1">{{ __('You') }}</span>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @push('js')
     <script src="{{ themeAsset('js/slick.min.js') }}"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script>
         'use strict';
         var __quantity = {{ $listing->quantity }};
