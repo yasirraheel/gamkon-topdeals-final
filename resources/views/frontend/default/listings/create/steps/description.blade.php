@@ -11,22 +11,22 @@
             border-radius: 0 0 3px 3px;
         }
 
-        // Fix Select2 Styling to match theme
+        // Fix Select2 Styling to match theme - High Contrast Fix
         .select2-container--default .select2-selection--multiple {
-            background-color: var(--td-bg) !important;
-            border: 1px solid var(--td-border) !important;
+            background-color: #ffffff !important;
+            border: 1px solid #e5e7eb !important;
             border-radius: 8px;
             min-height: 48px;
             padding: 4px;
         }
 
         .select2-container--default .select2-selection--multiple .select2-selection__rendered {
-            color: var(--td-text-primary) !important;
+            color: #111827 !important;
             padding-left: 8px;
         }
 
         .select2-container--default .select2-search--inline .select2-search__field {
-            color: var(--td-text-primary) !important;
+            color: #111827 !important;
             font-family: inherit;
             margin-top: 7px;
         }
@@ -59,8 +59,8 @@
         }
 
         .select2-dropdown {
-            background-color: var(--td-bg) !important;
-            border: 1px solid var(--td-border) !important;
+            background-color: #ffffff !important;
+            border: 1px solid #e5e7eb !important;
             z-index: 9999;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
@@ -71,19 +71,19 @@
         }
 
         .select2-results__option {
-            color: var(--td-text-secondary) !important;
+            color: #374151 !important;
             padding: 10px 12px;
-            background-color: var(--td-bg) !important;
+            background-color: #ffffff !important;
         }
 
         .select2-container--default .select2-results__option[aria-selected=true] {
-            background-color: rgba(0, 0, 0, 0.05) !important;
-            color: var(--td-text-primary) !important;
+            background-color: #f3f4f6 !important;
+            color: #111827 !important;
         }
 
         .select2-results__option:hover {
-            background-color: var(--td-bg-hover) !important;
-            color: var(--td-text-primary) !important;
+            background-color: #f9fafb !important;
+            color: #111827 !important;
         }
 
         /* Ensure dropdown is visible against any background */
