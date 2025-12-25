@@ -189,7 +189,7 @@ class CheckoutController extends Controller
         }
         
         // Check if gateway is active
-        if ($gateway && (!$gateway->status || !$gateway->gateway->status)) {
+        if ($gateway && (!$gateway->status || ($gateway->gateway && !$gateway->gateway->status))) {
             notify()->error(__('Selected payment gateway is currently disabled. Please choose another method.'));
             return to_route('checkout');
         }

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\GatewayType;
 use App\Enums\OrderStatus;
 use App\Enums\ReferralType;
 use App\Enums\TxnStatus;
@@ -107,7 +108,10 @@ class OrderService
             DB::commit();
 
             if (!$isTopup) {
-                $this->orderCreatedNotify($order);
+                $gateway = Gateway::where('gateway_code', $gateway_code)->first();
+                if ($gateway && $gateway->type == GatewayType::Manual) {
+                    $this->orderCreatedNotify($order);
+                }
             }
 
             return $order;
