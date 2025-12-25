@@ -401,6 +401,7 @@
             });
 
             // Dynamic Product Name Generation
+            // Default to false to prevent initial AJAX load from overwriting name
             var isUserInteraction = false;
 
             function updateProductName() {
@@ -408,8 +409,9 @@
                 var existingName = '{{ $listing?->product_name }}';
                 var isNewListing = !existingName;
                 
-                // Ensure we respect the existing name on load
-                if (!isUserInteraction && !isNewListing) {
+                // If we have an existing name (Edit Mode) AND it's NOT a user interaction, do NOT update
+                if (!isNewListing && !isUserInteraction) {
+                    console.log("Skipping update: Not user interaction on existing listing");
                     return;
                 }
 
@@ -482,11 +484,29 @@
             // Listen for changes on all relevant fields
             $('#selectProductCatalog, #selectProductPlan, #selectDuration, #selectPlan, #guarantee_period, input[name="price"], input[name="discount_value"], select[name="discount_type"]').on('change input', function(e) {
                 // Mark as user interaction so updateProductName knows it's allowed to update
-                if (e.originalEvent) {
-                    isUserInteraction = true;
-                }
+                // Even programmatic triggers from select2 or nice-select often lack originalEvent in some versions
+                // We assume any change AFTER initial load is user interaction for now, except the initial catalog load
+                
+                // If it's the initial page load (document ready) and we are just setting up, we might want to skip
+                // But specifically for manual changes:
+                isUserInteraction = true;
+                
                 updateProductName();
             });
+
+            // Prevent initial load from flagging as user interaction
+            // We set a small timeout to allow initial AJAX to fire without triggering "user interaction" logic
+            setTimeout(function() {
+                // Any change after this 500ms window is definitely user interaction
+                isUserInteraction = true; 
+            }, 1000);
+
+            // Re-bind to ensure specific interactions are caught
+            $('#selectProductCatalog').on('change', function() { isUserInteraction = true; });
+            $('#selectProductPlan').on('change', function() { isUserInteraction = true; updateProductName(); });
+            $('#selectDuration').on('change', function() { isUserInteraction = true; updateProductName(); });
+            $('#selectPlan').on('change', function() { isUserInteraction = true; updateProductName(); });
+
 
             $('#editor').summernote({
                 height: 200,
