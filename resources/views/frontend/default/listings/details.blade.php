@@ -216,12 +216,14 @@
                 margin: 0 !important;
             }
             .pd-info-item {
+                display: flex; /* Ensure flex is active */
                 background: #f9fafb;
                 padding: 12px;
                 border-radius: 8px;
                 width: 100%;
                 justify-content: flex-start;
                 text-align: left;
+                gap: 12px; /* Ensure gap exists */
             }
             .pd-info-label {
                 font-size: 12px;
@@ -283,14 +285,14 @@
                                             
                                             <div class="d-flex align-items-center gap-1">
                                                 @if($regionType === 'global')
+                                                    <iconify-icon icon="solar:verified-check-bold" class="text-primary" width="16"></iconify-icon>
                                                     <p class="pd-info-value mb-0">{{ __('Global (All Countries)') }}</p>
-                                                    <iconify-icon icon="solar:verified-check-bold" class="text-primary" width="16"></iconify-icon>
                                                 @elseif($regionType === 'include')
+                                                    <iconify-icon icon="solar:verified-check-bold" class="text-primary" width="16"></iconify-icon>
                                                     <p class="pd-info-value mb-0">{{ __('Selected Countries Only') }}</p>
-                                                    <iconify-icon icon="solar:verified-check-bold" class="text-primary" width="16"></iconify-icon>
                                                 @else
-                                                    <p class="pd-info-value mb-0">{{ __('Global (Except Excluded)') }}</p>
                                                     <iconify-icon icon="solar:verified-check-bold" class="text-primary" width="16"></iconify-icon>
+                                                    <p class="pd-info-value mb-0">{{ __('Global (Except Excluded)') }}</p>
                                                 @endif
                                             </div>
 
