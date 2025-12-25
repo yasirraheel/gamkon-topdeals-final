@@ -47,24 +47,14 @@ trait Payment
         $txn = $txnInfo->tnx;
         Session::put('deposit_tnx', $txn);
 
-        $depositMethod = DepositMethod::code($gateway)->with('gateway')->first();
-        $gateway = strtolower($depositMethod?->gateway?->gateway_code ?? $gateway ?? 'none');
+        $gateway = DepositMethod::code($gateway)->first()->gateway->gateway_code ?? 'none';
 
         $gatewayTxn = self::gatewayMap($gateway, $txnInfo);
         if ($gatewayTxn) {
             return $gatewayTxn->deposit();
         }
 
-        $order = $txnInfo->order ?? Order::find(session('order_id') ?? $txnInfo->order_id);
-        if ($order) {
-            orderService()->setOrderFailed($order);
-        } else {
-            app(OrderService::class)->dismissSession();
-        }
-
-        notify()->error(__('Selected payment gateway is unavailable. Please try again.'));
-
-        return to_buyerSellerRoute('dashboard');
+        return self::paymentNotify($txn, 'pending');
     }
 
     protected function withdrawAutoGateway($gatewayCode, $txnInfo)
