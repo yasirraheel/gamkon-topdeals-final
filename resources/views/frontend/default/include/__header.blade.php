@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                         @else
-                            <div class="auth-btn">
+                            <div class="auth-btn d-none d-md-block">
                                 <a href="{{ route('login') }}" class="primary-button">{{ __('Sign In') }}</a>
                             </div>
                         @endauth
