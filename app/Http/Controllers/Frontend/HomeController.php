@@ -37,6 +37,33 @@ class HomeController extends Controller
 
     }
 
+    public function loadMoreItems(Request $request)
+    {
+        if ($request->ajax()) {
+            $listings = Listing::with('productCatalog')
+                ->public()
+                ->latest()
+                ->whereNot('is_flash', 1)
+                ->whereNot('is_trending', 1)
+                ->paginate(12);
+
+            $html = '';
+            foreach ($listings as $listing) {
+                $html .= view('frontend::listings.include.category-block', [
+                    'listing' => $listing,
+                    'hasAnimation' => true,
+                    'loop' => (object)['index' => 0] // Dummy loop object to prevent errors
+                ])->render();
+            }
+
+            return response()->json([
+                'html' => $html,
+                'hasMore' => $listings->hasMorePages()
+            ]);
+        }
+        abort(404);
+    }
+
     public function subscribeNow(Request $request)
     {
         $validator = Validator::make($request->all(), [

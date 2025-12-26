@@ -38,5 +38,10 @@
             'bgClass' =>
                 !in_array($content->code, ['hero', 'cta-banner', 'blog']) && $loop->odd ? 'section-bg' : '',
         ])
+
+        {{-- Inject All Items after Latest Items --}}
+        @if($content->code == 'latest-items')
+            @include('frontend::home.include.__all-items', ['bgClass' => $loop->even ? 'section-bg' : ''])
+        @endif
     @endforeach
 @endsection

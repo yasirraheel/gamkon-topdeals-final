@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\WishlistController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/load-more-items', [HomeController::class, 'loadMoreItems'])->name('home.load-more-items');
 Route::post('subscriber', [HomeController::class, 'subscribeNow'])->name('subscriber');
 
 // Dynamic Page

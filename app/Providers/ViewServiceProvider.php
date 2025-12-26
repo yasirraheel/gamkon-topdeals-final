@@ -90,6 +90,12 @@ class ViewServiceProvider extends ServiceProvider
                 ]);
             });
 
+            View::composer(['frontend::home.include.__all-items'], function ($view) {
+                $view->with([
+                    'allItemsListing' => \App\Models\Listing::with('productCatalog')->public()->latest()->whereNot('is_flash', 1)->whereNot('is_trending', 1)->paginate(12),
+                ]);
+            });
+
             View::composer(['frontend::include.common.chat', 'frontend::chat.include.recent-chat', 'frontend::user.include.__user_header', 'frontend::include.__header'], function ($view) {
                 $authUser = auth()->id();
                 // get all chat person
