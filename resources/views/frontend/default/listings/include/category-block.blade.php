@@ -1,150 +1,71 @@
 <div class="col-sm-6 col-md-4 col-lg-3">
-    <div class="games-card {{ isset($hasAnimation) ? 'wow img-custom-anim-top' : '' }}" data-wow-duration="1s"
-        data-wow-delay="0.{{ isset($hasAnimation) ? $loop->index : 0 }}s" style="position: relative; overflow: hidden; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); cursor: pointer;" onclick="window.location.href='{{ $listing->url }}'">
+    <div class="minimal-product-card {{ isset($hasAnimation) ? 'wow img-custom-anim-top' : '' }}" data-wow-duration="1s"
+        data-wow-delay="0.{{ isset($hasAnimation) ? $loop->index : 0 }}s" style="background: #fff; border-radius: 12px; padding: 15px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; height: 100%; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer;" onclick="window.location.href='{{ $listing->url }}'">
         
-        <button class="fav-button {{ isWishlisted($listing->id) ? 'active' : '' }}" data-id="{{ $listing->id }}" onclick="event.stopPropagation()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-heart-icon lucide-heart">
-                <path
-                    d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5" />
-            </svg>
-        </button>
-        <a href="{{ $listing->url }}" class="game-image" style="position: relative; display: block;">
-            <img loading="lazy" src="{{ $listing->thumbnail_url }}" alt="{{ $listing->product_name }}">
-            
-            {{-- Product Name Overlay on Image --}}
-            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 90%; z-index: 8; text-align: center;">
-                <div style="background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); padding: 15px 20px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.18);">
-                    <h3 style="color: white; font-size: 18px; font-weight: 800; margin: 0; line-height: 1.3; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); letter-spacing: 0.3px;">
-                        {{ $listing->product_name }}
-                    </h3>
-                </div>
-            </div>
-        </a>
-        
-        {{-- Plan/Delivery Banner with Wave Effect --}}
-        @if ($listing->selected_plan || $listing->delivery_method == 'auto')
-            <div style="position: absolute; bottom: 0; left: 0; right: 0; z-index: 10;">
-                {{-- Wave SVG --}}
-                <svg style="display: block; width: 100%; height: 40px;" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                    <defs>
-                        <linearGradient id="waveGradient{{ $listing->id }}" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#ef4444;stop-opacity:1" />
-                            <stop offset="50%" style="stop-color:#dc2626;stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:#b91c1c;stop-opacity:1" />
-                        </linearGradient>
-                    </defs>
-                    <path d="M0,0 C150,50 350,0 600,40 C850,80 1050,30 1200,60 L1200,120 L0,120 Z" fill="url(#waveGradient{{ $listing->id }})"></path>
-                </svg>
-                <div style="background: linear-gradient(135deg, #b91c1c 0%, #dc2626 50%, #ef4444 100%); padding: 10px 15px 15px; margin-top: -2px; text-align: center;">
-                    <div style="color: white; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; text-shadow: 0 2px 4px rgba(0,0,0,0.2);">
-                        @if ($listing->selected_plan)
-                            ⭐ {{ $listing->selected_plan }}
-                        @elseif ($listing->delivery_method == 'auto')
-                            ⚡ INSTANT DELIVERY
-                        @endif
-                    </div>
-                </div>
-            </div>
+        {{-- Duration Badge (Top Right) --}}
+        @if($listing->selected_duration)
+        <div style="position: absolute; top: 10px; right: 10px; background: #f3f4f6; padding: 4px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; color: #374151; display: flex; align-items: center; gap: 4px; z-index: 5;">
+            <iconify-icon icon="solar:shield-check-bold" style="color: #374151;"></iconify-icon>
+            {{ $listing->selected_duration }}
+        </div>
         @endif
-        
-        <div class="game-content" style="padding-bottom: {{ ($listing->selected_plan || $listing->delivery_method == 'auto') ? '80px' : '15px' }};">
-            <div class="game-content-full">
-                {{-- Clean attributes list --}}
-                @php
-                    $hasAttributes = $listing->selected_duration || 
-                                   ($listing->delivery_method && $listing->delivery_method != 'auto') || 
-                                   ($listing->delivery_method == 'manual' && $listing->delivery_speed) || 
-                                   ($listing->quantity > 0);
-                @endphp
-                
-                @if ($hasAttributes)
-                    <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; font-size: 11px;">
-                        @if ($listing->selected_duration)
-                            <div style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; display: flex; align-items: center; border: 1px solid #e5e7eb;" title="{{ __('Duration') }}" data-bs-toggle="tooltip">
-                                <span style="margin-right: 4px;">⏱</span>
-                                <span style="color: #374151; font-weight: 700;">{{ $listing->selected_duration }}</span>
-                            </div>
-                        @endif
-                        
-                        @if ($listing->delivery_method && $listing->delivery_method != 'auto')
-                            <div style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; display: flex; align-items: center; border: 1px solid #e5e7eb;" title="{{ __('Delivery') }}" data-bs-toggle="tooltip">
-                                <span style="margin-right: 4px;">📦</span>
-                                <span style="color: #374151; font-weight: 700;">{{ ucfirst($listing->delivery_method) }}</span>
-                            </div>
-                        @endif
-                        
-                        @if ($listing->delivery_method == 'manual' && $listing->delivery_speed)
-                            <div style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; display: flex; align-items: center; border: 1px solid #e5e7eb;" title="{{ __('Speed') }}" data-bs-toggle="tooltip">
-                                <span style="margin-right: 4px;">⚡</span>
-                                <span style="color: #374151; font-weight: 700;">{{ $listing->delivery_speed }} {{ $listing->delivery_speed_unit }}</span>
-                            </div>
-                        @endif
-                        
-                        @if ($listing->quantity > 0)
-                            <div style="background: #f3f4f6; padding: 3px 8px; border-radius: 6px; display: flex; align-items: center; border: 1px solid #e5e7eb;" title="{{ __('Available') }}" data-bs-toggle="tooltip">
-                                <span style="margin-right: 4px;">📋</span>
-                                <span style="color: #374151; font-weight: 700;">{{ $listing->quantity }} {{ __('Offers') }}</span>
-                            </div>
-                        @endif
-                    </div>
-                @endif
-                
-                <div style="font-size: 12px; margin-bottom: 8px; color: #6b7280; font-weight: 500; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
-                    <span>📁 <a href="{{ route('category.listing', $listing->category->slug) }}" style="color: #6b7280; font-weight: 600; position: relative; z-index: 2;" onclick="event.stopPropagation()">{{ $listing->category->name }}</a></span>
-                    <span style="color: #d1d5db;">•</span>
-                    <span>
-                        <div style="display: inline-flex; align-items: center; gap: 4px; background: #f3f4f6; padding: 4px 8px; border-radius: 6px; border: 1px solid #e5e7eb;">
-                            @if($listing->avg_rating > 0)
-                                <iconify-icon icon="solar:like-bold" style="color: #3b82f6; font-size: 16px;"></iconify-icon>
-                                <span style="color: #3b82f6; font-weight: 700; font-size: 13px;">{{ number_format($listing->avg_rating * 20, 2) }}%</span>
-                                <span style="color: #6b7280; font-size: 11px;">({{ $listing->reviews()->count() }})</span>
-                            @else
-                                <iconify-icon icon="solar:like-bold" style="color: #3b82f6; font-size: 16px;"></iconify-icon>
-                                <span style="color: #3b82f6; font-weight: 600; font-size: 12px;">{{ __('No rating available') }}</span>
-                            @endif
-                        </div>
-                    </span>
-                    <span style="color: #d1d5db;">•</span>
-                    <span>👤 {{ __('By') }} <a href="{{ route('seller.details', $listing->seller?->username ?? 404) }}" style="color: #3b82f6; font-weight: 600; position: relative; z-index: 2;" onclick="event.stopPropagation()">
-                        {{ $listing->seller?->username }}
-                        @if($listing->seller?->kyc == 1)
-                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#3b82f6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: text-bottom; margin-left: 2px;" title="{{ __('Verified Seller') }}" data-bs-toggle="tooltip">
-                                <path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74z"></path>
-                                <polyline points="9 11 12 14 22 4"></polyline>
-                            </svg>
-                        @endif
-                    </a></span>
+
+        {{-- Top Section: Title & Image --}}
+        <div style="display: flex; gap: 10px; margin-bottom: 15px; margin-top: 20px;">
+            <div style="flex: 1;">
+                <h5 style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 5px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                    {{ $listing->product_name }}
+                </h5>
+                <div style="font-size: 12px; color: #666; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                    {{ Str::limit(strip_tags($listing->description), 50) }}
                 </div>
-                
-                @if (!isset($isLatest))
-                    <div class="star" style="margin-bottom: 10px;">
-                        <div class="star-icon">
-                            <iconify-icon icon="uis:favorite" class="star-icon"></iconify-icon>
-                        </div>
-                        <p style="font-weight: 600;">{{ number_format($listing->average_rating ?? 0, 1) }}
-                            <span style="color: #9ca3af;">({{ $listing->total_reviews ?? 0 }})</span>
-                        </p>
-                    </div>
-                @endif
-                
-                <div class="pricing" style="margin-top: 12px;">
-                    <div class="left">
-                        @if ($listing->discount_amount > 0)
-                            <h6 class="has-discount" style="font-size: 13px; text-decoration: line-through; color: #9ca3af;">
-                                {{ setting('currency_symbol', 'global') }}{{ number_format($listing->price, 2) }}</h6>
-                        @endif
-                        <h6 style="font-size: 20px; font-weight: 800; color: #10b981;">{{ setting('currency_symbol', 'global') }}{{ number_format($listing->final_price, 2) }}
-                        </h6>
-                    </div>
-                </div>
+            </div>
+            <div style="width: 60px; height: 60px; flex-shrink: 0;">
+                <img src="{{ $listing->thumbnail_url }}" alt="" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
             </div>
         </div>
-        @if ($listing->is_trending)
-            <div class="has-trending">
-                <img src="{{ themeAsset('images/icon/flash-icon.png') }}" alt="{{ $listing->product_name }}">
+
+        {{-- Middle Section: Seller & Rating --}}
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed #eee;">
+            {{-- Seller --}}
+            <div style="display: flex; align-items: center; gap: 6px;">
+                <img src="{{ $listing->seller->avatar_path }}" style="width: 20px; height: 20px; border-radius: 50%; object-fit: cover;">
+                <span style="font-size: 12px; font-weight: 600; color: #333; text-transform: uppercase;">{{ $listing->seller->username }}</span>
             </div>
-        @endif
+            
+            {{-- Rating --}}
+            <div style="display: flex; align-items: center; gap: 4px;">
+                @if($listing->avg_rating > 0)
+                    <iconify-icon icon="solar:like-bold" style="color: #3b82f6; font-size: 16px;"></iconify-icon>
+                    <span style="color: #3b82f6; font-weight: 700; font-size: 13px;">{{ number_format($listing->avg_rating * 20, 2) }}%</span>
+                    <span style="color: #999; font-size: 11px;">({{ $listing->reviews()->count() }})</span>
+                @else
+                    <span style="color: #999; font-size: 11px;">{{ __('No rating') }}</span>
+                @endif
+            </div>
+        </div>
+
+        {{-- Bottom Section: Price & Delivery --}}
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+            {{-- Price --}}
+            <div style="font-size: 18px; font-weight: 800; color: #ef4444;">
+                {{ amountWithCurrency($listing->final_price) }}
+            </div>
+
+            {{-- Delivery --}}
+            <div style="display: flex; align-items: center; gap: 4px; color: #888; font-size: 12px;">
+                <iconify-icon icon="solar:clock-circle-linear" style="font-size: 16px;"></iconify-icon>
+                <span>
+                    @if($listing->delivery_method == 'auto')
+                        {{ __('Instant') }}
+                    @elseif($listing->delivery_speed)
+                        {{ $listing->delivery_speed }} {{ $listing->delivery_speed_unit }}
+                    @else
+                        {{ __('Manual') }}
+                    @endif
+                </span>
+            </div>
+        </div>
+
     </div>
 </div>
