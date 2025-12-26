@@ -1,6 +1,30 @@
+@push('css')
+<style>
+    .minimal-product-card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 15px;
+        position: relative;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border: 1px solid #e5e7eb;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    .minimal-product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        border-color: #3b82f6;
+    }
+</style>
+@endpush
+
 <div class="col-sm-6 col-md-4 col-lg-3">
     <div class="minimal-product-card {{ isset($hasAnimation) ? 'wow img-custom-anim-top' : '' }}" data-wow-duration="1s"
-        data-wow-delay="0.{{ isset($hasAnimation) ? $loop->index : 0 }}s" style="background: #fff; border-radius: 12px; padding: 15px; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border: 1px solid #f0f0f0; height: 100%; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer;" onclick="window.location.href='{{ $listing->url }}'">
+        data-wow-delay="0.{{ isset($hasAnimation) ? $loop->index : 0 }}s" onclick="window.location.href='{{ $listing->url }}'">
         
         {{-- Duration Badge (Top Right) --}}
         @if($listing->selected_duration)
