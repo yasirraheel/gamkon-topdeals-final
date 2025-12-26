@@ -129,12 +129,12 @@ class ReviewController extends Controller
         // seller avg_review total_reviews
         $seller = $listing->seller;
 
-        $sellerAvgRating = $seller->listings()->avg('avg_rating');
-        $sellerAvgRating = is_nan($sellerAvgRating) ? 0 : $sellerAvgRating;
+        $sellerAvgRating = ListingReview::where('seller_id', $seller->id)->approved()->avg('rating');
+        $sellerAvgRating = is_null($sellerAvgRating) ? 0 : $sellerAvgRating;
 
         $sellerUpdatedData = [
             'avg_rating' => $sellerAvgRating,
-            'total_reviews' => $seller->listings()->withCount('approvedReviews')->get()->sum('approved_reviews_count'),
+            'total_reviews' => ListingReview::where('seller_id', $seller->id)->approved()->count(),
         ];
 
         $seller->update($sellerUpdatedData);
@@ -163,6 +163,21 @@ class ReviewController extends Controller
 
         notify()->success('Review deleted successfully.');
 
+        return back();
+    }
+
+    public function recalculate()
+    {
+        $sellers = User::whereHas('listings')->get();
+        foreach ($sellers as $seller) {
+            $avg = ListingReview::where('seller_id', $seller->id)->approved()->avg('rating');
+            $count = ListingReview::where('seller_id', $seller->id)->approved()->count();
+            $seller->update([
+                'avg_rating' => $avg ?? 0,
+                'total_reviews' => $count
+            ]);
+        }
+        notify()->success('Seller ratings recalculated successfully.');
         return back();
     }
 }

@@ -153,6 +153,7 @@ Route::prefix('reviews')->name('reviews.')->group(function () {
     Route::get('/create', [ReviewController::class, 'create'])->name('create');
     Route::post('/store', [ReviewController::class, 'store'])->name('store');
     Route::get('', [ReviewController::class, 'index'])->name('index');
+    Route::get('/recalculate', [ReviewController::class, 'recalculate'])->name('recalculate');
     Route::get('/{review}', [ReviewController::class, 'show'])->name('show');
     Route::get('/{review}/approve', [ReviewController::class, 'approve'])->name('approve');
     Route::patch('/{review}/reject', [ReviewController::class, 'reject'])->name('reject');
