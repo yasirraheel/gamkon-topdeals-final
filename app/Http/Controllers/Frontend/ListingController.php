@@ -452,6 +452,10 @@ class ListingController extends Controller
             return redirect($request->redirect);
         }
 
+        if ($request->order_id) {
+            return to_route('sell.index');
+        }
+
         return back();
     }
 
