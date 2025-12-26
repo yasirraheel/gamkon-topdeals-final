@@ -76,5 +76,7 @@ class Kernel extends HttpKernel
         'isDemo' => \App\Http\Middleware\DemoMode::class,
         'otp' => \App\Http\Middleware\OtpVerify::class,
         'userPermissionChecker' => \App\Http\Middleware\UserPermissionChecker::class,
+        'install_check' => \App\Http\Middleware\InstallCheck::class,
+
     ];
 }
