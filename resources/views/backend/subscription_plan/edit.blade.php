@@ -171,8 +171,17 @@
                                             class="site-btn-xs primary-btn mb-3">{{ __('Add Field option') }}</a>
                                     </div>
                                     <div class="addOptions">
-                                        @if (old('features', $plan->features))
-                                            @foreach (old('features', $plan->features ?? []) as $features)
+                                        @php
+                                            $planFeatures = old('features', $plan->features);
+                                            if (is_string($planFeatures)) {
+                                                $planFeatures = json_decode($planFeatures, true);
+                                            }
+                                            if (!is_array($planFeatures)) {
+                                                $planFeatures = [];
+                                            }
+                                        @endphp
+                                        @if (!empty($planFeatures))
+                                            @foreach ($planFeatures as $features)
                                                 <div class="mb-4">
                                                     <div class="option-remove-row row">
                                                         <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6 col-12">
