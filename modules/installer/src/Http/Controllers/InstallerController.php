@@ -42,7 +42,7 @@ class InstallerController
             return redirect(route('install.step.two'))->with('error', 'License Key is invalid!');
         }
 
-        DotenvEditor::setKey('LICENSE_KEY', $licenseKey)->save();
+        // DotenvEditor::setKey('LICENSE_KEY', $licenseKey)->save();
 
         return redirect(route('install.step.three'))->with('success', 'License Activated Successfully!');
     }
@@ -93,7 +93,7 @@ class InstallerController
             return back()->with('error', 'Database connection failed.');
         }
 
-        DotenvEditor::setKeys($variables);
+        // DotenvEditor::setKeys($variables);
         // DotenvEditor::setKeys($variables)->save();
 
         return redirect(route('install.step.four'))->with('success', 'Database connected successfully!');
