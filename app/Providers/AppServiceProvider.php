@@ -21,6 +21,12 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         Paginator::defaultView('frontend::include.__pagination');
+        
+        // Override DotenvEditor with SafeDotenvEditor to prevent .env modification
+        $this->app->bind('dotenv-editor', function ($app) {
+            return new \App\Services\SafeDotenvEditor($app, $app['config']);
+        });
+
         // URL::forceScheme('https');
         // if (!$this->app['request']->secure()) {
         //     return redirect()->to(url()->secure($this->app['request']->getRequestUri()));
