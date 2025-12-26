@@ -55,7 +55,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/admin.php'));
 
             // Dyanmic Page
-            Route::middleware(['web', 'translate', 'trans', 'install_check'])
+            Route::middleware(['web', 'translate', 'install_check'])
                 ->get('/{page}', PageController::class)
                 ->name('page');
         });
