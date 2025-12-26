@@ -19,6 +19,11 @@
         box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         border-color: #3b82f6;
     }
+    .wide-tooltip .tooltip-inner {
+        max-width: 350px !important;
+        width: 350px !important;
+        text-align: left;
+    }
 </style>
 @endpush
 
@@ -40,7 +45,7 @@
                 <h5 style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 5px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                     {{ $listing->product_name }}
                 </h5>
-                <div data-bs-toggle="tooltip" data-bs-placement="top" title="{{ strip_tags($listing->description) }}" style="font-size: 12px; color: #666; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                <div data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="wide-tooltip" title="{{ strip_tags($listing->description) }}" style="font-size: 12px; color: #666; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                     {{ Str::limit(strip_tags($listing->description), 50) }}
                 </div>
             </div>
