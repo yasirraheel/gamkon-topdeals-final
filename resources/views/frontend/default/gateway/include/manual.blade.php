@@ -1,12 +1,24 @@
 <div class="col-xl-12 col-md-12">
     <div class="site-card">
         <div class="site-card-body">
-            <div class="frontend-editor-data">
+            <div class="payment-instruction-content">
                 {!! $paymentDetails !!}
             </div>
         </div>
     </div>
 </div>
+<style>
+    .payment-instruction-content {
+        color: var(--td-text-primary, #333);
+    }
+    .payment-instruction-content p {
+        color: var(--td-text-primary, #333);
+        margin-bottom: 10px;
+    }
+    .payment-instruction-content strong {
+        color: var(--td-heading, #000);
+    }
+</style>
 @foreach (json_decode($fieldOptions, true) as $key => $field)
     @if ($field['type'] == 'file')
         <div class="td-form-group mt-2 position-relative">
