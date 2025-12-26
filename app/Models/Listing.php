@@ -40,6 +40,7 @@ class Listing extends Model
         'is_flash',
         'avg_rating',
         'subcategory_id',
+        'sold_count',
     ];
 
     protected $appends = [

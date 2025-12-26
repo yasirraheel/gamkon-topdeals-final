@@ -45,6 +45,8 @@ class ReviewController extends Controller
             'reviewed_at' => now(),
         ]);
 
+        $listing->increment('sold_count');
+
         $this->listingReviewUpdate($listing, $review, false);
 
         notify()->success(__('Review added successfully.'));
