@@ -85,7 +85,7 @@
                                         <th scope="row" class="text-nowrap">{{ $order->order_number }}</th>
                                         <th scope="row" class="text-nowrap">{{ orderDateFormat($order->created_at) }}
                                         </th>
-                                        <td class="text-nowrap">
+                                        <td style="min-width: 200px; max-width: 300px; white-space: normal;">
                                             @if ($order->is_topup)
                                                 {{ __('Topup') . ' #' . $order->order_number }}
                                             @else
