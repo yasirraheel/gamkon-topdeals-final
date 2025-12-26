@@ -1,6 +1,10 @@
-<div class="col-xl-12 col-md-12 badge badge-2 primary rounded-pill">
-    <div class="frontend-editor-data">
-        {!! $paymentDetails !!}
+<div class="col-xl-12 col-md-12">
+    <div class="site-card">
+        <div class="site-card-body">
+            <div class="frontend-editor-data">
+                {!! $paymentDetails !!}
+            </div>
+        </div>
     </div>
 </div>
 @foreach (json_decode($fieldOptions, true) as $key => $field)
