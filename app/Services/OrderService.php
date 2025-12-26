@@ -145,8 +145,24 @@ class OrderService
         ];
 
         $this->mailNotify(auth()->user()->email, 'order_placed', $shortcodes);
-        // Notify Admin
-        $this->mailNotify(setting('site_email', 'global'), 'order_placed', $shortcodes);
+        
+        // Notify Admin using dedicated template
+        $this->mailNotify(setting('site_email', 'global'), 'admin_new_order', $shortcodes);
+
+        // Notify Seller
+        if ($order->seller) {
+            $sellerShortcodes = [
+                '[[seller_name]]' => $order->seller->full_name,
+                '[[order_number]]' => $order->order_number,
+                '[[product_names]]' => $order->listing->product_name,
+                '[[quantity]]' => $order->quantity,
+                '[[total_price]]' => $order->total_price . ' ' . setting('site_currency', 'global'),
+                '[[order_date]]' => $order->order_date,
+                '[[site_title]]' => setting('site_title', 'global'),
+                '[[site_url]]' => route('home'),
+            ];
+            $this->mailNotify($order->seller->email, 'seller_new_order', $sellerShortcodes);
+        }
 
         return true;
     }
