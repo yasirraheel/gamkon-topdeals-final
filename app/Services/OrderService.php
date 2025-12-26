@@ -144,8 +144,11 @@ class OrderService
             '[[invoice_link]]' => route('user.purchase.invoice', $order->order_number ?? 0),
         ];
 
-        return $this->mailNotify(auth()->user()->email, 'order_placed', $shortcodes);
+        $this->mailNotify(auth()->user()->email, 'order_placed', $shortcodes);
+        // Notify Admin
+        $this->mailNotify(setting('site_email', 'global'), 'order_placed', $shortcodes);
 
+        return true;
     }
 
     public function orderPaymentCompletedNotify(Order $order)
@@ -166,6 +169,8 @@ class OrderService
         $this->pushNotify('order_payment_completed', $shortcodes, route('user.purchase.invoice', $order->order_number ?? 0), auth()->id());
 
         $this->mailNotify($order->buyer->email, 'order_payment_completed', $shortcodes);
+        // Notify Admin
+        $this->mailNotify(setting('site_email', 'global'), 'order_payment_completed', $shortcodes);
 
         return true;
     }
