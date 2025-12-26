@@ -28,7 +28,7 @@
         
         {{-- Duration Badge (Top Right) --}}
         @if($listing->selected_duration)
-        <div style="position: absolute; top: 10px; right: 10px; background: #f3f4f6; padding: 4px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; color: #374151; display: flex; align-items: center; gap: 4px; z-index: 5;">
+        <div data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Guarantee Period') }}: {{ $listing->selected_duration }}" style="position: absolute; top: 10px; right: 10px; background: #f3f4f6; padding: 4px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; color: #374151; display: flex; align-items: center; gap: 4px; z-index: 5;">
             <iconify-icon icon="solar:shield-check-bold" style="color: #374151;"></iconify-icon>
             {{ $listing->selected_duration }}
         </div>
@@ -40,7 +40,7 @@
                 <h5 style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 5px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                     {{ $listing->product_name }}
                 </h5>
-                <div style="font-size: 12px; color: #666; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                <div data-bs-toggle="tooltip" data-bs-placement="top" title="{{ strip_tags($listing->description) }}" style="font-size: 12px; color: #666; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                     {{ Str::limit(strip_tags($listing->description), 50) }}
                 </div>
             </div>
@@ -104,7 +104,7 @@
             </div>
 
             {{-- Delivery --}}
-            <div style="display: flex; align-items: center; gap: 4px; color: #888; font-size: 12px;">
+            <div data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Delivery Time') }}" style="display: flex; align-items: center; gap: 4px; color: #888; font-size: 12px;">
                 <iconify-icon icon="solar:clock-circle-linear" style="font-size: 16px;"></iconify-icon>
                 <span>
                     @if($listing->delivery_method == 'auto')
