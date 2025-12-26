@@ -35,7 +35,7 @@
         @endif
 
         {{-- Top Section: Title & Image --}}
-        <div style="display: flex; gap: 10px; margin-bottom: 15px; margin-top: 20px;">
+        <div style="display: flex; gap: 10px; margin-bottom: 10px; margin-top: 20px;">
             <div style="flex: 1;">
                 <h5 style="font-size: 15px; font-weight: 700; color: #111; margin-bottom: 5px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                     {{ $listing->product_name }}
@@ -47,6 +47,33 @@
             <div style="width: 60px; height: 60px; flex-shrink: 0;">
                 <img src="{{ $listing->thumbnail_url }}" alt="" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
             </div>
+        </div>
+
+        {{-- Details Badges: Sharing, Plan, Devices --}}
+        <div style="display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;">
+            @if($listing->selected_plan)
+            <div data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Sharing Method') }}: {{ $listing->selected_plan }}" 
+                 style="background: #eff6ff; color: #3b82f6; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                <iconify-icon icon="solar:user-bold"></iconify-icon>
+                {{ $listing->selected_plan }}
+            </div>
+            @endif
+
+            @if($listing->plan_id)
+            <div data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Plan') }}: {{ $listing->plan_id }}" 
+                 style="background: #f0fdf4; color: #16a34a; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                <iconify-icon icon="solar:star-bold"></iconify-icon>
+                {{ $listing->plan_id }}
+            </div>
+            @endif
+
+            @if($listing->devices)
+            <div data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Supported Devices') }}: {{ $listing->devices }}" 
+                 style="background: #f3f4f6; color: #4b5563; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; display: flex; align-items: center; gap: 4px;">
+                <iconify-icon icon="solar:devices-bold"></iconify-icon>
+                {{ Str::limit($listing->devices, 10) }}
+            </div>
+            @endif
         </div>
 
         {{-- Middle Section: Seller & Rating --}}
