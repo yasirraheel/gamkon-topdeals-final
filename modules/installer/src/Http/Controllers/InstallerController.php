@@ -93,8 +93,8 @@ class InstallerController
             return back()->with('error', 'Database connection failed.');
         }
 
-        // DotenvEditor::setKeys($variables);
-        // DotenvEditor::setKeys($variables)->save();
+
+
 
         return redirect(route('install.step.four'))->with('success', 'Database connected successfully!');
     }
