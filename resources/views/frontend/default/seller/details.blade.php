@@ -95,13 +95,13 @@
                                     <p>{{ __('Rating') }}</p>
                                     <div class="star">
                                         @for ($i = 1; $i <= 5; $i++)
-                                            @if ($i <= $seller->avg_rating)
+                                            @if ($i <= round($seller->avg_rating))
                                                 <img src="{{ themeAsset('images/icon/star.png') }}" alt="">
                                             @else
                                                 <img src="{{ themeAsset('images/icon/empty-star.png') }}" alt="">
                                             @endif
                                         @endfor
-                                        ({{ $seller->total_reviews ?? 0 }})
+                                        ({{ $seller->avg_rating }} / {{ $seller->total_reviews ?? 0 }})
                                     </div>
                                 </div>
                                 <div class="point">
