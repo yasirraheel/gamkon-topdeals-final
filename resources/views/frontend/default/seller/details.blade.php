@@ -6,7 +6,26 @@
     {{ trim(setting('meta_keywords', 'meta')) }}
 @endsection
 @section('meta_description')
-    {{ trim(setting('meta_description', 'meta')) }}
+    {{ $seller->about ? \Illuminate\Support\Str::limit(strip_tags($seller->about), 160) : trim(setting('meta_description', 'meta')) }}
+@endsection
+
+@section('meta')
+    @php
+        $metaTitle = $seller->full_name . ' - ' . setting('site_title', 'global');
+        $metaDesc = $seller->about ? \Illuminate\Support\Str::limit(strip_tags($seller->about), 160) : trim(setting('meta_description', 'meta'));
+        $metaImg = $seller->avatar_path;
+        $url = route('seller.details', $seller->username);
+    @endphp
+    <meta property="og:title" content="{{ $metaTitle }}">
+    <meta property="og:description" content="{{ $metaDesc }}">
+    <meta property="og:image" content="{{ $metaImg }}">
+    <meta property="og:url" content="{{ $url }}">
+    <meta property="og:type" content="profile">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $metaTitle }}">
+    <meta name="twitter:description" content="{{ $metaDesc }}">
+    <meta name="twitter:image" content="{{ $metaImg }}">
 @endsection
 
 @section('content')

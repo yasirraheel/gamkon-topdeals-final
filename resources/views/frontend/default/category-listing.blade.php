@@ -3,6 +3,25 @@
 @section('meta_keywords', trim(setting('meta_keywords', 'meta')))
 @section('meta_description', trim($category->description ?? setting('meta_description', 'meta')))
 
+@section('meta')
+    @php
+        $metaTitle = ($category->name ?? __('All Items')) . ' - ' . setting('site_title', 'global');
+        $metaDesc = trim($category->description ?? setting('meta_description', 'meta'));
+        $metaImg = isset($category) && $category->image ? asset($category->image) : asset(setting('site_logo', 'global'));
+        $url = isset($category) ? route('category.listing', $category->slug) : route('all.listing');
+    @endphp
+    <meta property="og:title" content="{{ $metaTitle }}">
+    <meta property="og:description" content="{{ $metaDesc }}">
+    <meta property="og:image" content="{{ $metaImg }}">
+    <meta property="og:url" content="{{ $url }}">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $metaTitle }}">
+    <meta name="twitter:description" content="{{ $metaDesc }}">
+    <meta name="twitter:image" content="{{ $metaImg }}">
+@endsection
+
 @section('content')
     @include('frontend::common.page-header', [
         'title' => $category?->name ? __(':category', ['category' => $category->name]) : __('All Items'),
