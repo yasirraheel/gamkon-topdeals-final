@@ -34,8 +34,5 @@ class InstallerServiceProvider extends ServiceProvider
         $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
         $this->mergeConfigFrom(__DIR__ . '/config/installer.php', 'installer');
         config(['app.debug' => false, 'debugbar.enabled' => false]);
-
-        DotenvEditor::setKey('APP_URL', url('/'))->save();
-        DotenvEditor::setKey('ASSET_URL', url('/assets'))->save();
     }
 }
