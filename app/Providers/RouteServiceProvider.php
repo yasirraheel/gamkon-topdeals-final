@@ -44,12 +44,12 @@ class RouteServiceProvider extends ServiceProvider
                 ->name('user.')
                 ->middleware(['auth', 'translate', '2fa', 'isActive', setting('otp_verification', 'permission') ? 'otp' : 'web', setting('email_verification', 'permission') ? 'verified' : 'web', UserTypeRouteProtect::class])
                 ->group(base_path('routes/common.php'));
-            Route::middleware(['web', 'XSS', 'translate', 'trans', 'install_check'])
+            Route::middleware(['web', 'XSS', 'translate', 'install_check'])
                 ->group(base_path('routes/web.php'));
-            Route::middleware(['web', 'XSS', 'translate', 'trans', 'install_check'])
+            Route::middleware(['web', 'XSS', 'translate', 'install_check'])
                 ->group(base_path('routes/auth.php'));
 
-            Route::middleware(['web', 'auth:admin', 'XSS', 'isDemo', 'translate', 'trans', 'install_check'])
+            Route::middleware(['web', 'auth:admin', 'XSS', 'isDemo', 'translate', 'install_check'])
                 ->prefix(setting('site_admin_prefix', 'global'))
                 ->name('admin.')
                 ->group(base_path('routes/admin.php'));

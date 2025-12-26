@@ -11,9 +11,9 @@ class ValidateLicense
     {
 
         $isInstalled = file_exists(storage_path('installed'));
-        if ($isInstalled && !App::validateLicense()) {
-            return redirect('blocked');
-        }
+        // if ($isInstalled && !App::validateLicense()) {
+        //     return redirect('blocked');
+        // }
 
         return $next($request);
     }

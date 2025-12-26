@@ -166,6 +166,8 @@ class InstallerController
 
     public function blocked()
     {
+        return redirect('/');
+        
         if (App::initApp()) {
             return back();
         }
