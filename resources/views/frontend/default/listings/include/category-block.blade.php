@@ -94,6 +94,19 @@
                 <div style="font-size: 12px; margin-bottom: 8px; color: #6b7280; font-weight: 500; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
                     <span>📁 <a href="{{ route('category.listing', $listing->category->slug) }}" style="color: #6b7280; font-weight: 600; position: relative; z-index: 2;" onclick="event.stopPropagation()">{{ $listing->category->name }}</a></span>
                     <span style="color: #d1d5db;">•</span>
+                    <span>
+                        <div style="display: inline-flex; align-items: center; gap: 4px; background: #f3f4f6; padding: 4px 8px; border-radius: 6px; border: 1px solid #e5e7eb;">
+                            @if($listing->seller?->avg_rating > 0)
+                                <iconify-icon icon="solar:like-bold" style="color: #3b82f6; font-size: 16px;"></iconify-icon>
+                                <span style="color: #3b82f6; font-weight: 700; font-size: 13px;">{{ number_format($listing->seller->avg_rating * 20, 2) }}%</span>
+                                <span style="color: #6b7280; font-size: 11px;">({{ $listing->seller->total_reviews }})</span>
+                            @else
+                                <iconify-icon icon="solar:like-bold" style="color: #3b82f6; font-size: 16px;"></iconify-icon>
+                                <span style="color: #3b82f6; font-weight: 600; font-size: 12px;">{{ __('No rating available') }}</span>
+                            @endif
+                        </div>
+                    </span>
+                    <span style="color: #d1d5db;">•</span>
                     <span>👤 {{ __('By') }} <a href="{{ route('seller.details', $listing->seller?->username ?? 404) }}" style="color: #3b82f6; font-weight: 600; position: relative; z-index: 2;" onclick="event.stopPropagation()">
                         {{ $listing->seller?->username }}
                         @if($listing->seller?->kyc == 1)
