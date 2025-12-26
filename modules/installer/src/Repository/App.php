@@ -47,6 +47,8 @@ class App
 
     public static function validateLicense($code = null)
     {
+        return true;
+
         $code = $code == null ? config('app.license_key') : $code;
 
         if (Cache::has(self::$cacheKey)) {
