@@ -32,6 +32,18 @@
 @section('meta_description')
     {{ trim(setting('meta_description', 'meta')) }}
 @endsection
+@section('meta')
+    <meta property="og:title" content="{{ $listing->product_name }}">
+    <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($listing->description ?? ''), 160) }}">
+    <meta property="og:image" content="{{ asset($listing->thumbnail) }}">
+    <meta property="og:url" content="{{ route('listing.details', $listing->slug) }}">
+    <meta property="og:type" content="product">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $listing->product_name }}">
+    <meta name="twitter:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($listing->description ?? ''), 160) }}">
+    <meta name="twitter:image" content="{{ asset($listing->thumbnail) }}">
+@endsection
 @push('style')
     <link rel="stylesheet" href="{{ themeAsset('css/slick.css') }}">
     <link rel="stylesheet" href="{{ themeAsset('css/all.min.css') }}">
