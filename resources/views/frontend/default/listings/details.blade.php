@@ -544,7 +544,7 @@
                             @endforelse
                             
                             @if($listing->approvedReviews()->count() > 3)
-                                <a href="#" class="text-primary small fw-bold text-decoration-none d-block text-center">{{ __('See all feedback') }}</a>
+                                <a href="#" class="text-primary small fw-bold text-decoration-none d-block text-center" data-bs-toggle="modal" data-bs-target="#allReviewsModal">{{ __('See all feedback') }}</a>
                             @endif
                         </div>
                     </div>
@@ -583,6 +583,42 @@
                 <input type="hidden" name="product_id" value="{{ $listing->id }}">
                 <input type="hidden" name="quantity" value="1">
             </form>
+        </div>
+    </div>
+
+    {{-- All Reviews Modal --}}
+    <div class="modal fade" id="allReviewsModal" tabindex="-1" aria-labelledby="allReviewsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 rounded-4">
+                <div class="modal-header border-bottom">
+                    <h5 class="modal-title fw-bold" id="allReviewsModalLabel">{{ __('All Feedback') }} ({{ $listing->approvedReviews()->count() }})</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4" style="max-height: 70vh; overflow-y: auto;">
+                    @forelse($listing->approvedReviews()->latest()->get() as $review)
+                        <div class="review-item border-bottom pb-3 mb-3 last:border-0 last:pb-0 last:mb-0">
+                            <div class="d-flex justify-content-between align-items-start mb-1">
+                                <div class="d-flex gap-2 align-items-center">
+                                    <span class="d-block text-dark fw-bold small mb-0">{{ $review->buyer->username ?? 'User' }}</span>
+                                    <div class="d-flex align-items-center gap-1">
+                                        @for($i = 1; $i <= 5; $i++)
+                                            <iconify-icon icon="solar:star-bold" width="12" class="{{ $i <= $review->rating ? 'text-warning' : 'text-muted opacity-25' }}"></iconify-icon>
+                                        @endfor
+                                    </div>
+                                </div>
+                                <small class="text-muted" style="font-size: 10px;">{{ $review->created_at->diffForHumans() }}</small>
+                            </div>
+                            <small class="text-muted d-block mb-2" style="font-size: 11px;">{{ __('Bought') }} {{ $listing->product_name }}</small>
+                            <p class="text-muted small mb-0" style="line-height: 1.4;">{{ $review->review }}</p>
+                        </div>
+                    @empty
+                        <div class="text-center text-muted py-5">
+                            <iconify-icon icon="solar:chat-square-like-bold-duotone" width="48" class="mb-2 opacity-50"></iconify-icon>
+                            <p>{{ __('No reviews available') }}</p>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
         </div>
     </div>
 
