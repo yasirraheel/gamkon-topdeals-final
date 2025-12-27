@@ -31,6 +31,15 @@
     <div class="minimal-product-card {{ isset($hasAnimation) ? 'wow img-custom-anim-top' : '' }}" data-wow-duration="1s"
         data-wow-delay="0.{{ isset($hasAnimation) ? $loop->index : 0 }}s" onclick="window.location.href='{{ $listing->url }}'">
         
+        {{-- Trending Badge (Top Left) --}}
+        @if($listing->is_trending)
+        <div data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Trending Item') }}" 
+             style="position: absolute; top: 10px; left: 10px; background: linear-gradient(135deg, #ff4d4d 0%, #ff9f43 100%); color: #fff; padding: 4px 10px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; display: flex; align-items: center; gap: 4px; z-index: 5; box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3); border: 1px solid rgba(255, 255, 255, 0.2);">
+            <iconify-icon icon="solar:fire-bold" style="color: #fff; font-size: 12px;"></iconify-icon>
+            {{ __('HOT') }}
+        </div>
+        @endif
+
         {{-- Duration Badge (Top Right) --}}
         @if($listing->selected_duration)
         <div data-bs-toggle="tooltip" data-bs-placement="top" title="{{ __('Guarantee Period') }}: {{ $listing->selected_duration }}" style="position: absolute; top: 10px; right: 10px; background: #f3f4f6; padding: 4px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; color: #374151; display: flex; align-items: center; gap: 4px; z-index: 5;">

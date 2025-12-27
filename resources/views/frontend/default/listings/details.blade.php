@@ -407,7 +407,14 @@
                                     <div class="col-md-6">
                                         <a href="{{ route('listing.details', $item->slug) }}" class="text-decoration-none">
                                             <div class="d-flex gap-3 p-3 border rounded-3 bg-white h-100 align-items-center hover-shadow transition">
-                                                <img src="{{ asset($item->thumbnail) }}" alt="{{ $item->product_name }}" width="60" height="60" class="rounded-3 object-fit-cover">
+                                                <div class="position-relative flex-shrink-0">
+                                                    <img src="{{ asset($item->thumbnail) }}" alt="{{ $item->product_name }}" width="60" height="60" class="rounded-3 object-fit-cover">
+                                                    @if($item->is_trending)
+                                                        <div style="position: absolute; top: -6px; left: -6px; background: linear-gradient(135deg, #ff4d4d 0%, #ff9f43 100%); color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; border: 2px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.15); z-index: 2;" data-bs-toggle="tooltip" title="{{ __('Trending') }}">
+                                                            <iconify-icon icon="solar:fire-bold"></iconify-icon>
+                                                        </div>
+                                                    @endif
+                                                </div>
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <h6 class="text-dark fw-bold mb-1 text-truncate" style="font-size: 14px;">{{ $item->product_name }}</h6>
                                                     <div class="d-flex align-items-center gap-2 mb-1">
