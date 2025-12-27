@@ -453,7 +453,7 @@ class ListingController extends Controller
         }
 
         if ($request->order_id) {
-            return to_route('sell.index');
+            return to_buyerSellerRoute('sell.index');
         }
 
         return back();
