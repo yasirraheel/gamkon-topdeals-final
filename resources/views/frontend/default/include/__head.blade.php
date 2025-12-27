@@ -44,4 +44,6 @@
             --td-secondary-rgb: {{ $rgb['r'] ?? 255 }}, {{ $rgb['g'] ?? 98 }}, {{ $rgb['b'] ?? 41 }} !important;
         }
     </style>
+    <!-- Global Ad Head Code -->
+    {!! \App\Models\Setting::where('name', 'ads_head_code')->value('val') !!}
 </head>

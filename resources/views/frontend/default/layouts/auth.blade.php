@@ -9,6 +9,8 @@
 @stack('css')
 
 <body>
+    <!-- Global Ad Body Code -->
+    {!! \App\Models\Setting::where('name', 'ads_body_code')->value('val') !!}
 
 
     <!--Notification-->

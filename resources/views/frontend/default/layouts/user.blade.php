@@ -7,6 +7,9 @@
 @stack('css')
 
 <body class="">
+    <!-- Global Ad Body Code -->
+    {!! \App\Models\Setting::where('name', 'ads_body_code')->value('val') !!}
+    
     <!--[if lte IE 9]>
       <p class="browserupgrade">
         You are using an <strong>outdated</strong> browser. Please
