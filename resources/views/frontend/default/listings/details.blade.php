@@ -374,10 +374,15 @@
                                             <p class="text-primary mb-0" style="font-size: 12px; opacity: 0.9; line-height: 1.5;">
                                                 {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
                                             </p>
-                                            <p class="text-warning mb-0 mt-2 fw-bold" style="font-size: 12px; line-height: 1.5;">
-                                                {{ __('Note:') }} {{ __('The features in description may vary on availability. Must check features given by seller for more detail') }} 
-                                                <a href="{{ buyerSellerRoute('chat.index', $listing->seller->username) }}" class="text-decoration-underline fw-bold text-warning">{{ __('chat with seller') }} ({{ $listing->seller->username }})</a>
-                                            </p>
+                                            <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 8px 12px; border-radius: 6px; margin-top: 12px; font-size: 12px; line-height: 1.5;">
+                                                <div class="d-flex gap-2">
+                                                    <iconify-icon icon="solar:bell-bold" style="font-size: 16px; margin-top: 2px; flex-shrink: 0;"></iconify-icon>
+                                                    <div>
+                                                        <strong>{{ __('Note:') }}</strong> {{ __('The features in description may vary on availability. Must check features given by seller for more detail') }} 
+                                                        <a href="{{ buyerSellerRoute('chat.index', $listing->seller->username) }}" style="color: #533f03; text-decoration: underline; font-weight: 700;">{{ __('chat with seller') }} ({{ $listing->seller->username }})</a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
