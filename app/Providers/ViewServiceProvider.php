@@ -92,7 +92,7 @@ class ViewServiceProvider extends ServiceProvider
 
             View::composer(['frontend::home.include.__all-items'], function ($view) {
                 $view->with([
-                    'allItemsListing' => \App\Models\Listing::with('productCatalog')->public()->latest()->whereNot('is_flash', 1)->whereNot('is_trending', 1)->paginate(12),
+                    'allItemsListing' => \App\Models\Listing::with('productCatalog')->public()->latest()->whereNot('is_flash', 1)->paginate(12),
                 ]);
             });
 

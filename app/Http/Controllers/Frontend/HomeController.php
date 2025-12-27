@@ -44,7 +44,6 @@ class HomeController extends Controller
                 ->public()
                 ->latest()
                 ->whereNot('is_flash', 1)
-                ->whereNot('is_trending', 1)
                 ->paginate(12);
 
             $html = '';
