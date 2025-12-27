@@ -33,13 +33,13 @@
                                     <div class="col-xl-6">
                                         <div class="site-input-groups">
                                             <label class="box-input-label">{{ __('Header Code') }} <small>({{ __('Inside <head> tag') }})</small></label>
-                                            <textarea name="ads_head_code" class="form-textarea" rows="4" placeholder="<script>...</script>">{{ setting('ads_head_code') }}</textarea>
+                                            <textarea name="ads_head_code" class="form-textarea" rows="4" placeholder="<script>...</script>">{{ setting('ads_head_code', null, '') }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="site-input-groups">
                                             <label class="box-input-label">{{ __('Body Code') }} <small>({{ __('Inside <body> tag') }})</small></label>
-                                            <textarea name="ads_body_code" class="form-textarea" rows="4" placeholder="<script>...</script>">{{ setting('ads_body_code') }}</textarea>
+                                            <textarea name="ads_body_code" class="form-textarea" rows="4" placeholder="<script>...</script>">{{ setting('ads_body_code', null, '') }}</textarea>
                                         </div>
                                     </div>
                                 </div>
