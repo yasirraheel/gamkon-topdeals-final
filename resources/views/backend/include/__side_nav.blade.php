@@ -349,6 +349,10 @@
                                     <a href="{{ route('admin.settings.site') }}"><i
                                             data-lucide="settings-2"></i>{{ __('Site Settings') }}</a>
                                 </li>
+                                <li class="{{ isActive('admin.ad-units.*') }}">
+                                    <a href="{{ route('admin.ad-units.index') }}"><i
+                                            data-lucide="megaphone"></i>{{ __('Ads Management') }}</a>
+                                </li>
                             @endcan
                             @can('email-setting')
                                 <li class="{{ isActive('admin.settings.mail') }}">
