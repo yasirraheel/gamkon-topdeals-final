@@ -374,9 +374,9 @@
                                             <p class="text-primary mb-0" style="font-size: 12px; opacity: 0.9; line-height: 1.5;">
                                                 {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
                                             </p>
-                                            <p class="text-danger mb-0 mt-2 fw-bold" style="font-size: 12px; line-height: 1.5;">
+                                            <p class="text-warning mb-0 mt-2 fw-bold" style="font-size: 12px; line-height: 1.5;">
                                                 {{ __('Note:') }} {{ __('The features in description may vary on availability. Must check features given by seller for more detail') }} 
-                                                <a href="{{ buyerSellerRoute('chat.index', $listing->seller->username) }}" class="text-decoration-underline fw-bold">{{ __('chat with seller') }} ({{ $listing->seller->username }})</a>
+                                                <a href="{{ buyerSellerRoute('chat.index', $listing->seller->username) }}" class="text-decoration-underline fw-bold text-warning">{{ __('chat with seller') }} ({{ $listing->seller->username }})</a>
                                             </p>
                                         </div>
                                     </div>
