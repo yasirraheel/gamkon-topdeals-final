@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AdUnit;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdUnitController extends Controller
 {
@@ -73,16 +74,40 @@ class AdUnitController extends Controller
 
     public function updateSettings(Request $request)
     {
-        // Use updateOrCreate to ensure value is saved even if cache is stale
-        Setting::updateOrCreate(
-            ['name' => 'ads_head_code'],
-            ['val' => $request->input('ads_head_code', ''), 'type' => 'string']
-        );
-        
-        Setting::updateOrCreate(
-            ['name' => 'ads_body_code'],
-            ['val' => $request->input('ads_body_code', ''), 'type' => 'string']
-        );
+        // Use DB facade to ensure data is written directly to the database, bypassing any model issues
+        $settings = [
+            'ads_head_code' => $request->input('ads_head_code', ''),
+            'ads_body_code' => $request->input('ads_body_code', ''),
+        ];
+
+        foreach ($settings as $key => $value) {
+            // Ensure value is not null
+            if (is_null($value)) {
+                $value = '';
+            }
+
+            // Check if record exists
+            $exists = DB::table('settings')->where('name', $key)->exists();
+
+            if ($exists) {
+                DB::table('settings')->where('name', $key)->update([
+                    'val' => $value,
+                    'type' => 'string',
+                    'updated_at' => now(),
+                ]);
+            } else {
+                DB::table('settings')->insert([
+                    'name' => $key,
+                    'val' => $value,
+                    'type' => 'string',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
+
+        // Manually flush the cache to ensure other parts of the app see the new values
+        \App\Models\Setting::flushCache();
 
         notify()->success('Global ad settings updated successfully.');
         return back();
