@@ -286,22 +286,6 @@
                                     <h1 class="pd-title mb-0">{{ $listing->product_name }}</h1>
                                 </div>
                                 
-                                {{-- Important Notice --}}
-                                <div class="pd-notice mt-2 mb-3" style="padding: 12px; border-left: 3px solid var(--td-primary); background: rgba(var(--td-primary-rgb), 0.05); border-radius: 4px;">
-                                    <div class="d-flex gap-2">
-                                        <iconify-icon icon="solar:info-circle-bold" class="text-primary flex-shrink-0" width="18" style="margin-top: 2px;"></iconify-icon>
-                                        <div>
-                                            <h6 class="text-primary fw-bold mb-1" style="font-size: 13px;">{{ __('Important Notice') }}</h6>
-                                            <p class="text-primary mb-1" style="font-size: 12px; opacity: 0.9; line-height: 1.5;">
-                                                {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
-                                            </p>
-                                            <p class="text-primary mb-0" style="font-size: 12px; opacity: 0.9; line-height: 1.5;">
-                                                {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <div class="pd-info-grid">
                                     {{-- Region --}}
                                     <div class="pd-info-item">
@@ -374,6 +358,22 @@
                                         <div>
                                             <span class="pd-info-label">{{ __('Duration') }}</span>
                                             <p class="pd-info-value">{{ $listing->selected_duration }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- Important Notice --}}
+                                <div class="pd-notice mt-3" style="padding: 12px; border-left: 3px solid var(--td-primary); background: rgba(var(--td-primary-rgb), 0.05); border-radius: 4px;">
+                                    <div class="d-flex gap-2">
+                                        <iconify-icon icon="solar:info-circle-bold" class="text-primary flex-shrink-0" width="18" style="margin-top: 2px;"></iconify-icon>
+                                        <div>
+                                            <h6 class="text-primary fw-bold mb-1" style="font-size: 13px;">{{ __('Important Notice') }}</h6>
+                                            <p class="text-primary mb-1" style="font-size: 12px; opacity: 0.9; line-height: 1.5;">
+                                                {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
+                                            </p>
+                                            <p class="text-primary mb-0" style="font-size: 12px; opacity: 0.9; line-height: 1.5;">
+                                                {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
