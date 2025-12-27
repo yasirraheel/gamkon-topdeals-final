@@ -313,6 +313,11 @@ Route::group(['prefix' => 'settings', 'as' => 'settings.', 'controller' => Setti
 
 });
 
+// ===============================  Ad Management ==================================
+Route::post('ad-units/settings', [\App\Http\Controllers\Backend\AdUnitController::class, 'updateSettings'])->name('ad-units.settings.update');
+Route::resource('ad-units', \App\Http\Controllers\Backend\AdUnitController::class);
+Route::get('ad-units/status/{id}', [\App\Http\Controllers\Backend\AdUnitController::class, 'statusUpdate'])->name('ad-units.status');
+
 // Portfolio
 Route::resource('seller-ranking', SellerRankingController::class)->only('index', 'store', 'update')->parameter('seller-ranking', 'portfolio');
 
