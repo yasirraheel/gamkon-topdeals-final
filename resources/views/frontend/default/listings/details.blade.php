@@ -286,6 +286,22 @@
                                     <h1 class="pd-title mb-0">{{ $listing->product_name }}</h1>
                                 </div>
                                 
+                                {{-- Important Notice --}}
+                                <div class="pd-notice mt-2 mb-3" style="padding: 12px; border-left: 3px solid var(--td-primary); background: rgba(var(--td-primary-rgb), 0.05); border-radius: 4px;">
+                                    <div class="d-flex gap-2">
+                                        <iconify-icon icon="solar:info-circle-bold" class="text-primary flex-shrink-0" width="18" style="margin-top: 2px;"></iconify-icon>
+                                        <div>
+                                            <h6 class="text-primary fw-bold mb-1" style="font-size: 13px;">{{ __('Important Notice') }}</h6>
+                                            <p class="text-primary mb-1" style="font-size: 12px; opacity: 0.9; line-height: 1.5;">
+                                                {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
+                                            </p>
+                                            <p class="text-primary mb-0" style="font-size: 12px; opacity: 0.9; line-height: 1.5;">
+                                                {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="pd-info-grid">
                                     {{-- Region --}}
                                     <div class="pd-info-item">
@@ -363,26 +379,17 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        {{-- Important Notice --}}
-                        <div class="pd-notice mt-4">
-                            <div class="d-flex gap-3">
-                                <iconify-icon icon="solar:info-circle-bold" class="text-primary flex-shrink-0" width="24" style="margin-top: 2px;"></iconify-icon>
-                                <div>
-                                    <h6 class="text-primary fw-bold mb-2" style="font-size: 15px;">{{ __('Important Notice') }}</h6>
-                                    <p class="text-primary mb-2" style="font-size: 14px; opacity: 0.9; line-height: 1.6;">
-                                        {{ __('This item/service is offered by independent sellers on') }} {{ setting('site_title', 'global') }}. {{ __('If you have any questions or issues, please contact the seller directly.') }}
-                                    </p>
-                                    <p class="text-primary mb-0" style="font-size: 14px; opacity: 0.9; line-height: 1.6;">
-                                        {{ __('Friendly reminder: Official') }} {{ setting('site_title', 'global') }} {{ __('coupons can be used on standard orders, but not on Marketplace purchases.') }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     {{-- Description --}}
                     <div class="pd-card">
+                        <div class="alert alert-warning d-flex align-items-center gap-2 mb-3" role="alert" style="font-size: 14px;">
+                            <iconify-icon icon="solar:danger-triangle-bold" width="20"></iconify-icon>
+                            <div>
+                                <strong>{{ __('Note:') }}</strong> {{ __('The features in description may vary on availability. Must check features given by seller for more detail') }} 
+                                <a href="{{ buyerSellerRoute('chat.index', $listing->seller->username) }}" class="text-decoration-underline fw-bold">{{ __('chat with seller') }} ({{ $listing->seller->username }})</a>
+                            </div>
+                        </div>
                         <h4 class="fw-bold mb-3" style="font-size: 18px;">{{ __('Offer description') }}</h4>
                         <div class="text-muted" style="font-size: 14px; line-height: 1.7;">
                             {!! $listing->description !!}
