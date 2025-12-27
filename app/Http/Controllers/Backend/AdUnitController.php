@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\AdUnit;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class AdUnitController extends Controller
@@ -30,7 +31,8 @@ class AdUnitController extends Controller
 
         AdUnit::create($request->all());
 
-        return redirect()->route('admin.ad-units.index')->with('success', 'Ad Unit created successfully.');
+        notify()->success('Ad Unit created successfully.');
+        return redirect()->route('admin.ad-units.index');
     }
 
     public function edit(AdUnit $adUnit)
@@ -49,13 +51,15 @@ class AdUnitController extends Controller
 
         $adUnit->update($request->all());
 
-        return redirect()->route('admin.ad-units.index')->with('success', 'Ad Unit updated successfully.');
+        notify()->success('Ad Unit updated successfully.');
+        return redirect()->route('admin.ad-units.index');
     }
 
     public function destroy(AdUnit $adUnit)
     {
         $adUnit->delete();
-        return redirect()->route('admin.ad-units.index')->with('success', 'Ad Unit deleted successfully.');
+        notify()->success('Ad Unit deleted successfully.');
+        return redirect()->route('admin.ad-units.index');
     }
 
     public function statusUpdate($id)
@@ -69,10 +73,18 @@ class AdUnitController extends Controller
 
     public function updateSettings(Request $request)
     {
-        // No validation needed for code snippets as they can be anything or empty
-        \App\Models\Setting::add('ads_head_code', $request->ads_head_code);
-        \App\Models\Setting::add('ads_body_code', $request->ads_body_code);
+        // Use updateOrCreate to ensure value is saved even if cache is stale
+        Setting::updateOrCreate(
+            ['name' => 'ads_head_code'],
+            ['val' => $request->input('ads_head_code', ''), 'type' => 'string']
+        );
+        
+        Setting::updateOrCreate(
+            ['name' => 'ads_body_code'],
+            ['val' => $request->input('ads_body_code', ''), 'type' => 'string']
+        );
 
-        return back()->with('success', 'Global ad settings updated successfully.');
+        notify()->success('Global ad settings updated successfully.');
+        return back();
     }
 }
