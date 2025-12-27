@@ -64,6 +64,15 @@
             !Cookie::get('reject_signup_first_order_bonus') &&
             $firstOrderBonus)
         <!-- subscribe newsletter start -->
+        <style>
+            .popup-overlay {
+                transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+            }
+            .popup-overlay.hidden {
+                opacity: 0;
+                visibility: hidden;
+            }
+        </style>
         <div class="popup-overlay subscribe-newsletter hidden" id="promoPopup">
             <div class="promo-popup-main">
                 <div class="close-btn" id="closePopupBtn">
@@ -99,6 +108,11 @@
                     $(".subscribe-newsletter").removeClass('hidden');
                 }, 3000);
             }
+            
+            // Add click event for close button
+            document.getElementById('closePopupBtn').addEventListener('click', function() {
+                document.getElementById('promoPopup').classList.add('hidden');
+            });
         </script>
         <!-- subscribe newsletter end -->
     @endif
