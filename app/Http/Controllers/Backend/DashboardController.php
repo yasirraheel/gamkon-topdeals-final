@@ -18,6 +18,7 @@ use App\Models\ReferralRelationship;
 use App\Models\Ticket;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\VisitorTracking;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -98,12 +99,8 @@ class DashboardController extends Controller
         $browser = $loginActivities->groupBy('browser')->map->count()->toArray();
         $platform = $loginActivities->groupBy('platform')->map->count()->toArray();
 
-        $country = User::all()->groupBy('country')->map(function ($country) {
-            return $country->count();
-        })->toArray();
-
-        arsort($country);
-        $country = array_slice($country, 0, 5);
+        // Get country stats from all visitors (guests + authenticated)
+        $country = VisitorTracking::getCountryStats(5);
 
         $symbol = setting('currency_symbol', 'global');
 
@@ -166,6 +163,11 @@ class DashboardController extends Controller
             'platform' => $platform,
             'country' => $country,
             'symbol' => $symbol,
+
+            // Visitor statistics
+            'total_visitors' => VisitorTracking::count(),
+            'unique_visitors' => VisitorTracking::getUniqueVisitorCount(),
+            'visitors_today' => VisitorTracking::whereDate('created_at', Carbon::today())->count(),
         ];
         // Date range filter for statistics
         if (request()->ajax()) {

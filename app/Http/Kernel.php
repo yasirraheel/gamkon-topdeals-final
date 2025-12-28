@@ -40,6 +40,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\StoreReferralCode::class,
             \App\Http\Middleware\IsMaintenance::class,
             \App\Http\Middleware\InstallCheck::class,
+            \App\Http\Middleware\TrackVisitor::class,
         ],
 
         'api' => [

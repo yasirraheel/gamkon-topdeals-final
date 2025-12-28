@@ -166,32 +166,33 @@ if (! function_exists('getIpAddress')) {
 }
 
 if (! function_exists('getLocation')) {
-    function getLocation()
+    function getLocation($ip = null)
     {
-        $clientIp = request()->ip();
-        $ip = $clientIp == '127.0.0.1' ? '103.77.188.202' : $clientIp;
+        $clientIp = $ip ?? request()->ip();
 
-        $location = json_decode(curl_get_file_contents('http://ip-api.com/json/'.$ip), true);
+        // Use cached geolocation
+        $location = \App\Models\IpGeolocation::getOrFetch($clientIp);
 
-        if ($location['status'] == 'fail') {
+        // Get full country data from CountryCodes.json
+        $currentCountry = collect(getCountries())->first(function ($value) use ($location) {
+            return $value['code'] == $location['country_code'];
+        });
+
+        if (!$currentCountry) {
             return app(Fluent::class, [
                 'country_code' => 0,
-                'name' => 'Bangladesh',
-                'dial_code' => '+880',
-                'ip' => $ip,
+                'name' => 'Unknown',
+                'dial_code' => '+00',
+                'ip' => $clientIp,
             ]);
         }
-        $currentCountry = collect(getCountries())->first(function ($value, $key) use ($location) {
-            return $value['code'] == $location['countryCode'];
-        });
-        $location = [
-            'country_code' => data_get($currentCountry, 'code', 0),
+
+        return new \Illuminate\Support\Fluent([
+            'country_code' => $currentCountry['code'],
             'name' => $currentCountry['name'],
             'dial_code' => $currentCountry['dial_code'],
-            'ip' => $location['query'] ?? [],
-        ];
-
-        return new \Illuminate\Support\Fluent($location);
+            'ip' => $clientIp,
+        ]);
     }
 }
 
