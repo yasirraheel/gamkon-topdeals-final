@@ -488,7 +488,7 @@
 
                                         @if($showTierPricing)
                                             <span class="badge bg-success" style="padding: 6px 12px; font-size: 12px; font-weight: 600;">
-                                                {{ __('Tier') }} {{ $tierInfo['tier'] }} - {{ $tierInfo['discount'] }}% {{ __('OFF for') }} {{ $location->name }}
+                                                {{ $tierInfo['discount'] }}% {{ __('OFF for') }} {{ $location->name }}
                                             </span>
                                         @endif
                                     </div>

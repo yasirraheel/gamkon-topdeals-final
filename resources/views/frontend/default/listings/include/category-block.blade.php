@@ -129,7 +129,7 @@
             @if($showTierPricing)
                 <span style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);">
                     <iconify-icon icon="solar:tag-price-bold" style="font-size: 12px;"></iconify-icon>
-                    {{ __('Tier') }} {{ $tierInfo['tier'] }} - {{ $tierInfo['discount'] }}% {{ __('OFF') }}
+                    {{ $tierInfo['discount'] }}% {{ __('OFF') }}
                 </span>
             @endif
         </div>
