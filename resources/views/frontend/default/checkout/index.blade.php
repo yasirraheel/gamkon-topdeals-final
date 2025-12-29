@@ -106,7 +106,7 @@
                                                         </div>
                                                     </div>
                                                 @endif
-                                                @if(setting('tiered_pricing_enabled', 'tiered_pricing') && isset($checkout['country_tier']) && $checkout['country_tier'] > 1)
+                                                @if(setting('tiered_pricing_enabled', 'tiered_pricing') && isset($checkout['country_tier']) && $checkout['tier_unit_price'] < $listing->final_price)
                                                     <div class="voucher payment-point">
                                                         <div class="left">
                                                             <p style="padding: 6px 8px; background: linear-gradient(135deg, #10b981 0%, #34d399 100%); color: #fff; border-radius: 8px; font-size: 12px; font-weight: 600; display: inline-block; margin: 0;">{{ __('Tier') }} {{ $checkout['country_tier'] }} {{ __('Discount') }} ({{ $checkout['country_name'] }})</p>

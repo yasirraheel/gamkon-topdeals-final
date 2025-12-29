@@ -472,7 +472,7 @@
                                 $location = getLocation();
                                 $tierInfo = getTierInfo($location->name);
                                 $tierPrice = getTierAdjustedPrice($listing, $location->name);
-                                $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['tier'] > 1;
+                                $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['percentage'] > 0;
                                 $countryFlag = getCountryFlag($location->country_code);
                             @endphp
 
