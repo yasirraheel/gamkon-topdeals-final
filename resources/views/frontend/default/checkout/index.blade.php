@@ -83,6 +83,16 @@
                                                         </div>
                                                     </div>
                                                 @endif
+                                                @if(setting('tiered_pricing_enabled', 'tiered_pricing') && isset($checkout['country_tier']) && $checkout['country_tier'] > 1)
+                                                    <div class="voucher payment-point">
+                                                        <div class="left">
+                                                            <p>{{ __('Tier') }} {{ $checkout['country_tier'] }} {{ __('Discount') }} ({{ $checkout['country_name'] }})</p>
+                                                        </div>
+                                                        <div class="right">
+                                                            <p>- {{ setting('currency_symbol', 'global') }}{{ ($listing->final_price - $checkout['tier_unit_price']) * $checkout['quantity'] }}</p>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 @if (isset($checkout['coupon']))
                                                     <div class="voucher payment-point">
                                                         <div class="left">

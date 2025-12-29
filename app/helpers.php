@@ -889,4 +889,88 @@ if (! function_exists('sideSingleItem')) {
         </li>';
     }
 }
+
+/**
+ * Get the pricing tier for a given country
+ *
+ * @param string $countryName
+ * @return array ['tier' => int, 'percentage' => int]
+ */
+if (!function_exists('getCountryTier')) {
+    function getCountryTier($countryName)
+    {
+        // Check if tiered pricing is enabled
+        if (!setting('tiered_pricing_enabled', 'tiered_pricing')) {
+            return ['tier' => 1, 'percentage' => 100];
+        }
+
+        // Check each tier in order (4 to 1, so higher discounts are checked first)
+        for ($tier = 4; $tier >= 1; $tier--) {
+            $countries = setting("tier_{$tier}_countries", 'tiered_pricing');
+
+            // Handle JSON string or array
+            if (is_string($countries)) {
+                $countries = json_decode($countries, true) ?? [];
+            }
+
+            if (is_array($countries) && in_array($countryName, $countries)) {
+                $percentage = (int) setting("tier_{$tier}_percentage", 'tiered_pricing', 100);
+                return ['tier' => $tier, 'percentage' => $percentage];
+            }
+        }
+
+        // Default to Tier 1 if not found in any tier
+        return ['tier' => 1, 'percentage' => 100];
+    }
+}
+
+/**
+ * Calculate tier-adjusted price for a listing
+ *
+ * @param \App\Models\Listing $listing
+ * @param string|null $countryName
+ * @return float
+ */
+if (!function_exists('getTierAdjustedPrice')) {
+    function getTierAdjustedPrice($listing, $countryName = null)
+    {
+        // If tiered pricing is disabled, return final_price
+        if (!setting('tiered_pricing_enabled', 'tiered_pricing')) {
+            return $listing->final_price;
+        }
+
+        // Get country from parameter or detect from IP
+        if ($countryName === null) {
+            $location = getLocation();
+            $countryName = $location->name;
+        }
+
+        // Get tier information
+        $tierInfo = getCountryTier($countryName);
+
+        // Calculate tier-adjusted price: final_price * (percentage / 100)
+        return $listing->final_price * ($tierInfo['percentage'] / 100);
+    }
+}
+
+/**
+ * Get tier information for display
+ *
+ * @param string|null $countryName
+ * @return array ['tier' => int, 'percentage' => int, 'discount' => int]
+ */
+if (!function_exists('getTierInfo')) {
+    function getTierInfo($countryName = null)
+    {
+        if ($countryName === null) {
+            $location = getLocation();
+            $countryName = $location->name;
+        }
+
+        $tierInfo = getCountryTier($countryName);
+        $tierInfo['discount'] = 100 - $tierInfo['percentage'];
+
+        return $tierInfo;
+    }
+}
 // ...existing code...

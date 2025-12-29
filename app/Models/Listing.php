@@ -45,6 +45,8 @@ class Listing extends Model
 
     protected $appends = [
         'final_price',
+        'tier_price',
+        'tier_info',
         'statusBadge',
         'thumbnailUrl',
         'average_rating',
@@ -114,6 +116,27 @@ class Listing extends Model
     public function getDiscountAmountAttribute($value)
     {
         return $this->discount_type == 'percentage' ? $this->price * $this->discount_value / 100 : $this->discount_value;
+    }
+
+    /**
+     * Get the tier-adjusted price for the current user's country
+     *
+     * @return float
+     */
+    public function getTierPriceAttribute()
+    {
+        return getTierAdjustedPrice($this);
+    }
+
+    /**
+     * Get tier information for current user
+     *
+     * @return array
+     */
+    public function getTierInfoAttribute()
+    {
+        $location = getLocation();
+        return getTierInfo($location->name);
     }
 
     public function getThumbnailUrlAttribute($value)

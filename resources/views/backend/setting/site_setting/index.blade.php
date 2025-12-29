@@ -56,6 +56,10 @@
         'fields' => $configSettings['subscribed_user_first_order_bonus'],
         'section' => 'subscribed_user_first_order_bonus',
     ])</div>
+    <div class="col-xl-12 col-lg-12 col-md-12 col-12">@include('backend.setting.site_setting.include.__tiered_pricing', [
+        'fields' => $configSettings['tiered_pricing'],
+        'section' => 'tiered_pricing',
+    ])</div>
 @endsection
 @push('single-script')
     <script>

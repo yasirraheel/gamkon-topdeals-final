@@ -29,6 +29,8 @@ class Order extends Model
         'delivery_speed_unit',
         'category_id',
         'org_unit_price',
+        'country_tier',
+        'country_name',
     ];
 
     protected $casts = [

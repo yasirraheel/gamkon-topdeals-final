@@ -468,12 +468,29 @@
 
                             <hr class="my-4 text-muted opacity-25">
 
+                            @php
+                                $location = getLocation();
+                                $tierInfo = getTierInfo($location->name);
+                                $tierPrice = getTierAdjustedPrice($listing, $location->name);
+                                $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['tier'] > 1;
+                            @endphp
+
                             <div class="d-flex justify-content-between align-items-end mb-4">
                                 <span class="text-muted fw-bold">{{ __('Total') }}:</span>
                                 <div class="text-end">
-                                    <h3 class="text-danger fw-bold mb-0" style="font-size: 28px;">{{ amountWithCurrency($listing->final_price) }}</h3>
-                                    @if ($listing->discount_value > 0)
-                                        <small class="text-muted text-decoration-line-through">{{ amountWithCurrency($listing->price) }}</small>
+                                    @if($showTierPricing)
+                                        <div class="mb-2">
+                                            <span class="badge bg-success">
+                                                {{ __('Tier') }} {{ $tierInfo['tier'] }} - {{ $tierInfo['discount'] }}% {{ __('OFF for') }} {{ $location->name }}
+                                            </span>
+                                        </div>
+                                        <h3 class="text-danger fw-bold mb-0" style="font-size: 28px;">{{ amountWithCurrency($tierPrice) }}</h3>
+                                        <small class="text-muted text-decoration-line-through">{{ amountWithCurrency($listing->final_price) }}</small>
+                                    @else
+                                        <h3 class="text-danger fw-bold mb-0" style="font-size: 28px;">{{ amountWithCurrency($listing->final_price) }}</h3>
+                                        @if ($listing->discount_value > 0)
+                                            <small class="text-muted text-decoration-line-through">{{ amountWithCurrency($listing->price) }}</small>
+                                        @endif
                                     @endif
                                 </div>
                             </div>
@@ -753,7 +770,7 @@
     <script>
         'use strict';
         var __quantity = {{ $listing->quantity }};
-        var unitPrice = {{ $listing->final_price }};
+        var unitPrice = {{ $tierPrice ?? $listing->final_price }};
         $(document).ready(function() {
             // Refund Guarantee Modal
             $('.refund-guarantee-btn').click(function(e) {

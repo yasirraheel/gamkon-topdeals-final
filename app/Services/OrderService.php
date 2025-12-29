@@ -69,6 +69,10 @@ class OrderService
             $data['delivery_speed'] = $listing->delivery_speed ?? null;
             $data['delivery_speed_unit'] = $listing->delivery_speed_unit ?? null;
 
+            // Add tier pricing data from checkout session
+            $data['country_tier'] = $checkout['country_tier'] ?? null;
+            $data['country_name'] = $checkout['country_name'] ?? null;
+
             $order = Order::create($data);
 
             session(['order_id' => $order->id]);

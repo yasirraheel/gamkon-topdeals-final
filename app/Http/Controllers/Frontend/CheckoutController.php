@@ -45,11 +45,19 @@ class CheckoutController extends Controller
             return back();
         }
 
+        // Get user's country and tier pricing
+        $location = getLocation();
+        $countryName = $location->name;
+        $tierAdjustedPrice = getTierAdjustedPrice($listing, $countryName);
+
         $checkoutData = [
             'product_id' => $listing->id,
             'quantity' => $request->quantity,
-            'finalPrice' => $listing->final_price * $request->quantity,
-            'subtotal' => $listing->final_price * $request->quantity,
+            'finalPrice' => $tierAdjustedPrice * $request->quantity,
+            'subtotal' => $tierAdjustedPrice * $request->quantity,
+            'country_name' => $countryName,
+            'country_tier' => getCountryTier($countryName)['tier'],
+            'tier_unit_price' => $tierAdjustedPrice,
         ];
 
         if ($request->coupon) {
@@ -70,7 +78,7 @@ class CheckoutController extends Controller
                 return back();
             }
             $checkoutData['coupon_id'] = $coupon->id;
-            $checkoutData['coupon_discount_amount'] = $coupon->discount_type == 'percentage' ? ($coupon->discount_value / 100) * $listing->final_price : $coupon->discount_value;
+            $checkoutData['coupon_discount_amount'] = $coupon->discount_type == 'percentage' ? ($coupon->discount_value / 100) * $tierAdjustedPrice : $coupon->discount_value;
             $checkoutData['finalPrice'] = $checkoutData['finalPrice'] - $checkoutData['coupon_discount_amount'];
         }
 
