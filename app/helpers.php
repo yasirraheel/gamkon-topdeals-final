@@ -973,4 +973,28 @@ if (!function_exists('getTierInfo')) {
         return $tierInfo;
     }
 }
+
+/**
+ * Get country flag emoji from country code
+ *
+ * @param string $countryCode ISO 3166-1 alpha-2 country code (e.g., "US", "GB")
+ * @return string Flag emoji or empty string if invalid
+ */
+if (!function_exists('getCountryFlag')) {
+    function getCountryFlag($countryCode)
+    {
+        if (empty($countryCode) || strlen($countryCode) !== 2) {
+            return '';
+        }
+
+        $countryCode = strtoupper($countryCode);
+
+        // Convert country code to flag emoji using regional indicator symbols
+        // A = U+1F1E6, Z = U+1F1FF (Regional Indicator Symbol Letters)
+        $flag = mb_chr(0x1F1E6 + ord($countryCode[0]) - ord('A')) .
+                mb_chr(0x1F1E6 + ord($countryCode[1]) - ord('A'));
+
+        return $flag;
+    }
+}
 // ...existing code...

@@ -3,6 +3,29 @@
 @section('title')
     {{ __('Checkout') }}
 @endsection
+
+@push('css')
+<style>
+    /* Prevent ads in checkout card */
+    .checkout-card-box ins,
+    .checkout-card-box .adsbygoogle,
+    .checkout-card-box [id*="google_ads"],
+    .checkout-card-box [class*="google-ad"],
+    .checkout-card-box [class*="ad-unit"],
+    .checkout-payment ins,
+    .checkout-payment .adsbygoogle,
+    .checkout-payment [id*="google_ads"],
+    .checkout-payment [class*="google-ad"],
+    .checkout-payment [class*="ad-unit"] {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        width: 0 !important;
+        overflow: hidden !important;
+    }
+</style>
+@endpush
+
 @section('content')
     <div class="checkout-area section_space-py">
         <div class="container">
@@ -66,7 +89,7 @@
                                                         <p>{{ __('Subtotal') }}</p>
                                                     </div>
                                                     <div class="right">
-                                                        <p>{{ setting('currency_symbol', 'global') }}{{ $checkout['subtotal'] }}
+                                                        <p style="white-space: nowrap;">{{ setting('currency_symbol', 'global') }}{{ $checkout['subtotal'] }}
                                                         </p>
                                                     </div>
                                                 </div>
@@ -78,7 +101,7 @@
                                                             </p>
                                                         </div>
                                                         <div class="right">
-                                                            <p>- {{ setting('currency_symbol', 'global') }}{{ $listing->discount_amount }}
+                                                            <p style="white-space: nowrap;">- {{ setting('currency_symbol', 'global') }}{{ $listing->discount_amount }}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -86,10 +109,10 @@
                                                 @if(setting('tiered_pricing_enabled', 'tiered_pricing') && isset($checkout['country_tier']) && $checkout['country_tier'] > 1)
                                                     <div class="voucher payment-point">
                                                         <div class="left">
-                                                            <p>{{ __('Tier') }} {{ $checkout['country_tier'] }} {{ __('Discount') }} ({{ $checkout['country_name'] }})</p>
+                                                            <p style="padding: 6px 8px; background: linear-gradient(135deg, #10b981 0%, #34d399 100%); color: #fff; border-radius: 8px; font-size: 12px; font-weight: 600; display: inline-block; margin: 0;">{{ __('Tier') }} {{ $checkout['country_tier'] }} {{ __('Discount') }} ({{ $checkout['country_name'] }})</p>
                                                         </div>
                                                         <div class="right">
-                                                            <p>- {{ setting('currency_symbol', 'global') }}{{ ($listing->final_price - $checkout['tier_unit_price']) * $checkout['quantity'] }}</p>
+                                                            <p style="white-space: nowrap;">- {{ setting('currency_symbol', 'global') }}{{ ($listing->final_price - $checkout['tier_unit_price']) * $checkout['quantity'] }}</p>
                                                         </div>
                                                     </div>
                                                 @endif
@@ -99,7 +122,7 @@
                                                             <p>{{ __('Coupon Discount') }}</p>
                                                         </div>
                                                         <div class="right">
-                                                            <p>- {{ setting('currency_symbol', 'global') }}{{ $checkout['coupon_discount_amount'] }}
+                                                            <p style="white-space: nowrap;">- {{ setting('currency_symbol', 'global') }}{{ $checkout['coupon_discount_amount'] }}
                                                             </p>
                                                         </div>
                                                     </div>
@@ -112,7 +135,7 @@
                                                         <p>{{ __('Charge') }}</p>
                                                     </div>
                                                     <div class="right">
-                                                        <p>{{ setting('currency_symbol', 'global') }}<span
+                                                        <p style="white-space: nowrap;">{{ setting('currency_symbol', 'global') }}<span
                                                                 class="charge-amount">0</span></p>
                                                     </div>
                                                 </div>
@@ -121,7 +144,7 @@
                                                         <p>{{ __('TOTAL') }}</p>
                                                     </div>
                                                     <div class="right">
-                                                        <p>{{ setting('currency_symbol', 'global') }}<span
+                                                        <p style="white-space: nowrap;">{{ setting('currency_symbol', 'global') }}<span
                                                                 class="total-amount">{{ $checkout['total'] }}</span></p>
                                                     </div>
                                                 </div>
@@ -130,7 +153,7 @@
                                                         <p>{{ __('Payable Amount') }}</p>
                                                     </div>
                                                     <div class="right">
-                                                        <p><span
+                                                        <p style="white-space: nowrap;"><span
                                                                 class="payable-symbol">{{ setting('currency_symbol', 'global') }}</span><span
                                                                 class="payable-amount">{{ $checkout['total'] }}</span></p>
                                                     </div>

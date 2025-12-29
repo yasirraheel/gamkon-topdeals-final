@@ -110,11 +110,46 @@
             </div>
         </div>
 
+        @php
+            $location = getLocation();
+            $tierInfo = getTierInfo($location->name);
+            $tierPrice = getTierAdjustedPrice($listing, $location->name);
+            $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['tier'] > 1;
+            $countryFlag = getCountryFlag($location->country_code);
+        @endphp
+
+        {{-- Country Flag Badge --}}
+        <div style="margin-bottom: 8px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+            <span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $location->name }}"
+                  style="background: #f3f4f6; padding: 4px 10px; border-radius: 12px; font-size: 14px; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; border: 1px solid #e5e7eb;">
+                {{ $countryFlag }}
+            </span>
+
+            {{-- Tier Pricing Badge --}}
+            @if($showTierPricing)
+                <span style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); color: #fff; padding: 4px 10px; border-radius: 12px; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 4px; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);">
+                    <iconify-icon icon="solar:tag-price-bold" style="font-size: 12px;"></iconify-icon>
+                    {{ __('Tier') }} {{ $tierInfo['tier'] }} - {{ $tierInfo['discount'] }}% {{ __('OFF') }}
+                </span>
+            @endif
+        </div>
+
         {{-- Bottom Section: Price & Delivery --}}
         <div style="display: flex; align-items: center; justify-content: space-between;">
             {{-- Price --}}
-            <div style="font-size: 18px; font-weight: 800; color: #ef4444;">
-                {{ amountWithCurrency($listing->final_price) }}
+            <div>
+                @if($showTierPricing)
+                    <div style="font-size: 18px; font-weight: 800; color: #ef4444;">
+                        {{ amountWithCurrency($tierPrice) }}
+                    </div>
+                    <div style="font-size: 12px; color: #999; text-decoration: line-through;">
+                        {{ amountWithCurrency($listing->final_price) }}
+                    </div>
+                @else
+                    <div style="font-size: 18px; font-weight: 800; color: #ef4444;">
+                        {{ amountWithCurrency($listing->final_price) }}
+                    </div>
+                @endif
             </div>
 
             {{-- Delivery --}}

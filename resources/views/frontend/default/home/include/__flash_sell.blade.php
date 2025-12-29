@@ -109,14 +109,45 @@
                                                             @endif
                                                         </a>
                                                     </p>
+                                                    @php
+                                                        $location = getLocation();
+                                                        $tierInfo = getTierInfo($location->name);
+                                                        $tierPrice = getTierAdjustedPrice($listing, $location->name);
+                                                        $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['tier'] > 1;
+                                                        $countryFlag = getCountryFlag($location->country_code);
+                                                    @endphp
+
+                                                    {{-- Country Flag & Tier Pricing Badge --}}
+                                                    <div style="margin-bottom: 8px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                                                        <span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $location->name }}"
+                                                              style="background: #f3f4f6; padding: 3px 8px; border-radius: 10px; font-size: 13px; display: inline-flex; align-items: center; cursor: pointer; border: 1px solid #e5e7eb;">
+                                                            {{ $countryFlag }}
+                                                        </span>
+
+                                                        @if($showTierPricing)
+                                                            <span style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); color: #fff; padding: 3px 8px; border-radius: 10px; font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);">
+                                                                <iconify-icon icon="solar:tag-price-bold" style="font-size: 11px;"></iconify-icon>
+                                                                {{ __('Tier') }} {{ $tierInfo['tier'] }} - {{ $tierInfo['discount'] }}% {{ __('OFF') }}
+                                                            </span>
+                                                        @endif
+                                                    </div>
+
                                                     <div class="price-remaining">
                                                         <div class="price-discount">
-                                                            <h5 class="price">
-                                                                {{ $currencySymbol . $listing->final_price }}</h5>
-                                                            @if ($listing->discount_value > 0)
-                                                                <p class="discount">
-                                                                    {{ $currencySymbol . $listing->price }}
+                                                            @if($showTierPricing)
+                                                                <h5 class="price" style="white-space: nowrap;">
+                                                                    {{ $currencySymbol . $tierPrice }}</h5>
+                                                                <p class="discount" style="white-space: nowrap;">
+                                                                    {{ $currencySymbol . $listing->final_price }}
                                                                 </p>
+                                                            @else
+                                                                <h5 class="price" style="white-space: nowrap;">
+                                                                    {{ $currencySymbol . $listing->final_price }}</h5>
+                                                                @if ($listing->discount_value > 0)
+                                                                    <p class="discount" style="white-space: nowrap;">
+                                                                        {{ $currencySymbol . $listing->price }}
+                                                                    </p>
+                                                                @endif
                                                             @endif
                                                         </div>
                                                         <p class="remaining">

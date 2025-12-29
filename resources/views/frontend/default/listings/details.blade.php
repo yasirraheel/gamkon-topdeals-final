@@ -473,23 +473,33 @@
                                 $tierInfo = getTierInfo($location->name);
                                 $tierPrice = getTierAdjustedPrice($listing, $location->name);
                                 $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['tier'] > 1;
+                                $countryFlag = getCountryFlag($location->country_code);
                             @endphp
 
                             <div class="d-flex justify-content-between align-items-end mb-4">
                                 <span class="text-muted fw-bold">{{ __('Total') }}:</span>
                                 <div class="text-end">
-                                    @if($showTierPricing)
-                                        <div class="mb-2">
-                                            <span class="badge bg-success">
+                                    {{-- Country Flag Badge --}}
+                                    <div class="mb-2" style="display: flex; gap: 6px; align-items: center; justify-content: flex-end; flex-wrap: wrap;">
+                                        <span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $location->name }}"
+                                              style="background: #f3f4f6; padding: 4px 10px; border-radius: 12px; font-size: 16px; display: inline-flex; align-items: center; cursor: pointer; border: 1px solid #e5e7eb;">
+                                            {{ $countryFlag }}
+                                        </span>
+
+                                        @if($showTierPricing)
+                                            <span class="badge bg-success" style="padding: 6px 12px; font-size: 12px; font-weight: 600;">
                                                 {{ __('Tier') }} {{ $tierInfo['tier'] }} - {{ $tierInfo['discount'] }}% {{ __('OFF for') }} {{ $location->name }}
                                             </span>
-                                        </div>
-                                        <h3 class="text-danger fw-bold mb-0" style="font-size: 28px;">{{ amountWithCurrency($tierPrice) }}</h3>
-                                        <small class="text-muted text-decoration-line-through">{{ amountWithCurrency($listing->final_price) }}</small>
+                                        @endif
+                                    </div>
+
+                                    @if($showTierPricing)
+                                        <h3 class="text-danger fw-bold mb-0" style="font-size: 28px; white-space: nowrap;">{{ amountWithCurrency($tierPrice) }}</h3>
+                                        <small class="text-muted text-decoration-line-through" style="white-space: nowrap;">{{ amountWithCurrency($listing->final_price) }}</small>
                                     @else
-                                        <h3 class="text-danger fw-bold mb-0" style="font-size: 28px;">{{ amountWithCurrency($listing->final_price) }}</h3>
+                                        <h3 class="text-danger fw-bold mb-0" style="font-size: 28px; white-space: nowrap;">{{ amountWithCurrency($listing->final_price) }}</h3>
                                         @if ($listing->discount_value > 0)
-                                            <small class="text-muted text-decoration-line-through">{{ amountWithCurrency($listing->price) }}</small>
+                                            <small class="text-muted text-decoration-line-through" style="white-space: nowrap;">{{ amountWithCurrency($listing->price) }}</small>
                                         @endif
                                     @endif
                                 </div>
