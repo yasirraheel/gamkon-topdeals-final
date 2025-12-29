@@ -406,7 +406,7 @@
                                 @foreach ($suggested->take(4) as $item)
                                     @php
                                         $tierInfo = getCountryTier($userCountry);
-                                        $tierAdjustedPrice = getTierAdjustedPrice($item->final_price, $tierInfo);
+                                        $tierAdjustedPrice = getTierAdjustedPrice($item, $userCountry);
                                         $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['percentage'] > 0;
                                     @endphp
                                     <div class="col-md-6">
@@ -597,7 +597,7 @@
                                 @foreach ($suggested->take(4) as $item)
                                     @php
                                         $tierInfo = getCountryTier($userCountry);
-                                        $tierAdjustedPrice = getTierAdjustedPrice($item->final_price, $tierInfo);
+                                        $tierAdjustedPrice = getTierAdjustedPrice($item, $userCountry);
                                         $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['percentage'] > 0;
                                     @endphp
                                     <div class="col-md-6">
