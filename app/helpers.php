@@ -914,13 +914,13 @@ if (!function_exists('getCountryTier')) {
             }
 
             if (is_array($countries) && in_array($countryName, $countries)) {
-                $percentage = (int) setting("tier_{$tier}_percentage", 'tiered_pricing', 100);
+                $percentage = (int) setting("tier_{$tier}_percentage", 'tiered_pricing', 0); // Default 0% discount
                 return ['tier' => $tier, 'percentage' => $percentage];
             }
         }
 
         // Default to Tier 1 if not found in any tier
-        return ['tier' => 1, 'percentage' => 100];
+        return ['tier' => 1, 'percentage' => 0]; // Default 0% discount
     }
 }
 
@@ -948,8 +948,10 @@ if (!function_exists('getTierAdjustedPrice')) {
         // Get tier information
         $tierInfo = getCountryTier($countryName);
 
-        // Calculate tier-adjusted price: final_price * (percentage / 100)
-        return $listing->final_price * ($tierInfo['percentage'] / 100);
+        // Calculate tier-adjusted price: final_price * ((100 - discount_percentage) / 100)
+        // If percentage is 33 (meaning 33% discount), we multiply by 0.67
+        $discountPercentage = $tierInfo['percentage'];
+        return $listing->final_price * ((100 - $discountPercentage) / 100);
     }
 }
 
@@ -968,7 +970,8 @@ if (!function_exists('getTierInfo')) {
         }
 
         $tierInfo = getCountryTier($countryName);
-        $tierInfo['discount'] = 100 - $tierInfo['percentage'];
+        // Tier percentage now represents discount directly
+        $tierInfo['discount'] = $tierInfo['percentage'];
 
         return $tierInfo;
     }
