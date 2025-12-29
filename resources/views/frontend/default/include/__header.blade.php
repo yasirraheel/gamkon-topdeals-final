@@ -18,9 +18,12 @@
                     $userLocation = getLocation();
                 @endphp
                 @if($userLocation->country_code)
-                    <span class="country-flag ms-2" style="font-size: 24px;" title="{{ $userLocation->name }}">
-                        {{ getCountryFlag($userLocation->country_code) }}
-                    </span>
+                    <img src="https://flagcdn.com/w40/{{ strtolower($userLocation->country_code) }}.png" 
+                         srcset="https://flagcdn.com/w80/{{ strtolower($userLocation->country_code) }}.png 2x"
+                         width="30" 
+                         alt="{{ $userLocation->name }}" 
+                         class="country-flag ms-2" 
+                         title="{{ $userLocation->name }}">
                 @endif
                 @includeWhen(
                     !$user?->is_seller || !Route::is('seller.*') || Route::is('seller.details'),
@@ -195,9 +198,12 @@
                 <img src="{{ asset(setting('site_logo', 'global')) }}" alt="{{ setting('site_title', 'global') }}">
             </a>
             @if($userLocation->country_code)
-                <span class="country-flag ms-2" style="font-size: 24px;" title="{{ $userLocation->name }}">
-                    {{ getCountryFlag($userLocation->country_code) }}
-                </span>
+                <img src="https://flagcdn.com/w40/{{ strtolower($userLocation->country_code) }}.png" 
+                     srcset="https://flagcdn.com/w80/{{ strtolower($userLocation->country_code) }}.png 2x"
+                     width="30" 
+                     alt="{{ $userLocation->name }}" 
+                     class="country-flag ms-2" 
+                     title="{{ $userLocation->name }}">
             @endif
             <div class="authentication-and-close">
                 <div class="auth">

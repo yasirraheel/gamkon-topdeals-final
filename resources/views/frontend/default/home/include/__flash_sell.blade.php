@@ -114,14 +114,16 @@
                                                         $tierInfo = getTierInfo($location->name);
                                                         $tierPrice = getTierAdjustedPrice($listing, $location->name);
                                                         $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['tier'] > 1;
-                                                        $countryFlag = getCountryFlag($location->country_code);
                                                     @endphp
 
                                                     {{-- Country Flag & Tier Pricing Badge --}}
                                                     <div style="margin-bottom: 8px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
                                                         <span data-bs-toggle="tooltip" data-bs-placement="top" title="{{ $location->name }}"
                                                               style="background: #f3f4f6; padding: 3px 8px; border-radius: 10px; font-size: 13px; display: inline-flex; align-items: center; cursor: pointer; border: 1px solid #e5e7eb;">
-                                                            {{ $countryFlag }}
+                                                            <img src="https://flagcdn.com/w20/{{ strtolower($location->country_code) }}.png" 
+                                                                 srcset="https://flagcdn.com/w40/{{ strtolower($location->country_code) }}.png 2x"
+                                                                 width="20" 
+                                                                 alt="{{ $location->name }}">
                                                         </span>
 
                                                         @if($showTierPricing)
