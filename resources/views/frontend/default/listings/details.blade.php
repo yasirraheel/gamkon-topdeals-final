@@ -404,6 +404,11 @@
                             <h4 class="fw-bold mb-3" style="font-size: 18px;">{{ __('Explore More') }}</h4>
                             <div class="row g-3">
                                 @foreach ($suggested->take(4) as $item)
+                                    @php
+                                        $tierInfo = getCountryTier($userCountry);
+                                        $tierAdjustedPrice = getTierAdjustedPrice($item->final_price, $tierInfo);
+                                        $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['percentage'] > 0;
+                                    @endphp
                                     <div class="col-md-6">
                                         <a href="{{ route('listing.details', $item->slug) }}" class="text-decoration-none">
                                             <div class="d-flex gap-3 p-3 border rounded-3 bg-white h-100 align-items-center hover-shadow transition">
@@ -422,9 +427,15 @@
                                                         <span class="text-muted small fw-bold">{{ number_format($item->average_rating, 1) }}</span>
                                                     </div>
                                                     <div class="d-flex align-items-baseline gap-2">
-                                                        <span class="text-danger fw-bold">{{ amountWithCurrency($item->final_price) }}</span>
-                                                        @if ($item->discount_value > 0)
-                                                            <span class="text-muted small text-decoration-line-through">{{ amountWithCurrency($item->price) }}</span>
+                                                        @if($showTierPricing)
+                                                            <span class="text-danger fw-bold">{{ amountWithCurrency($tierAdjustedPrice) }}</span>
+                                                            <span class="text-muted small text-decoration-line-through">{{ amountWithCurrency($item->final_price) }}</span>
+                                                            <span class="badge bg-danger ms-1" style="font-size: 10px;">-{{ $tierInfo['percentage'] }}%</span>
+                                                        @else
+                                                            <span class="text-danger fw-bold">{{ amountWithCurrency($item->final_price) }}</span>
+                                                            @if ($item->discount_value > 0)
+                                                                <span class="text-muted small text-decoration-line-through">{{ amountWithCurrency($item->price) }}</span>
+                                                            @endif
                                                         @endif
                                                     </div>
                                                 </div>
@@ -487,10 +498,10 @@
                                         </span>
 
                                         @if($showTierPricing)
-                                            <span class="badge bg-success" style="padding: 6px 12px; font-size: 12px; font-weight: 600;">
-                                                {{ $tierInfo['discount'] }}% {{ __('OFF for') }} {{ $location->name }}
-                                            </span>
-                                        @endif
+                                        <span class="badge bg-success text-wrap" style="padding: 8px 14px; font-size: 12px; font-weight: 600; line-height: 1.4; text-align: left;">
+                                            {{ $tierInfo['discount'] }}% {{ __('OFF for') }} {{ $location->name }}
+                                        </span>
+                                    @endif
                                     </div>
 
                                     @if($showTierPricing)
@@ -584,6 +595,11 @@
                             <h4 class="fw-bold mb-3" style="font-size: 18px;">{{ __('Explore More') }}</h4>
                             <div class="row g-3">
                                 @foreach ($suggested->take(4) as $item)
+                                    @php
+                                        $tierInfo = getCountryTier($userCountry);
+                                        $tierAdjustedPrice = getTierAdjustedPrice($item->final_price, $tierInfo);
+                                        $showTierPricing = setting('tiered_pricing_enabled', 'tiered_pricing') && $tierInfo['percentage'] > 0;
+                                    @endphp
                                     <div class="col-md-6">
                                         <a href="{{ route('listing.details', $item->slug) }}" class="text-decoration-none">
                                             <div class="d-flex gap-3 p-3 border rounded-3 bg-white h-100 align-items-center">
@@ -591,7 +607,13 @@
                                                 <div class="flex-grow-1 overflow-hidden">
                                                     <h6 class="text-dark fw-bold mb-1 text-truncate" style="font-size: 14px;">{{ $item->product_name }}</h6>
                                                     <div class="d-flex align-items-baseline gap-2">
-                                                        <span class="text-danger fw-bold">{{ amountWithCurrency($item->final_price) }}</span>
+                                                        @if($showTierPricing)
+                                                            <span class="text-danger fw-bold">{{ amountWithCurrency($tierAdjustedPrice) }}</span>
+                                                            <span class="text-muted text-decoration-line-through small" style="font-size: 11px;">{{ amountWithCurrency($item->final_price) }}</span>
+                                                            <span class="badge bg-danger ms-1" style="font-size: 10px;">-{{ $tierInfo['percentage'] }}%</span>
+                                                        @else
+                                                            <span class="text-danger fw-bold">{{ amountWithCurrency($item->final_price) }}</span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>

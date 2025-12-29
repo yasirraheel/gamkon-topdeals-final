@@ -127,8 +127,8 @@
                                                         </span>
 
                                                         @if($showTierPricing)
-                                                            <span style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); color: #fff; padding: 3px 8px; border-radius: 10px; font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);">
-                                                                <iconify-icon icon="solar:tag-price-bold" style="font-size: 11px;"></iconify-icon>
+                                                            <span style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); color: #fff; padding: 5px 10px; border-radius: 10px; font-size: 10px; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);">
+                                                                <iconify-icon icon="solar:tag-price-bold" style="font-size: 12px;"></iconify-icon>
                                                                 {{ $tierInfo['discount'] }}% {{ __('OFF') }}
                                                             </span>
                                                         @endif
