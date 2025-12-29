@@ -920,7 +920,8 @@ if (!function_exists('getCountryTier')) {
         }
 
         // Default to Tier 1 if not found in any tier
-        return ['tier' => 1, 'percentage' => 0]; // Default 0% discount
+        $percentage = (int) setting("tier_1_percentage", 'tiered_pricing', 0);
+        return ['tier' => 1, 'percentage' => $percentage];
     }
 }
 
