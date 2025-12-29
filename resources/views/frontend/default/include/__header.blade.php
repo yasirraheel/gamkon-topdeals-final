@@ -23,7 +23,8 @@
                          width="30" 
                          alt="{{ $userLocation->name }}" 
                          class="country-flag ms-2" 
-                         title="{{ $userLocation->name }}">
+                         title="{{ $userLocation->name }}"
+                         style="margin-left: 8px !important; display: inline-block;">
                 @endif
                 @includeWhen(
                     !$user?->is_seller || !Route::is('seller.*') || Route::is('seller.details'),
