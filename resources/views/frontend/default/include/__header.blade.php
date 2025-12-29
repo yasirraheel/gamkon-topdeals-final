@@ -11,21 +11,23 @@
     <div class="has-container-fluid">
         <div class="header-full">
             <div class="left">
-                <a href="{{ route('home') }}" class="logo">
-                    <x-luminous.logo />
-                </a>
-                @php
-                    $userLocation = getLocation();
-                @endphp
-                @if($userLocation->country_code)
-                    <img src="https://flagcdn.com/w40/{{ strtolower($userLocation->country_code) }}.png" 
-                         srcset="https://flagcdn.com/w80/{{ strtolower($userLocation->country_code) }}.png 2x"
-                         width="30" 
-                         alt="{{ $userLocation->name }}" 
-                         class="country-flag ms-2" 
-                         title="{{ $userLocation->name }}"
-                         style="margin-left: 8px !important; display: inline-block;">
-                @endif
+                <div class="logo-flag-container" style="display: flex; align-items: center; gap: 8px;">
+                    <a href="{{ route('home') }}" class="logo">
+                        <x-luminous.logo />
+                    </a>
+                    @php
+                        $userLocation = getLocation();
+                    @endphp
+                    @if($userLocation->country_code)
+                        <img src="https://flagcdn.com/w40/{{ strtolower($userLocation->country_code) }}.png" 
+                             srcset="https://flagcdn.com/w80/{{ strtolower($userLocation->country_code) }}.png 2x"
+                             width="30" 
+                             alt="{{ $userLocation->name }}" 
+                             class="country-flag" 
+                             title="{{ $userLocation->name }}"
+                             style="display: inline-block;">
+                    @endif
+                </div>
                 @includeWhen(
                     !$user?->is_seller || !Route::is('seller.*') || Route::is('seller.details'),
                     'frontend::include.common.search-form')
