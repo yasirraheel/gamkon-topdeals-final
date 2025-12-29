@@ -106,7 +106,14 @@ class SettingController extends Controller
                         $val = self::imageUploadTrait($val, $oldImage, 'webp');
                     }
 
-                    Setting::add($key, $val, Setting::getDataType($key, $section));
+                    $dataType = Setting::getDataType($key, $section);
+
+                    // JSON-encode arrays for json data type
+                    if ($dataType === 'json' && is_array($val)) {
+                        $val = json_encode($val);
+                    }
+
+                    Setting::add($key, $val, $dataType);
                 }
             }
 
