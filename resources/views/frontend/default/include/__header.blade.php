@@ -14,6 +14,14 @@
                 <a href="{{ route('home') }}" class="logo">
                     <x-luminous.logo />
                 </a>
+                @php
+                    $userLocation = getLocation();
+                @endphp
+                @if($userLocation->country_code)
+                    <span class="country-flag ms-2" style="font-size: 24px;" title="{{ $userLocation->name }}">
+                        {{ getCountryFlag($userLocation->country_code) }}
+                    </span>
+                @endif
                 @includeWhen(
                     !$user?->is_seller || !Route::is('seller.*') || Route::is('seller.details'),
                     'frontend::include.common.search-form')
@@ -186,6 +194,11 @@
             <a href="{{ route('home') }}" class="td-offcanvas-logo">
                 <img src="{{ asset(setting('site_logo', 'global')) }}" alt="{{ setting('site_title', 'global') }}">
             </a>
+            @if($userLocation->country_code)
+                <span class="country-flag ms-2" style="font-size: 24px;" title="{{ $userLocation->name }}">
+                    {{ getCountryFlag($userLocation->country_code) }}
+                </span>
+            @endif
             <div class="authentication-and-close">
                 <div class="auth">
                     @auth
