@@ -74,8 +74,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'first_name' => [Rule::requiredIf($isFirstName), 'string', 'max:255'],
             'last_name' => [Rule::requiredIf($isLastName), 'string', 'max:255'],
-            'g-recaptcha-response' => Rule::requiredIf(plugin_active('Google reCaptcha')),
-            new Recaptcha,
+            'g-recaptcha-response' => [Rule::requiredIf(plugin_active('Google reCaptcha')), new Recaptcha],
             'gender' => [Rule::requiredIf($isGender), 'in:male,female,other'],
             'username' => ['required', 'string', 'max:17', 'unique:users'],
             'country' => [Rule::requiredIf($isCountry), 'string', 'max:255'],

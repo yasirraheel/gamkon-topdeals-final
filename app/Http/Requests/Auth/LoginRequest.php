@@ -34,7 +34,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => ['required', 'string'],
             'password' => ['required', 'string'],
-            'g-recaptcha-response' => Rule::requiredIf(plugin_active('Google reCaptcha')), new Recaptcha,
+            'g-recaptcha-response' => [Rule::requiredIf(plugin_active('Google reCaptcha')), new Recaptcha],
         ];
     }
 

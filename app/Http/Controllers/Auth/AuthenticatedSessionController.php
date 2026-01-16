@@ -25,8 +25,10 @@ class AuthenticatedSessionController extends Controller
         $page = getPageData('login');
         $data = json_decode($page->data, true);
         $googleReCaptcha = plugin_active('Google reCaptcha');
+        $googleReCaptchaData = $googleReCaptcha ? json_decode($googleReCaptcha->data, true) : [];
+        $googleReCaptchaKey = $googleReCaptchaData['site_key'] ?? $googleReCaptchaData['google_recaptcha_key'] ?? null;
 
-        return view('frontend::auth.login', compact('data', 'googleReCaptcha'));
+        return view('frontend::auth.login', compact('data', 'googleReCaptcha', 'googleReCaptchaKey'));
     }
 
     /**
