@@ -80,6 +80,7 @@ class PageController extends Controller
             'email' => 'required|email',
             'subject' => 'required',
             'msg' => 'required',
+            'g-recaptcha-response' => [Rule::requiredIf(plugin_active('Google reCaptcha')), new Recaptcha],
         ]);
 
         if ($validator->fails()) {
