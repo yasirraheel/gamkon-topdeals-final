@@ -520,7 +520,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             'subject' => 'required',
             'message' => 'required',
-            'user_type' => 'required|in:all,buyer,seller',
+            'user_type' => 'required_without:id|in:all,buyer,seller',
         ]);
 
         if ($validator->fails()) {
