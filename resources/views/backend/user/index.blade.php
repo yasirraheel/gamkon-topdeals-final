@@ -28,39 +28,39 @@
                  <div class="col-xl-12">
                      <div class="site-table table-responsive">
                          <form action="{{ request()->url() }}" method="get">
-                             <div class="table-filter">
-                                 <div class="filter">
-                                     <div class="search">
-                                         <input type="text" id="search" name="query" value="{{ request('query') }}"
-                                             placeholder="{{ __('Search') }}" />
-                                     </div>
-                                     <select name="email_status" id="email_status" class="form-select form-select-sm">
-                                         <option value="" selected>{{ __('Filter By Email Status') }}</option>
-                                         <option value="verified"
-                                             {{ request('email_status') == 'verified' ? 'selected' : '' }}>
-                                             {{ __('Email Verified') }}</option>
-                                         <option value="unverified"
-                                             {{ request('email_status') == 'unverified' ? 'selected' : '' }}>
-                                             {{ __('Email Unverified') }}</option>
-                                     </select>
-                                     <select name="kyc_status" id="kyc_status" class="form-select form-select-sm">
-                                         <option value="" selected>{{ __('Filter By KYC') }}</option>
-                                         <option value="1" {{ request('kyc_status') == '1' ? 'selected' : '' }}>
-                                             {{ __('Verified') }}</option>
-                                         <option value="0" {{ request('kyc_status') == '0' ? 'selected' : '' }}>
-                                             {{ __('Unverified') }}</option>
-                                     </select>
+                            <div class="table-filter">
+                                <div class="filter">
+                                    <div class="search">
+                                        <input type="text" id="search" name="query" value="{{ request('query') }}"
+                                            placeholder="{{ __('Search') }}" />
+                                    </div>
+                                    <select name="email_status" id="email_status" class="form-select form-select-sm">
+                                        <option value="" selected>{{ __('Filter By Email Status') }}</option>
+                                        <option value="verified"
+                                            {{ request('email_status') == 'verified' ? 'selected' : '' }}>
+                                            {{ __('Email Verified') }}</option>
+                                        <option value="unverified"
+                                            {{ request('email_status') == 'unverified' ? 'selected' : '' }}>
+                                            {{ __('Email Unverified') }}</option>
+                                    </select>
+                                    <select name="kyc_status" id="kyc_status" class="form-select form-select-sm">
+                                        <option value="" selected>{{ __('Filter By KYC') }}</option>
+                                        <option value="1" {{ request('kyc_status') == '1' ? 'selected' : '' }}>
+                                            {{ __('Verified') }}</option>
+                                        <option value="0" {{ request('kyc_status') == '0' ? 'selected' : '' }}>
+                                            {{ __('Unverified') }}</option>
+                                    </select>
 
-                                     <select name="status" id="status" class="form-select form-select-sm">
-                                         <option value="" selected>{{ __('Filter By Status') }}</option>
-                                         <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>
-                                             {{ __('Active') }}</option>
-                                         <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>
-                                             {{ __('Disabled') }}</option>
-                                         <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>
-                                             {{ __('Closed') }}</option>
-                                     </select>
-                                     <button type="submit" class="apply-btn"><i
+                                    <select name="status" id="status" class="form-select form-select-sm">
+                                        <option value="" selected>{{ __('Filter By Status') }}</option>
+                                        <option value="1" {{ request('status') == '1' ? 'selected' : '' }}>
+                                            {{ __('Active') }}</option>
+                                        <option value="0" {{ request('status') == '0' ? 'selected' : '' }}>
+                                            {{ __('Disabled') }}</option>
+                                        <option value="2" {{ request('status') == '2' ? 'selected' : '' }}>
+                                            {{ __('Closed') }}</option>
+                                    </select>
+                                    <button type="submit" class="apply-btn"><i
                                             data-lucide="search"></i>{{ __('Find') }}</button>
                                 </div>
                                 <div class="action-btns ms-2">
@@ -72,8 +72,9 @@
                         </form>
                         <form id="bulkActionForm" action="{{ route('admin.user.bulk-delete') }}" method="POST">
                             @csrf
-                            <table class="table">
-                             <thead>
+                        </form>
+                        <table class="table">
+                            <thead>
                                 <tr>
                                     <th>
                                         <div class="form-check">
@@ -110,7 +111,7 @@
                                         <td>
                                             <div class="form-check">
                                                 <input class="form-check-input user-checkbox" type="checkbox" name="ids[]"
-                                                    value="{{ $user->id }}">
+                                                    value="{{ $user->id }}" form="bulkActionForm">
                                             </div>
                                         </td>
                                         <td>
@@ -155,7 +156,6 @@
                              @endcan
                             <!-- Modal for Send Mail End-->
                         </table>
-                        </form>
 
                         {{ $users->links('backend.include.__pagination') }}
                      </div>
