@@ -57,6 +57,7 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'controller' => UserControlle
     Route::get('add-new/seller', 'create')->name('sellers.new');
     Route::get('add-new/buyer', 'create')->name('buyers.new');
     Route::post('store', 'store')->name('store');
+    Route::post('bulk-delete', 'bulkDelete')->name('bulk-delete');
     Route::post('status-update/{id}', 'statusUpdate')->name('status-update');
     Route::post('password-update/{id}', 'passwordUpdate')->name('password-update');
     Route::post('balance-update/{id}', 'balanceUpdate')->name('balance-update');

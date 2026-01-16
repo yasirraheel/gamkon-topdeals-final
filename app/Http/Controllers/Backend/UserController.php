@@ -625,6 +625,40 @@ class UserController extends Controller
 
     }
 
+    public function bulkDelete(Request $request)
+    {
+        $ids = $request->input('ids');
+        if (empty($ids)) {
+            notify()->error(__('No users selected!'));
+            return back();
+        }
+
+        try {
+            foreach ($ids as $id) {
+                $user = User::find($id);
+                if ($user) {
+                    $user->kycs()->delete();
+                    $user->transaction()->delete();
+                    $user->ticket()->delete();
+                    $user->activities()->delete();
+                    $user->messages()->delete();
+                    $user->notifications()->delete();
+                    $user->refferelLinks()->delete();
+                    $user->withdrawAccounts()->delete();
+                    $user->withdraws()->delete();
+                    $user->planHistories()->delete();
+                    $user->listings()->delete();
+                    $user->coupons()->delete();
+                    $user->delete();
+                }
+            }
+            notify()->success(__('Selected users deleted successfully'));
+        } catch (\Throwable $th) {
+            notify()->error(__('Something went wrong!'));
+        }
+        return back();
+    }
+
     public function popularToggle($id)
     {
         $user = User::findOrFail($id);

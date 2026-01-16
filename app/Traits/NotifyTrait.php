@@ -20,6 +20,12 @@ trait NotifyTrait
     // ============================= mail template helper ===================================================
     protected function mailNotify($email, $code, $shortcodes = null)
     {
+        // Check if email is valid
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            \Log::warning("Mail Notification: Invalid email address $email for code $code");
+            return false;
+        }
+
         try {
             $template = EmailTemplate::where('status', true)->where('code', $code)->first();
             if ($template) {

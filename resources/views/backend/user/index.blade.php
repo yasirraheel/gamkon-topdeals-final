@@ -61,25 +61,41 @@
                                              {{ __('Closed') }}</option>
                                      </select>
                                      <button type="submit" class="apply-btn"><i
-                                             data-lucide="search"></i>{{ __('Find') }}</button>
-                                 </div>
-                             </div>
-                         </form>
-                         <table class="table">
+                                            data-lucide="search"></i>{{ __('Find') }}</button>
+                                </div>
+                                <div class="action-btns ms-2">
+                                    <button type="button" class="btn btn-danger btn-sm d-none" id="bulkDeleteBtn">
+                                        <i class="fas fa-trash"></i> {{ __('Delete Selected') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <form id="bulkActionForm" action="{{ route('admin.user.bulk-delete') }}" method="POST">
+                            @csrf
+                            <table class="table">
                              <thead>
-                                 <tr>
-                                     @include('backend.filter.th', [
-                                         'label' => 'User',
-                                         'field' => 'username',
-                                     ])
-                                     @include('backend.filter.th', [
-                                         'label' => 'Email',
-                                         'field' => 'email',
-                                     ])
-                                     @include('backend.filter.th', [
-                                         'label' => 'Balance',
-                                         'field' => 'balance',
-                                     ])
+                                <tr>
+                                    <th>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="checkAll">
+                                        </div>
+                                    </th>
+                                    @include('backend.filter.th', [
+                                        'label' => 'User',
+                                        'field' => 'username',
+                                    ])
+                                    @include('backend.filter.th', [
+                                        'label' => 'Email',
+                                        'field' => 'email',
+                                    ])
+                                    @include('backend.filter.th', [
+                                        'label' => 'Created At',
+                                        'field' => 'created_at',
+                                    ])
+                                    @include('backend.filter.th', [
+                                        'label' => 'Balance',
+                                        'field' => 'balance',
+                                    ])
                                      <th>{{ __('KYC') }}</th>
                                      @include('backend.filter.th', [
                                          'label' => 'Status',
@@ -90,9 +106,15 @@
                              </thead>
                              <tbody>
                                  @forelse($users as $user)
-                                     <tr>
-                                         <td>
-                                             <div class="icon">
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input user-checkbox" type="checkbox" name="ids[]"
+                                                    value="{{ $user->id }}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="icon">
                                                  @include('backend.user.include.__avatar', [
                                                      'avatar' => $user->avatar_path,
                                                      'first_name' => $user->first_name,
@@ -107,9 +129,10 @@
                                              </div>
                                          </td>
                                          <td>{{ Str::limit($user->email, 20) }} {!! $user->email_verified_at
-                                             ? '<i data-bs-toggle="tooltip" data-bs-placement="top" title="Email Verified" class="fas fa-check-circle text-success"></i>'
-                                             : '' !!}</td>
-                                         <td>{{ $currencySymbol . $user->balance }}</td>
+                                            ? '<i data-bs-toggle="tooltip" data-bs-placement="top" title="Email Verified" class="fas fa-check-circle text-success"></i>'
+                                            : '' !!}</td>
+                                        <td>{{ $user->created_at->diffForHumans() }}</td>
+                                        <td>{{ $currencySymbol . $user->balance }}</td>
                                          <td>
                                              @include('backend.user.include.__kyc', ['kyc' => $user->kyc])
                                          </td>
@@ -130,10 +153,11 @@
                              @can('customer-mail-send')
                                  @include('backend.user.include.__mail_send')
                              @endcan
-                             <!-- Modal for Send Mail End-->
-                         </table>
+                            <!-- Modal for Send Mail End-->
+                        </table>
+                        </form>
 
-                         {{ $users->links('backend.include.__pagination') }}
+                        {{ $users->links('backend.include.__pagination') }}
                      </div>
                  </div>
              </div>
@@ -164,10 +188,57 @@
                  var url = '{{ route('admin.user.destroy', ':id') }}';
                  url = url.replace(':id', id);
                  $('#deleteForm').attr('action', url);
-                 $('#delete').modal('toggle')
+                $('#delete').modal('toggle')
 
-             });
+            });
 
-         })(jQuery);
-     </script>
- @endsection
+            // Check All
+            $('#checkAll').on('change', function() {
+                $('.user-checkbox').prop('checked', $(this).is(':checked'));
+                toggleBulkDeleteBtn();
+            });
+
+            // Individual checkbox change
+            $('.user-checkbox').on('change', function() {
+                toggleBulkDeleteBtn();
+                // Update checkAll state
+                if ($('.user-checkbox:checked').length == $('.user-checkbox').length) {
+                    $('#checkAll').prop('checked', true);
+                } else {
+                    $('#checkAll').prop('checked', false);
+                }
+            });
+
+            function toggleBulkDeleteBtn() {
+                if ($('.user-checkbox:checked').length > 0) {
+                    $('#bulkDeleteBtn').removeClass('d-none');
+                } else {
+                    $('#bulkDeleteBtn').addClass('d-none');
+                }
+            }
+
+            // Bulk Delete Button Click
+            $('#bulkDeleteBtn').on('click', function() {
+                // You might want to add a confirmation here
+                // e.g., using the same delete modal or a simple confirm
+                // For now, let's use a simple confirm
+                /*
+                if (confirm('{{ __('Are you sure you want to delete selected users?') }}')) {
+                    $('#bulkActionForm').submit();
+                }
+                */
+                // Or better, trigger the delete modal but modifying it to submit the bulk form?
+                // Or just use the browser confirm for simplicity as per common requests
+                
+                // Let's use the delete modal structure if possible, but it's designed for single ID action replacement.
+                // Simplest is standard confirm or sweetalert if available.
+                // The project uses standard modals. Let's just submit directly or use browser confirm.
+                
+                if(confirm("{{ __('Are you sure you want to delete selected users?') }}")){
+                     $('#bulkActionForm').submit();
+                }
+            });
+
+        })(jQuery);
+    </script>
+@endsection
