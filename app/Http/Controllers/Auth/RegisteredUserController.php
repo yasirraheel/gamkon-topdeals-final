@@ -44,7 +44,10 @@ class RegisteredUserController extends Controller
         $referralCode = ReferralLink::find($request->cookie('invite'))?->code ?? $request->get('invite');
         $sellerKyc = setting('seller_register_kyc', 'permission') ? Kyc::sellerVerification()->first() : null;
 
-        return view('frontend::auth.register', compact('location', 'referralCode', 'data', 'sellerKyc'));
+        $googleReCaptcha = plugin_active('Google reCaptcha');
+        $googleReCaptchaKey = $googleReCaptcha ? json_decode($googleReCaptcha->data)->google_recaptcha_key : null;
+
+        return view('frontend::auth.register', compact('location', 'referralCode', 'data', 'sellerKyc', 'googleReCaptcha', 'googleReCaptchaKey'));
     }
 
     /**

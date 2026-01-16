@@ -234,6 +234,14 @@
                                         <p class="feedback-invalid active">{{ $message }}</p>
                                     @enderror
                                 </div>
+                                @if ($googleReCaptcha)
+                                    <div class="col-12">
+                                        <div class="g-recaptcha" data-sitekey="{{ $googleReCaptchaKey }}"></div>
+                                        @error('g-recaptcha-response')
+                                            <p class="feedback-invalid active">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                @endif
                                 <div class="col-md-12">
                                     <div class="auth-action">
                                         <button type="submit"
@@ -432,6 +440,14 @@
                                         <p class="feedback-invalid active">{{ $message }}</p>
                                     @enderror
                                 </div>
+                                @if ($googleReCaptcha)
+                                    <div class="col-12">
+                                        <div class="g-recaptcha" data-sitekey="{{ $googleReCaptchaKey }}"></div>
+                                        @error('g-recaptcha-response')
+                                            <p class="feedback-invalid active">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                @endif
                                 <div class="col-md-12">
                                     <div class="auth-action">
                                         <button type="submit"
@@ -489,6 +505,9 @@
 
 @endsection
 @push('js')
+    @if ($googleReCaptcha)
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    @endif
     <script>
         'use strict';
         (function($) {
