@@ -10,6 +10,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Fluent;
+use Illuminate\Validation\Rule;
+use App\Rules\Recaptcha;
 
 class PageController extends Controller
 {
@@ -26,7 +28,11 @@ class PageController extends Controller
         }
         $data = new Fluent(json_decode($page->data, true));
 
-        return view('frontend::pages.'.$page->code, compact('data'));
+        $googleReCaptcha = plugin_active('Google reCaptcha');
+        $googleReCaptchaData = $googleReCaptcha ? json_decode($googleReCaptcha->data, true) : [];
+        $googleReCaptchaKey = $googleReCaptchaData['site_key'] ?? $googleReCaptchaData['google_recaptcha_key'] ?? null;
+
+        return view('frontend::pages.'.$page->code, compact('data', 'googleReCaptcha', 'googleReCaptchaKey'));
     }
 
     public function getPage($section)

@@ -96,6 +96,14 @@
                                                         <p class="feedback-invalid">{{ __('This field is required') }}</p>
                                                     </div>
                                                 </div>
+                                                @if ($googleReCaptcha)
+                                                    <div class="col-12">
+                                                        <div class="g-recaptcha" data-sitekey="{{ $googleReCaptchaKey }}"></div>
+                                                        @error('g-recaptcha-response')
+                                                            <p class="feedback-invalid active">{{ $message }}</p>
+                                                        @enderror
+                                                    </div>
+                                                @endif
                                                 <div class="col-12">
                                                     <div class="auth-action">
                                                         <button class="primary-button xl-btn w-100">
