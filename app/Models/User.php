@@ -338,6 +338,11 @@ class User extends Authenticatable implements CanUseTickets, MustVerifyEmail
         return $this->belongsTo(PlanHistory::class, 'current_plan_id');
     }
 
+    public function planHistories()
+    {
+        return $this->hasMany(PlanHistory::class);
+    }
+
     public function portfolio()
     {
         return $this->belongsTo(Portfolio::class, 'portfolio_id');

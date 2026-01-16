@@ -607,9 +607,8 @@ class UserController extends Controller
             $user->notifications()->delete();
             $user->refferelLinks()->delete();
             $user->withdrawAccounts()->delete();
-            $user->withdraws()->delete();
-            $user->planHistories()->delete();
-            $user->listings()->delete();
+                        $user->planHistories()->delete();
+                        $user->listings()->delete();
             $user->coupons()->delete();
             $user->delete();
 
@@ -645,7 +644,6 @@ class UserController extends Controller
                     $user->notifications()->delete();
                     $user->refferelLinks()->delete();
                     $user->withdrawAccounts()->delete();
-                    $user->withdraws()->delete();
                     $user->planHistories()->delete();
                     $user->listings()->delete();
                     $user->coupons()->delete();
