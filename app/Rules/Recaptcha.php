@@ -25,7 +25,10 @@ class Recaptcha implements Rule
      */
     public function passes($attribute, $value)
     {
-        $data = ['secret' => json_decode(plugin_active('Google reCaptcha')?->data)['google_recaptcha_secret'],
+        $pluginData = json_decode(plugin_active('Google reCaptcha')?->data, true);
+        $secret = $pluginData['secret_key'] ?? $pluginData['google_recaptcha_secret'] ?? null;
+
+        $data = ['secret' => $secret,
             'response' => $value];
 
         try {

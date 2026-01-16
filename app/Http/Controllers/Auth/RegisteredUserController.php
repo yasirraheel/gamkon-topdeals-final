@@ -45,7 +45,8 @@ class RegisteredUserController extends Controller
         $sellerKyc = setting('seller_register_kyc', 'permission') ? Kyc::sellerVerification()->first() : null;
 
         $googleReCaptcha = plugin_active('Google reCaptcha');
-        $googleReCaptchaKey = $googleReCaptcha ? json_decode($googleReCaptcha->data)->google_recaptcha_key : null;
+        $googleReCaptchaData = $googleReCaptcha ? json_decode($googleReCaptcha->data, true) : [];
+        $googleReCaptchaKey = $googleReCaptchaData['site_key'] ?? $googleReCaptchaData['google_recaptcha_key'] ?? null;
 
         return view('frontend::auth.register', compact('location', 'referralCode', 'data', 'sellerKyc', 'googleReCaptcha', 'googleReCaptchaKey'));
     }
