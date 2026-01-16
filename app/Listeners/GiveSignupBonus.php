@@ -37,7 +37,7 @@ class GiveSignupBonus
         }
 
         // 2. Referral Bonus for the Referrer
-        if ($user->ref_id && setting('sign_up_referral', 'permission')) {
+        if ($user->ref_id && setting('sign_up_referral', 'permission') && (float) setting('referral_bonus', 'fee') > 0) {
             $referrer = User::find($user->ref_id);
             
             // Check if referrer is verified (if required)
