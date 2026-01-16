@@ -115,7 +115,7 @@
         </div>
     </div>
 @endsection
-@section('script')
+@push('js')
     @if ($googleReCaptcha)
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @endif
@@ -124,18 +124,26 @@
             'use strict';
 
             // password hide show
-            let eyeicon = document.getElementById('eyeicon')
-            let passo = document.getElementById('passo')
-            eyeicon.onclick = function() {
-                if (passo.type === "password") {
-                    passo.type = "text";
-                    eyeicon.src = '{{ asset('frontend/default/images/icons/eye.svg') }}'
+            let eyeicon = document.querySelector('.input-icon i'); // Fixed selector to match current DOM if needed, but keeping logic similar to before but safer
+            let passo = document.querySelector('input[name="password"]');
+
+             // Re-implementing logic to match structure of other pages or fixing it if ID is missing
+             // The original code used getElementById 'eyeicon' but the HTML above uses class 'input-icon' containing 'i' class 'fa-regular fa-eye-slash'
+             // And input doesn't have id 'passo'
+             // Let's fix the script to actually work with the DOM elements present
+
+            $(document).on('click', '.input-icon', function() {
+                let input = $(this).siblings('input');
+                let icon = $(this).find('i');
+                if (input.attr('type') === 'password') {
+                    input.attr('type', 'text');
+                    icon.removeClass('fa-eye-slash').addClass('fa-eye');
                 } else {
-                    passo.type = "password";
-                    eyeicon.src = '{{ asset('frontend/default/images/icons/eye-off.svg') }}'
+                    input.attr('type', 'password');
+                    icon.removeClass('fa-eye').addClass('fa-eye-slash');
                 }
-            }
+            });
 
         })(jQuery);
     </script>
-@endsection
+@endpush
