@@ -131,7 +131,7 @@
                                          <td>{{ Str::limit($user->email, 20) }} {!! $user->email_verified_at
                                             ? '<i data-bs-toggle="tooltip" data-bs-placement="top" title="Email Verified" class="fas fa-check-circle text-success"></i>'
                                             : '' !!}</td>
-                                        <td>{{ $user->created_at->diffForHumans() }}</td>
+                                        <td>{{ $user->created_at ? \Carbon\Carbon::parse($user->created_at)->diffForHumans() : '' }}</td>
                                         <td>{{ $currencySymbol . $user->balance }}</td>
                                          <td>
                                              @include('backend.user.include.__kyc', ['kyc' => $user->kyc])
