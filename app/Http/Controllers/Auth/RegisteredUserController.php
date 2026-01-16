@@ -111,6 +111,11 @@ class RegisteredUserController extends Controller
 
         DB::commit();
 
+        if (!Auth::check()) {
+            notify()->success(__('Registration successful. Please check your email to verify your account.'));
+            return to_route('login');
+        }
+
         if (session('checkout')) {
             return to_route('checkout');
         }
@@ -165,20 +170,15 @@ class RegisteredUserController extends Controller
         // Referred event
         event(new UserReferred($request->cookie('invite'), $user));
 
+        Cookie::forget('invite');
+
         if (setting('email_verification', 'permission') && !$request->has('from_social')) {
             $user->sendEmailVerificationNotification();
+        } else {
+            $user->markEmailAsVerified();
+            Auth::login($user);
+            LoginActivities::add();
         }
-
-        if (setting('referral_signup_bonus', 'permission') && (float) setting('signup_bonus', 'fee') > 0) {
-            $signupBonus = (float) setting('signup_bonus', 'fee');
-            $user->increment('balance', $signupBonus);
-            (new Txn)->new($signupBonus, 0, $signupBonus, 'system', 'Signup Bonus', TxnType::SignupBonus, TxnStatus::Success, null, null, $user->id);
-            Session::put('signup_bonus', $signupBonus);
-        }
-
-        Cookie::forget('invite');
-        Auth::login($user);
-        LoginActivities::add();
 
         return $user;
     }

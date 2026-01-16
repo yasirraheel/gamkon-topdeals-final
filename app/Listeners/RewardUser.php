@@ -39,27 +39,6 @@ class RewardUser
             User::find($event->user->id)->update([
                 'ref_id' => $referral->user->id,
             ]);
-
-            $email_verification = setting('email_verification', 'permission') ? $referral->user->email_verified_at !== null : true;
-
-            // Sign Up Referral Bonus
-            if (setting('sign_up_referral', 'permission') && $email_verification) {
-
-                $referralBonus = (float) setting('referral_bonus', 'fee');
-                // User who was sharing link
-                $provider = $referral->user;
-                $provider->increment('balance', $referralBonus);
-                Txn::new($referralBonus, 0, $referralBonus, 'System', 'Referral Bonus via '.$event->user->full_name, TxnType::Referral, TxnStatus::Success, null, null, $provider->id);
-
-                // send push notification ref_id user
-                // ["[[full_name]]","[[bonus_amount]]","[[currency]]"]
-                $shortcodes = [
-                    '[[full_name]]' => $event->user->full_name,
-                    '[[bonus_amount]]' => $referralBonus,
-                    '[[currency]]' => setting('site_currency', 'global'),
-                ];
-                $this->pushNotify('referral_bonus', $shortcodes, route('user.transactions'), $provider->id);
-            }
         }
     }
 }
